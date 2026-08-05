@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/ApiGateway/" />
+  <Folder Name="/Platform/">
+    <Project Path="Platform/Platform.API/Platform.API.csproj" Id="c614c9fd-7934-4af6-9ec2-a572fa298e81" />
+    <Project Path="Platform/Platform.Core/Platform.Core.csproj" Id="80c660d7-6c49-4318-8cf1-c8b070169fac" />
+    <Project Path="Platform/Platform.Infrastructure/Platform.Infrastructure.csproj" Id="8cbb6211-5ed7-4157-b5ad-0ca5b805f911" />
+  </Folder>
+  <Folder Name="/Services/" />
+  <Folder Name="/Services/Catalog/">
+    <Project Path="Services/Catalog/Catalog.API/Catalog.API.csproj" Id="976f821a-1718-410e-be64-0cbc27e14ea7" />
+    <Project Path="Services/Catalog/Catalog.Application/Catalog.Application.csproj" Id="12e1c146-f9ff-4df4-8bf6-2185a6a0526e" />
+    <Project Path="Services/Catalog/Catalog.Domain/Catalog.Core.csproj" Id="ad227e8d-b94a-4cf5-a831-bb6360cf8a8a" />
+    <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" Id="8edb2fd6-25ce-40fd-ae90-b4f94135b19f" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>

@@ -1,0 +1,11 @@
+services:
+  catalogdb:
+    ports:
+      - "27001:27017"
+   
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8081:80"
+    
