@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Platform.API.Responses;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Platform.API.Exceptions
@@ -22,7 +23,6 @@ namespace Platform.API.Exceptions
             CancellationToken cancellationToken)
         {
             _logger.LogError(exception, exception.Message);
-
             Result<object> response;
             switch (exception)
             {
@@ -31,10 +31,9 @@ namespace Platform.API.Exceptions
                     break;
 
                 default:
-                    response = Result<object>.Failure("An unexpected error occurred.");
+                    response = Result<object>.Failure(CultureInfo.CurrentUICulture.Name == "en" ? "An unexpected error occurred." : "حدث خطأ غير متوقع.");
                     break;
             }
-
 
             httpContext.Response.StatusCode = StatusCodes.Status200OK;
             httpContext.Response.ContentType = "application/json";

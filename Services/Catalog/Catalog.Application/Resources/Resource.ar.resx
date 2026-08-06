@@ -120,13 +120,16 @@
   <data name="InternalServerError" xml:space="preserve">
     <value>حدث خطأ غير متوقع.</value>
   </data>
-  <data name="ProductIdNotFound" xml:space="preserve">
+  <data name="ProductNotFound" xml:space="preserve">
     <value>لم يتم العثور على المنتج ذو المعرف {0}.</value>
   </data>
-  <data name="ProductNotFound" xml:space="preserve">
-    <value>المنتج غير موجود.</value>
+  <data name="FailedToUpdateProduct" xml:space="preserve">
+    <value>فشل تحديث المنتج بالمعرف {0}</value>
   </data>
   <data name="InvalidBrandOrType" xml:space="preserve">
     <value>العلامة التجارية أو النوع المحدد غير صالح.</value>
+  </data>
+  <data name="FailedToCreateProduct" xml:space="preserve">
+    <value>فشل إنشاء المنتج بالمعرف {0}.</value>
   </data>
 </root>

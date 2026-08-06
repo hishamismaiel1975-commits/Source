@@ -10,6 +10,6 @@ namespace Catalog.Application.Products.Commands
     string ImageFile,
     string BrandId,
     string TypeId,
-    decimal Price) : IRequest<bool>;
+    decimal Price) : IRequest;
 
 }

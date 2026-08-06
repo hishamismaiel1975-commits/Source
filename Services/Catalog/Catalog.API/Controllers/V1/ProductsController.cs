@@ -48,8 +48,7 @@ namespace Catalog.API.Controllers.V1
         [HttpPut("{id}")]
         public async Task<Result<ProductResponse>> UpdateProduct(string id, ProductApp.Commands.UpdateProductCommand command)
         {
-            var result = await _mediator.Send(command);
-            if (!result) throw new ApplicationException("Not Found Product");
+            await _mediator.Send(command);
             return Result<ProductResponse>.Success();
         }
 
@@ -57,8 +56,7 @@ namespace Catalog.API.Controllers.V1
         public async Task<Result<ProductResponse>> DeleteProduct(string id)
         {
             var command = new ProductApp.Commands.DeleteProductCommand(id);
-            var result = await _mediator.Send(command);
-            if (!result) throw new ApplicationException("Not Found Product");
+            await _mediator.Send(command);
             return Result<ProductResponse>.Success();
         }
 
