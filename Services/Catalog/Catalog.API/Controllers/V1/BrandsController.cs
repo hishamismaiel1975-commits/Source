@@ -28,21 +28,6 @@ namespace Catalog.API.Controllers.V1
             return Result<IList<BrandResponse>>.Success(result);
         }
 
-        [HttpGet("GetBrands2")]
-        public async Task<Result<IList<BrandResponse>>> GetBrands2()
-        {
-            throw new ApplicationException("This is a test ApplicationException");
-
-        }
-
-        [HttpGet("GetBrands3")]
-        public async Task<Result<IList<BrandResponse>>> GetBrands3()
-        {
-            throw new Exception("This is a test Exception");
-
-        }
-
-
 
     }
 }
