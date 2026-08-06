@@ -52,7 +52,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success();
         }
 
-        [HttpDelete()]
+        [HttpDelete("{id}")]
         public async Task<Result<ProductResponse>> DeleteProduct(string id)
         {
             var command = new ProductApp.Commands.DeleteProductCommand(id);

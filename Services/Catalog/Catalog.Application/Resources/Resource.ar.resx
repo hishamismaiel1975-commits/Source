@@ -132,4 +132,7 @@
   <data name="FailedToCreateProduct" xml:space="preserve">
     <value>فشل إنشاء المنتج بالمعرف {0}.</value>
   </data>
+  <data name="FailedToCreateProduct1" xml:space="preserve">
+    <value>فشل حذف المنتج بالمعرف {0}.</value>
+  </data>
 </root>

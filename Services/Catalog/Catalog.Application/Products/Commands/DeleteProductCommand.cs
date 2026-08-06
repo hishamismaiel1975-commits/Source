@@ -3,5 +3,5 @@
 namespace Catalog.Application.Products.Commands
 {
     public record DeleteProductCommand(
-        string Id) : IRequest<bool>;
+        string Id) : IRequest;
 }

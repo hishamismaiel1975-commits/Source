@@ -132,4 +132,7 @@
   <data name="FailedToCreateProduct" xml:space="preserve">
     <value>Failed to create product with Id {0}.</value>
   </data>
+  <data name="FailedToCreateProduct1" xml:space="preserve">
+    <value>Failed to delete product with Id {0}.</value>
+  </data>
 </root>

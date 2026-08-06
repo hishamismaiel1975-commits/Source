@@ -12,7 +12,6 @@ namespace Catalog.Application.Products.Handlers
         private readonly IProductRepository _productRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly ITypeRepository _typeRepository;
-
         private readonly IStringLocalizer<Resource> _localizer;
 
         public UpdateProductHandler(IProductRepository productRepository, IBrandRepository brandRepository, ITypeRepository typeRepository, IStringLocalizer<Resource> localizer)
