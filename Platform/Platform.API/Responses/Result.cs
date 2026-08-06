@@ -4,14 +4,22 @@
     {
         public bool IsSuccess { get; init; }
         public string? ErrorMessage { get; init; }
-        public T? Value { get; init; }
+        public T? data { get; init; }
 
         public static Result<T> Success(T value)
         {
             return new Result<T>
             {
                 IsSuccess = true,
-                Value = value
+                data = value
+            };
+        }
+
+        public static Result<T> Success()
+        {
+            return new Result<T>
+            {
+                IsSuccess = true,
             };
         }
 
@@ -23,5 +31,9 @@
                 ErrorMessage = error
             };
         }
+
+
+
     }
+
 }

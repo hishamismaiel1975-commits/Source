@@ -3,6 +3,7 @@ using Catalog.Application.Products.Responses;
 using Catalog.Core.Specifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Platform.API.Responses;
 using Platform.Core.Pagination;
 using ProductApp = Catalog.Application.Products;
 
@@ -22,49 +23,43 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductResponse>> GetProductById(string id)
+        public async Task<Result<ProductResponse>> GetProductById(string id)
         {
             var query = new ProductApp.Queries.GetProductByIdQuery(id);
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return Result<ProductResponse>.Success(result);
         }
 
         [HttpGet]
-        public async Task<ActionResult<Pagination<ProductResponse>>> GetProducts([FromQuery] CatalogSpecParams specParams)
+        public async Task<Result<Pagination<ProductResponse>>> GetProducts([FromQuery] CatalogSpecParams specParams)
         {
             var query = new ProductApp.Queries.GetProductsQuery(specParams);
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return Result<Pagination<ProductResponse>>.Success(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductResponse>> CreateProduct([FromBody] ProductApp.Commands.CreateProductCommand command)
+        public async Task<Result<ProductResponse>> CreateProduct([FromBody] ProductApp.Commands.CreateProductCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok(result);
+            return Result<ProductResponse>.Success(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(string id, ProductApp.Commands.UpdateProductCommand command)
+        public async Task<Result<ProductResponse>> UpdateProduct(string id, ProductApp.Commands.UpdateProductCommand command)
         {
             var result = await _mediator.Send(command);
-            if (!result)
-            {
-                return NotFound();
-            }
-            return Ok();
+            if (!result) throw new ApplicationException("Not Found Product");
+            return Result<ProductResponse>.Success();
         }
 
         [HttpDelete()]
-        public async Task<IActionResult> DeleteProduct(string id)
+        public async Task<Result<ProductResponse>> DeleteProduct(string id)
         {
             var command = new ProductApp.Commands.DeleteProductCommand(id);
             var result = await _mediator.Send(command);
-            if (!result)
-            {
-                return NotFound();
-            }
-            return Ok();
+            if (!result) throw new ApplicationException("Not Found Product");
+            return Result<ProductResponse>.Success();
         }
 
     }

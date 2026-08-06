@@ -15,7 +15,6 @@ services:
       - catalogdb 
     environment:
       - ASPNETCORE_HTTP_PORTS=80
-      - "DatabaseSettings__ConnectionString=mongodb://catalogdb:27017"
       - "DatabaseSettings__DatabaseName=CatalogDb"
       - "DatabaseSettings__ProductCollectionName=Products"
       - "DatabaseSettings__BrandCollectionName=Brands"

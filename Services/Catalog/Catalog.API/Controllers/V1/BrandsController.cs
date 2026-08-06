@@ -2,6 +2,7 @@
 using Catalog.Application.Brands.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Platform.API.Responses;
 using BrandApp = Catalog.Application.Brands;
 
 
@@ -20,12 +21,27 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet()]
-        public async Task<ActionResult<IList<BrandResponse>>> GetBrands()
+        public async Task<Result<IList<BrandResponse>>> GetBrands()
         {
             var query = new BrandApp.Queries.GetAllBrandsQuery();
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return Result<IList<BrandResponse>>.Success(result);
         }
+
+        [HttpGet("GetBrands2")]
+        public async Task<Result<IList<BrandResponse>>> GetBrands2()
+        {
+            throw new ApplicationException("This is a test ApplicationException");
+
+        }
+
+        [HttpGet("GetBrands3")]
+        public async Task<Result<IList<BrandResponse>>> GetBrands3()
+        {
+            throw new Exception("This is a test Exception");
+
+        }
+
 
 
     }

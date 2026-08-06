@@ -9,14 +9,22 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using Platform.API.Exceptions;
 using Platform.Infrastructure.MongoDB.Settings;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register the global exception handler
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+
 //Register custom Serializers
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+
+
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -108,6 +116,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 
 
 app.UseAuthorization();
+app.UseExceptionHandler();
 app.MapControllers();
 app.Run();
 

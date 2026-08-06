@@ -2,6 +2,7 @@
 using Catalog.Application.Types.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Platform.API.Responses;
 using TypeApp = Catalog.Application.Types;
 
 
@@ -21,11 +22,11 @@ namespace Catalog.API.Controllers.V1
 
 
         [HttpGet]
-        public async Task<ActionResult<IList<TypesResponse>>> GetTypes()
+        public async Task<Result<IList<TypesResponse>>> GetTypes()
         {
             var query = new TypeApp.Queries.GetAllTypesQuery();
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return Result<IList<TypesResponse>>.Success(result);
         }
     }
 }
