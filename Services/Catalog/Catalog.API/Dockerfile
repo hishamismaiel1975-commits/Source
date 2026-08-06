@@ -18,6 +18,8 @@ COPY ["Platform/Platform.Core/Platform.Core.csproj", "Platform/Platform.Core/"]
 COPY ["Services/Catalog/Catalog.Domain/Catalog.Core.csproj", "Services/Catalog/Catalog.Domain/"]
 COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
 COPY ["Platform/Platform.Infrastructure/Platform.Infrastructure.csproj", "Platform/Platform.Infrastructure/"]
+
+
 RUN dotnet restore "./Services/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/Catalog.API"
@@ -32,4 +34,7 @@ RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+
+
 ENTRYPOINT ["dotnet", "Catalog.API.dll"]

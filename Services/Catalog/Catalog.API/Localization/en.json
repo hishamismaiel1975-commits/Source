@@ -1,7 +1,7 @@
 ﻿{
-  "FailedToCreate": "An error occurred while adding.",
-  "FailedToUpdate": "An error occurred while updating.",
-  "FailedToDelete": "An error occurred while deleting.",
+  "FailedToCreate": "An error occurred while adding the item.",
+  "FailedToUpdate": "An error occurred while updating the item.",
+  "FailedToDelete": "An error occurred while deleting the item.",
   "UnexpectedError": "An unexpected error occurred."
 
 }

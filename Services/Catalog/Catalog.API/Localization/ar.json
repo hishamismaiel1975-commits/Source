@@ -1,6 +1,6 @@
 ﻿{
-  "FailedToCreate": "حدث خطأ ما أثناء الإضافة",
-  "FailedToUpdate": "حدث خطأ ما أثناء التعديل.",
-  "FailedToDelete": "حدث خطأ ما أثناء الحذف.",
+  "FailedToCreate": "حدث خطأ أثناء إنشاء العنصر.",
+  "FailedToUpdate": "حدث خطأ أثناء تحديث العنصر.",
+  "FailedToDelete": "حدث خطأ أثناء حذف العنصر.",
   "UnexpectedError": "حدث خطأ غير متوقع."
 }

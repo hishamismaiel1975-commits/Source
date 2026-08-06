@@ -16,11 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Localization\ar.json" />
-    <Resource Include="Localization\en.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="10.0.2" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="10.0.2" />
     <PackageReference Include="MediatR" Version="14.2.0" />
@@ -37,6 +32,15 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Localization\ar.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Localization\en.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
