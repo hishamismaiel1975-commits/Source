@@ -1,10 +1,8 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
-using Catalog.Application.Resources;
 using Catalog.Core.Repositories;
 using MediatR;
-using Microsoft.Extensions.Localization;
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -13,14 +11,12 @@ namespace Catalog.Application.Products.Handlers
         private readonly IProductRepository _productRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly ITypeRepository _typeRepository;
-        private readonly IStringLocalizer<Resource> _localizer;
 
-        public CreateProductHandler(IProductRepository productRepository, IBrandRepository brandRepository, ITypeRepository typeRepository, IStringLocalizer<Resource> localizer)
+        public CreateProductHandler(IProductRepository productRepository, IBrandRepository brandRepository, ITypeRepository typeRepository)
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _typeRepository = typeRepository;
-            _localizer = localizer;
         }
         public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -30,7 +26,7 @@ namespace Catalog.Application.Products.Handlers
 
             if (brand == null || type == null)
             {
-                throw new ApplicationException(_localizer["InvalidBrandOrType"]);
+                throw new ApplicationException("InvalidBrandOrType");
             }
 
             //Match to Entity

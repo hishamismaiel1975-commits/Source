@@ -21,6 +21,7 @@ namespace Platform.API.Extensions
             app.UseRequestLocalization();
             app.MapControllers();
 
+
             return app;
         }
     }

@@ -14,8 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
 
-        // Add services to the container.
-        services.AddControllers();
+
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         services.AddOpenApi();
@@ -37,23 +36,26 @@ public static class ServiceCollectionExtensions
                 options.SubstituteApiVersionInUrl = true;
             });
 
-        //Add localization services
-        services.AddLocalization(options =>
-        {
-            options.ResourcesPath = "Resources";
-        });
+        services.AddMemoryCache();
+
+        // Configures ASP.NET Core Localization
         services.Configure<RequestLocalizationOptions>(options =>
         {
             var supportedCultures = new[]
         {
-                  new CultureInfo("en"),
-                  new CultureInfo("ar")
-         };
-
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
             options.DefaultRequestCulture = new RequestCulture("en");
             options.SupportedCultures = supportedCultures;
             options.SupportedUICultures = supportedCultures;
+
+            options.RequestCultureProviders.Insert(0,
+                new AcceptLanguageHeaderRequestCultureProvider());
         });
+
+        // Add services to the container.
+        services.AddControllers();
 
         return services;
     }

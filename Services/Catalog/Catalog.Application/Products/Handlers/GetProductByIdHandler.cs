@@ -17,7 +17,13 @@ namespace Catalog.Application.Products.Handlers
         public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(request.Id);
+            if (product == null)
+            {
+                throw new ApplicationException("ProductNotFound");
+            }
+
             return ProductMapper.ToResponse(product);
+
         }
     }
 }

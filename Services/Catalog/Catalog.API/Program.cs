@@ -9,6 +9,8 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Platform.API.Extensions;
+using Platform.Core.Localization;
+using Platform.Infrastructure.Localization;
 using Platform.Infrastructure.MongoDB.Settings;
 using System.Reflection;
 
@@ -16,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add Common Services
 builder.Services.AddPlatformServices();
+
 
 //Register custom Serializers
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
@@ -30,11 +33,11 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
-    options.SwaggerDoc("v2", new OpenApiInfo
-    {
-        Title = "Catalog API",
-        Version = "v2"
-    });
+    //options.SwaggerDoc("v2", new OpenApiInfo
+    //{
+    //    Title = "Catalog API",
+    //    Version = "v2"
+    //});
 
 
 });
@@ -48,9 +51,12 @@ var assemblies = new Assembly[]
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 
 //Add Custom Services
+builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ITypeRepository, TypeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 
 // Bind strongly-typed settings
 builder.Services.Configure<DatabaseSettings>(
@@ -62,6 +68,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     var settings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
+
 
 var app = builder.Build();
 
@@ -84,6 +91,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
         //options.SwaggerEndpoint("/swagger/v2/swagger.json", "Catalog API V2");
     });
 }
+
 
 app.Run();
 
