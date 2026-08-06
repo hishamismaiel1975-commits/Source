@@ -18,7 +18,6 @@ namespace Platform.API.Extensions
 
             app.UseAuthorization();
             app.UseExceptionHandler();
-            app.UseRequestLocalization();
             app.MapControllers();
 
 

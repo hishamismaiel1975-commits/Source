@@ -1,4 +1,7 @@
-﻿ {
-  "FailedToCreateProduct": "Failed to create product.",
+﻿{
+  "FailedToCreate": "An error occurred while adding.",
+  "FailedToUpdate": "An error occurred while updating.",
+  "FailedToDelete": "An error occurred while deleting.",
   "UnexpectedError": "An unexpected error occurred."
+
 }

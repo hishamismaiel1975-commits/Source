@@ -1,9 +1,6 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.API.Exceptions;
-using System.Globalization;
 
 public static class ServiceCollectionExtensions
 {
@@ -35,24 +32,6 @@ public static class ServiceCollectionExtensions
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
-
-        services.AddMemoryCache();
-
-        // Configures ASP.NET Core Localization
-        services.Configure<RequestLocalizationOptions>(options =>
-        {
-            var supportedCultures = new[]
-        {
-    new CultureInfo("en"),
-    new CultureInfo("ar")
-};
-            options.DefaultRequestCulture = new RequestCulture("en");
-            options.SupportedCultures = supportedCultures;
-            options.SupportedUICultures = supportedCultures;
-
-            options.RequestCultureProviders.Insert(0,
-                new AcceptLanguageHeaderRequestCultureProvider());
-        });
 
         // Add services to the container.
         services.AddControllers();

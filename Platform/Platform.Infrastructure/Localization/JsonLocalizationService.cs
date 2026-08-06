@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Platform.Core.Localization;
 using System.Collections.Frozen;
-using System.Globalization;
 using System.Text.Json;
 
 namespace Platform.Infrastructure.Localization
@@ -9,10 +9,12 @@ namespace Platform.Infrastructure.Localization
     public sealed class JsonLocalizationService : ILocalizationService
     {
         private readonly FrozenDictionary<string, FrozenDictionary<string, string>> _resources;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JsonLocalizationService(IWebHostEnvironment environment)
+        public JsonLocalizationService(IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _resources = LoadResources(environment.ContentRootPath);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         private static FrozenDictionary<string, FrozenDictionary<string, string>> LoadResources(string rootPath)
@@ -43,7 +45,13 @@ namespace Platform.Infrastructure.Localization
 
         public string Get(string key)
         {
-            var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            var culture = _httpContextAccessor.HttpContext?.Request.Headers["Accept-Language"]
+                .ToString()
+                .Split(',')
+                .FirstOrDefault()?
+                .Split('-')
+                .FirstOrDefault()
+                ?? "en";
 
             if (!_resources.TryGetValue(culture, out var values))
             {

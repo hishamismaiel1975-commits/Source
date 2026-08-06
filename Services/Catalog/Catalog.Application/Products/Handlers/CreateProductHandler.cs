@@ -32,6 +32,10 @@ namespace Catalog.Application.Products.Handlers
             //Match to Entity
             var product = ProductMapper.ToEntity(request, brand, type, DateTimeOffset.UtcNow);
             var newProduct = await _productRepository.CreateAsync(product);
+            if (newProduct == null)
+            {
+                throw new ApplicationException("FailedToCreate", new Exception("Failed to create product."));
+            }
             return ProductMapper.ToResponse(newProduct);
         }
     }

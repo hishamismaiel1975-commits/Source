@@ -39,7 +39,7 @@ namespace Catalog.Application.Products.Handlers
             var status = await _productRepository.UpdateAsync(updatedProduct);
             if (!status)
             {
-                throw new ApplicationException("FailedToUpdateProduct");
+                throw new ApplicationException("FailedToUpdate", new Exception($"Failed to update product with id {request.Id}"));
             }
 
         }

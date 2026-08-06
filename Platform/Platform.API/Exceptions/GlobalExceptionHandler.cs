@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Platform.API.Responses;
-using System.Globalization;
+using Platform.Core.Localization;
 using System.Text.Json;
 
 namespace Platform.API.Exceptions
@@ -10,11 +10,14 @@ namespace Platform.API.Exceptions
     public sealed class GlobalExceptionHandler : IExceptionHandler
     {
         private readonly ILogger<GlobalExceptionHandler> _logger;
+        private readonly ILocalizationService _localizationService;
 
         public GlobalExceptionHandler(
-            ILogger<GlobalExceptionHandler> logger)
+            ILogger<GlobalExceptionHandler> logger,
+            ILocalizationService localizationService)
         {
             _logger = logger;
+            _localizationService = localizationService;
         }
 
         public async ValueTask<bool> TryHandleAsync(
@@ -27,11 +30,12 @@ namespace Platform.API.Exceptions
             switch (exception)
             {
                 case ApplicationException ex:
-                    response = Result<object>.Failure(ex.Message);
+
+                    response = Result<object>.Failure(_localizationService.Get(ex.Message));
                     break;
 
                 default:
-                    response = Result<object>.Failure(CultureInfo.CurrentUICulture.Name == "en" ? "An unexpected error occurred." : "حدث خطأ غير متوقع.");
+                    response = Result<object>.Failure(_localizationService.Get("UnexpectedError"));
                     break;
             }
 

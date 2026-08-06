@@ -1,4 +1,6 @@
 ﻿{
-  "FailedToCreateProduct": "فشل إنشاء المنتج.",
+  "FailedToCreate": "حدث خطأ ما أثناء الإضافة",
+  "FailedToUpdate": "حدث خطأ ما أثناء التعديل.",
+  "FailedToDelete": "حدث خطأ ما أثناء الحذف.",
   "UnexpectedError": "حدث خطأ غير متوقع."
 }
