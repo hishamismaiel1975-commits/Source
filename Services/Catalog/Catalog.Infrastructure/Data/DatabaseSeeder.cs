@@ -1,6 +1,6 @@
-﻿using Catalog.Core.Entities;
+﻿using Catalog.Core.Persistence.MongoDB.Entities;
 using Microsoft.Extensions.Options;
-using Platform.Infrastructure.MongoDB.Settings;
+using Platform.Infrastructure.Persistence.MongoDB.Settings;
 using System.Text.Json;
 
 namespace Catalog.Infrastructure.Data

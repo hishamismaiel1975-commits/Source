@@ -1,4 +1,4 @@
-﻿using Catalog.Core.Entities;
+﻿using Catalog.Core.Persistence.MongoDB.Entities;
 
 namespace Catalog.Application.Products.Responses
 {

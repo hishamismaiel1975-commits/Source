@@ -4,7 +4,7 @@ using Catalog.Core.Specifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
-using Platform.Core.Pagination;
+using Platform.Core.Models;
 using ProductApp = Catalog.Application.Products;
 
 

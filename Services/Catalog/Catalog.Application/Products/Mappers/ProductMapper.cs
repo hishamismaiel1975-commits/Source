@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Entities;
-using Platform.Core.Pagination;
+using Catalog.Core.Persistence.MongoDB.Entities;
+using Platform.Core.Models;
 using Riok.Mapperly.Abstractions;
 
 

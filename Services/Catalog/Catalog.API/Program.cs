@@ -1,7 +1,7 @@
 using Catalog.Application.Brands.Handlers;
-using Catalog.Core.Repositories;
+using Catalog.Core.Persistence.MongoDB.Repositories;
 using Catalog.Infrastructure.Data;
-using Catalog.Infrastructure.Repositories;
+using Catalog.Infrastructure.Persistence.MongoDB.Repositories;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using MongoDB.Bson;
@@ -9,9 +9,9 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Platform.API.Extensions;
-using Platform.Core.Localization;
-using Platform.Infrastructure.Localization;
-using Platform.Infrastructure.MongoDB.Settings;
+using Platform.Core.Services.Localization;
+using Platform.Infrastructure.Persistence.MongoDB.Settings;
+using Platform.Infrastructure.Services.Localization;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

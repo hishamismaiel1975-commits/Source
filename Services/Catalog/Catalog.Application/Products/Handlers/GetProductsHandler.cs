@@ -1,9 +1,9 @@
 ﻿using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Repositories;
+using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
-using Platform.Core.Pagination;
+using Platform.Core.Models;
 
 namespace Catalog.Application.Products.Handlers
 {

@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Types.Mappers;
 using Catalog.Application.Types.Queries;
 using Catalog.Application.Types.Responses;
-using Catalog.Core.Repositories;
+using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
 
 namespace Catalog.Application.Types.Handlers

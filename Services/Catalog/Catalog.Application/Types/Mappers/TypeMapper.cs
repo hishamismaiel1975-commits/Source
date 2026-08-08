@@ -1,5 +1,5 @@
 ﻿using Catalog.Application.Types.Responses;
-using Catalog.Core.Entities;
+using Catalog.Core.Persistence.MongoDB.Entities;
 using Riok.Mapperly.Abstractions;
 
 namespace Catalog.Application.Types.Mappers
