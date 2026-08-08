@@ -46,10 +46,7 @@ namespace Platform.API.Extensions
             {
                 configuration
                     .MinimumLevel.Information()
-                    .WriteTo.Console()
-                    .WriteTo.File(
-                        Path.Combine(AppContext.BaseDirectory, "logs", "app-.log"),
-                        rollingInterval: RollingInterval.Day);
+                    .WriteTo.Console();
             });
 
             //Add Swagger services with API versioning support

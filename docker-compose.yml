@@ -19,12 +19,11 @@ services:
       - "DatabaseSettings__ProductCollectionName=Products"
       - "DatabaseSettings__BrandCollectionName=Brands"
       - "DatabaseSettings__TypeCollectionName=Types"
-    volumes:
-      - catalog_logs:/app/logs
-    
-
+       
 volumes:
-  catalog_logs:  
   mongo_data:
   
+  
+
+
   
