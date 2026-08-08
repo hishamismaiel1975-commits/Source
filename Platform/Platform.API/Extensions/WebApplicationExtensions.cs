@@ -1,15 +1,18 @@
 ﻿using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi;
 using Platform.API.Exceptions;
 using Serilog;
+using System.Reflection;
 
 namespace Platform.API.Extensions
 {
     public static class WebApplicationExtensions
     {
-        public static WebApplicationBuilder AddPlatform(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder)
         {
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -46,6 +49,34 @@ namespace Platform.API.Extensions
                         rollingInterval: RollingInterval.Day);
             });
 
+            //Add Swagger services with API versioning support
+            builder.Services.AddSwaggerGen(options =>
+            {
+                using var serviceProvider = builder.Services.BuildServiceProvider();
+
+                var provider = serviceProvider
+                    .GetRequiredService<IApiVersionDescriptionProvider>();
+
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    options.SwaggerDoc(
+                        description.GroupName,
+                        new OpenApiInfo
+                        {
+                            Title = typeof(TProgram).Assembly.GetName().Name,
+                            Version = description.ApiVersion.ToString()
+                        });
+                }
+            });
+
+            //Register Mediatr
+            var assemblies = new Assembly[]
+                {
+                     Assembly.GetExecutingAssembly(),
+                     typeof(TMediatr).Assembly
+                };
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+
             // Add services to the container.
             builder.Services.AddControllers();
 
@@ -53,19 +84,32 @@ namespace Platform.API.Extensions
         }
 
         // Configure the HTTP request pipeline.
-        public static WebApplication UsePlatform(this WebApplication app)
+        public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
             app.UseSerilogRequestLogging();
 
             // Enable Swagger
+            var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
             if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
             {
                 app.MapOpenApi();
                 app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    var apiName = typeof(TProgram).Assembly.GetName().Name;
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            $"{apiName} {description.GroupName.ToUpperInvariant()}");
+                    }
+                });
             }
 
             app.UseAuthorization();
             app.UseExceptionHandler();
+
+
             app.MapControllers();
 
             return app;
