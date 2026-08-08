@@ -1,6 +1,7 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
+using Platform.Core.Exceptions;
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -17,7 +18,8 @@ namespace Catalog.Application.Products.Handlers
             var status = await _productRepository.DeleteAsync(request.Id);
             if (!status)
             {
-                throw new ApplicationException("FailedToDeleteProduct");
+                AppException.Throw("FailedToDeleteProduct", $"Failed to delete product with id {request.Id}.");
+
             }
         }
     }

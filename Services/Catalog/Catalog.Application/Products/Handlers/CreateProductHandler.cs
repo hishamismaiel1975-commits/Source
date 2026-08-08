@@ -3,6 +3,7 @@ using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
+using Platform.Core.Exceptions;
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -26,7 +27,7 @@ namespace Catalog.Application.Products.Handlers
 
             if (brand == null || type == null)
             {
-                throw new ApplicationException("InvalidBrandOrType");
+                AppException.Throw("InvalidBrandOrType", $"Invalid Brand Or Type with id {request.BrandId} or {request.TypeId}");
             }
 
             //Match to Entity
@@ -34,7 +35,7 @@ namespace Catalog.Application.Products.Handlers
             var newProduct = await _productRepository.CreateAsync(product);
             if (newProduct == null)
             {
-                throw new ApplicationException("FailedToCreate", new Exception("Failed to create product."));
+                AppException.Throw("FailedToCreate", $"Failed to create product {request.Name}.");
             }
             return ProductMapper.ToResponse(newProduct);
         }

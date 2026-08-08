@@ -3,6 +3,7 @@ using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
+using Platform.Core.Exceptions;
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -19,7 +20,7 @@ namespace Catalog.Application.Products.Handlers
             var product = await _productRepository.GetByIdAsync(request.Id);
             if (product == null)
             {
-                throw new ApplicationException("ProductNotFound");
+                AppException.Throw("ProductNotFound", $"Product with id {request.Id} not found.");
             }
 
             return ProductMapper.ToResponse(product);

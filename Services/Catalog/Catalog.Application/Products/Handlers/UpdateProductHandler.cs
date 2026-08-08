@@ -2,6 +2,7 @@
 using Catalog.Application.Products.Mappers;
 using Catalog.Core.Persistence.MongoDB.Repositories;
 using MediatR;
+using Platform.Core.Exceptions;
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -22,14 +23,14 @@ namespace Catalog.Application.Products.Handlers
             var existing = await _productRepository.GetByIdAsync(request.Id);
             if (existing == null)
             {
-                throw new ApplicationException("ProductNotFound");
+                AppException.Throw("ProductNotFound", $"Product with id {request.Id} not found.");
             }
             //Step 1: Fetch Brand and Type
             var brand = await _brandRepository.GetByIdAsync(request.BrandId);
             var type = await _typeRepository.GetByIdAsync(request.TypeId);
             if (brand == null || type == null)
             {
-                throw new ApplicationException("InvalidBrandOrType");
+                AppException.Throw("InvalidBrandOrType", $"Invalid Brand Or Type with id {request.BrandId} or {request.TypeId}");
             }
 
             //Step 2: Mapper Role
@@ -39,7 +40,7 @@ namespace Catalog.Application.Products.Handlers
             var status = await _productRepository.UpdateAsync(updatedProduct);
             if (!status)
             {
-                throw new ApplicationException("FailedToUpdate", new Exception($"Failed to update product with id {request.Id}"));
+                AppException.Throw("FailedToUpdate", $"Failed to update product with id {request.Id}");
             }
 
         }
