@@ -2,6 +2,7 @@
   "FailedToCreate": "An error occurred while adding the item.",
   "FailedToUpdate": "An error occurred while updating the item.",
   "FailedToDelete": "An error occurred while deleting the item.",
+  "InvalidBrandOrType": "Invalid Brand Or Type.",
   "UnexpectedError": "An unexpected error occurred."
 
 }

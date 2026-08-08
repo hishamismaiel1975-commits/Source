@@ -1,4 +1,5 @@
 ﻿using Catalog.Core.Persistence.MongoDB.Entities;
+using Catalog.Infrastructure.Persistence.MongoDB.Repositories;
 using Microsoft.Extensions.Options;
 using Platform.Infrastructure.Persistence.MongoDB.Settings;
 using System.Text.Json;
@@ -9,9 +10,9 @@ namespace Catalog.Infrastructure.Data
     {
         public static async Task SeedAsync(IOptions<DatabaseSettings> options)
         {
-            var _brandRepository = new Repositories.BrandRepository(options);
-            var _typeRepository = new Repositories.TypeRepository(options);
-            var _productRepository = new Repositories.ProductRepository(options);
+            var _brandRepository = new BrandRepository(options);
+            var _typeRepository = new TypeRepository(options);
+            var _productRepository = new ProductRepository(options);
 
             var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedData");
 

@@ -2,5 +2,6 @@
   "FailedToCreate": "حدث خطأ أثناء إنشاء العنصر.",
   "FailedToUpdate": "حدث خطأ أثناء تحديث العنصر.",
   "FailedToDelete": "حدث خطأ أثناء حذف العنصر.",
+  "InvalidBrandOrType": "العلامة التجارية أو النوع غير صالح.",
   "UnexpectedError": "حدث خطأ غير متوقع."
 }
