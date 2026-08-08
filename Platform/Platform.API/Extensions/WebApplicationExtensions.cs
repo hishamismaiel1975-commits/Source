@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Serilog;
 using System.Reflection;
@@ -67,6 +70,28 @@ namespace Platform.API.Extensions
                             Version = description.ApiVersion.ToString()
                         });
                 }
+            });
+
+            //Add OpenTelemetry services
+            builder.Services.AddOpenTelemetry()
+             .ConfigureResource(resource =>
+             {
+                 resource.AddService(
+                typeof(TProgram).Assembly.GetName().Name!);
+             })
+            .WithTracing(tracing =>
+            {
+                tracing
+                .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation();
+                //  .AddOtlpExporter();
+            })
+            .WithMetrics(metrics =>
+            {
+                metrics
+                .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation();
+                //  .AddOtlpExporter();
             });
 
             //Register Mediatr
