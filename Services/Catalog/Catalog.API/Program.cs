@@ -16,11 +16,8 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add Observability Serilog & OpenTelemetry
-builder.AddObservability();
-
-// Add Common Services
-builder.Services.AddPlatformServices();
+// Add Platform Services
+builder.AddPlatform();
 
 //Register custom Serializers
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
@@ -34,14 +31,6 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Catalog API",
         Version = "v1"
     });
-
-    //options.SwaggerDoc("v2", new OpenApiInfo
-    //{
-    //    Title = "Catalog API",
-    //    Version = "v2"
-    //});
-
-
 });
 
 //Register Mediatr
@@ -90,7 +79,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog API V1");
-        //options.SwaggerEndpoint("/swagger/v2/swagger.json", "Catalog API V2");
     });
 }
 
