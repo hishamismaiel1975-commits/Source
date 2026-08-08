@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Platform.API.Extensions
 {
@@ -18,6 +19,7 @@ namespace Platform.API.Extensions
 
             app.UseAuthorization();
             app.UseExceptionHandler();
+            app.UseSerilogRequestLogging();
             app.MapControllers();
 
 

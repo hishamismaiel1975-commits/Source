@@ -16,9 +16,11 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Observability Serilog & OpenTelemetry
+builder.AddObservability();
+
 // Add Common Services
 builder.Services.AddPlatformServices();
-
 
 //Register custom Serializers
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
