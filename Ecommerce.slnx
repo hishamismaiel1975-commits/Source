@@ -1,5 +1,9 @@
 <Solution>
   <Folder Name="/ApiGateway/" />
+  <Folder Name="/Infrastructure/" />
+  <Folder Name="/Infrastructure/Portainer/">
+    <File Path="Infrastructure/Portainer/docker-compose.yml" />
+  </Folder>
   <Folder Name="/Platform/">
     <Project Path="Platform/Platform.API/Platform.API.csproj" Id="c614c9fd-7934-4af6-9ec2-a572fa298e81" />
     <Project Path="Platform/Platform.Core/Platform.Core.csproj" Id="80c660d7-6c49-4318-8cf1-c8b070169fac" />
