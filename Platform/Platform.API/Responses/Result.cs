@@ -4,6 +4,7 @@
     {
         public bool IsSuccess { get; init; }
         public string? ErrorMessage { get; init; }
+        public IList<string>? ErrorMessages { get; init; }
         public T? data { get; init; }
 
         public static Result<T> Success(T value)
@@ -29,6 +30,15 @@
             {
                 IsSuccess = false,
                 ErrorMessage = error
+            };
+        }
+
+        public static Result<T> Failure(IList<string> errors)
+        {
+            return new Result<T>
+            {
+                IsSuccess = false,
+                ErrorMessages = errors
             };
         }
 

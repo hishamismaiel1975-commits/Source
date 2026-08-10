@@ -1,47 +1,43 @@
 ﻿using Catalog.Application.Products.Commands;
 using FluentValidation;
-using Platform.Core.Services.Localization;
 
 public class CreateProductCommandValidator
     : AbstractValidator<CreateProductCommand>
 {
-    private readonly ILocalizationService _localizationService;
-
     public CreateProductCommandValidator(
-        ILocalizationService localizationService)
+        )
     {
-        _localizationService = localizationService;
 
         RuleFor(x => x.Name)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductNameRequired"))
+            .WithMessage("ProductNameRequired")
             .MaximumLength(200)
-            .WithMessage(_localizationService.Get("ProductNameMaxLength"));
+            .WithMessage("ProductNameMaxLength");
 
         RuleFor(x => x.Summary)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductSummaryRequired"))
+            .WithMessage("ProductSummaryRequired")
             .MaximumLength(500)
-            .WithMessage(_localizationService.Get("ProductSummaryMaxLength"));
+            .WithMessage("ProductSummaryMaxLength");
 
         RuleFor(x => x.Description)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductDescriptionRequired"));
+            .WithMessage("ProductDescriptionRequired");
 
         RuleFor(x => x.ImageFile)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductImageFileRequired"));
+            .WithMessage("ProductImageFileRequired");
 
         RuleFor(x => x.BrandId)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductBrandIdRequired"));
+            .WithMessage("ProductBrandIdRequired");
 
         RuleFor(x => x.TypeId)
             .NotEmpty()
-            .WithMessage(_localizationService.Get("ProductTypeIdRequired"));
+            .WithMessage("ProductTypeIdRequired");
 
         RuleFor(x => x.Price)
             .GreaterThan(0)
-            .WithMessage(_localizationService.Get("ProductPricePositive"));
+            .WithMessage("ProductPricePositive");
     }
 }

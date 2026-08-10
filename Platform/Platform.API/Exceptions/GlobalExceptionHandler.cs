@@ -32,7 +32,7 @@ namespace Platform.API.Exceptions
             {
                 case ValidationException ex:
                     {
-                        var errors = string.Join(" ", ex.Errors.Select(x => x.ErrorMessage));
+                        var errors = ex.Errors.Select(x => _localizationService.Get(x.ErrorMessage)).ToList();
                         response = Result<object>.Failure(errors);
                         break;
                     }
