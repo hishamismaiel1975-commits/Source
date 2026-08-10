@@ -3,6 +3,16 @@
   "FailedToUpdate": "An error occurred while updating the item.",
   "FailedToDelete": "An error occurred while deleting the item.",
   "InvalidBrandOrType": "Invalid Brand Or Type.",
-  "UnexpectedError": "An unexpected error occurred."
-
+  "UnexpectedError": "An unexpected error occurred.",
+  "ProductIdRequired": "Product ID is required.",
+  "ProductNameRequired": "Product name is required.",
+  "ProductNameMaxLength": "Product name cannot exceed 200 characters.",
+  "ProductSummaryRequired": "Product summary is required.",
+  "ProductSummaryMaxLength": "Product summary cannot exceed 500 characters.",
+  "ProductDescriptionRequired": "Product description is required.",
+  "ProductImageFileRequired": "Product image file is required.",
+  "ProductBrandIdRequired": "Product brand ID is required.",
+  "ProductTypeIdRequired": "Product type ID is required.",
+  "ProductPriceRequired": "Product price is required.",
+  "ProductPricePositive": "Product price must be greater than zero."
 }

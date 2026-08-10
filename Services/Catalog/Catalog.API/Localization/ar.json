@@ -3,5 +3,16 @@
   "FailedToUpdate": "حدث خطأ أثناء تحديث العنصر.",
   "FailedToDelete": "حدث خطأ أثناء حذف العنصر.",
   "InvalidBrandOrType": "العلامة التجارية أو النوع غير صالح.",
-  "UnexpectedError": "حدث خطأ غير متوقع."
+  "UnexpectedError": "حدث خطأ غير متوقع.",
+  "ProductIdRequired": "معرف المنتج مطلوب.",
+  "ProductNameRequired": "اسم المنتج مطلوب.",
+  "ProductNameMaxLength": "اسم المنتج يجب ألا يتجاوز 200 حرف.",
+  "ProductSummaryRequired": "ملخص المنتج مطلوب.",
+  "ProductSummaryMaxLength": "ملخص المنتج يجب ألا يتجاوز 500 حرف.",
+  "ProductDescriptionRequired": "وصف المنتج مطلوب.",
+  "ProductImageFileRequired": "صورة المنتج مطلوبة.",
+  "ProductBrandIdRequired": "معرف العلامة التجارية مطلوب.",
+  "ProductTypeIdRequired": "معرف نوع المنتج مطلوب.",
+  "ProductPriceRequired": "سعر المنتج مطلوب.",
+  "ProductPricePositive": "سعر المنتج يجب أن يكون أكبر من صفر."
 }

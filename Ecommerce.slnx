@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/Platform/">
     <Project Path="Platform/Platform.API/Platform.API.csproj" Id="c614c9fd-7934-4af6-9ec2-a572fa298e81" />
+    <Project Path="Platform/Platform.Application/Platform.Application.csproj" Id="efcfb271-dd50-4d14-9c7a-103faf706ae7" />
     <Project Path="Platform/Platform.Core/Platform.Core.csproj" Id="80c660d7-6c49-4318-8cf1-c8b070169fac" />
     <Project Path="Platform/Platform.Infrastructure/Platform.Infrastructure.csproj" Id="8cbb6211-5ed7-4157-b5ad-0ca5b805f911" />
   </Folder>

@@ -1,6 +1,9 @@
 ﻿using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
@@ -8,6 +11,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
+using Platform.Application.Behaviors;
 using Serilog;
 using System.Reflection;
 
@@ -20,6 +24,12 @@ namespace Platform.API.Extensions
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
+
+            //Stop auto model validation to enable mediator validation
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -98,6 +108,9 @@ namespace Platform.API.Extensions
                      typeof(TMediatr).Assembly
                 };
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+            builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -130,7 +143,6 @@ namespace Platform.API.Extensions
 
             app.UseAuthorization();
             app.UseExceptionHandler();
-
 
             app.MapControllers();
 

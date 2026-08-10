@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Platform.API.Responses;
@@ -29,6 +30,14 @@ namespace Platform.API.Exceptions
             Result<object> response;
             switch (exception)
             {
+                case ValidationException ex:
+                    {
+                        var errors = string.Join(" ", ex.Errors.Select(x => x.ErrorMessage));
+                        response = Result<object>.Failure(errors);
+                        break;
+                    }
+
+
                 case ApplicationException ex:
 
                     response = Result<object>.Failure(_localizationService.Get(ex.Message));

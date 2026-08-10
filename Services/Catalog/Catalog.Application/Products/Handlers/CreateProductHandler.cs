@@ -21,7 +21,6 @@ namespace Catalog.Application.Products.Handlers
         }
         public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            AppException.Throw("FailedToCreate", $"Failed to create product {request.Name}.");
             //Fetch Brand and Type from Repository
             var brand = await _brandRepository.GetByIdAsync(request.BrandId);
             var type = await _typeRepository.GetByIdAsync(request.TypeId);
