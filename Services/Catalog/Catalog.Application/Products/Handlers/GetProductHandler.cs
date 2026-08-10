@@ -7,15 +7,15 @@ using Platform.Core.Exceptions;
 
 namespace Catalog.Application.Products.Handlers
 {
-    public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponse>
+    public class GetProductHandler : IRequestHandler<GetProductQuery, ProductResponse>
     {
         private readonly IProductRepository _productRepository;
 
-        public GetProductByIdHandler(IProductRepository productRepository)
+        public GetProductHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
-        public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ProductResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(request.Id);
             if (product == null)
