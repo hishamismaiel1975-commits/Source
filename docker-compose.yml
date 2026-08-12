@@ -6,22 +6,26 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
     depends_on:
-      - catalogmongodb 
+      - mongodb 
     environment:
       - ASPNETCORE_HTTP_PORTS=80
       - "DatabaseSettings__DatabaseName=CatalogDb"
-      - "DatabaseSettings__ProductCollectionName=Products"
-      - "DatabaseSettings__BrandCollectionName=Brands"
-      - "DatabaseSettings__TypeCollectionName=Types"
 
-  catalogmongodb:
+  mongodb:
    image: mongo
    restart: always
    volumes:
      - mongo_data:/data/db
-       
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    volumes:
+      - sqlserver_data:/var/opt/mssql     
+
 volumes:
   mongo_data:
+  sqlserver_data:
   
   
 
