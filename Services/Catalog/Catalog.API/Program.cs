@@ -9,7 +9,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Platform.API.Extensions;
 using Platform.Core.Services.Localization;
-using Platform.Infrastructure.Persistence.MongoDB.Settings;
+using Platform.Infrastructure.Persistence.Settings;
 using Platform.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);

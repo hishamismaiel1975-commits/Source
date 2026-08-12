@@ -1,17 +1,17 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Platform.Core.Models;
-using Platform.Core.Persistence.MongoDB.Entities;
-using Platform.Core.Persistence.MongoDB.Repositories;
-using Platform.Infrastructure.Persistence.MongoDB.Settings;
+using Platform.Core.Persistence.Entities;
+using Platform.Core.Persistence.Repositories;
+using Platform.Infrastructure.Persistence.Settings;
 using System.Linq.Expressions;
 
-namespace Platform.Infrastructure.Persistence.MongoDB.Repositories
+namespace Platform.Infrastructure.Persistence.Repositories
 {
-    public abstract class Repository<T> : IRepository<T> where T : Entity
+    public abstract class MongoRepository<T> : IMongoRepository<T> where T : MongoEntity
     {
         protected readonly IMongoCollection<T> _collection;
-        public Repository(IOptions<DatabaseSettings> options)
+        public MongoRepository(IOptions<DatabaseSettings> options)
         {
             var client = new MongoClient(options.Value.ConnectionString);
             var db = client.GetDatabase(options.Value.DatabaseName);

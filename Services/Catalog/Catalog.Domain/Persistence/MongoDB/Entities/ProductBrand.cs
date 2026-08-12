@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using Platform.Core.Persistence.MongoDB.Entities;
+using Platform.Core.Persistence.Entities;
 
 namespace Catalog.Core.Persistence.MongoDB.Entities
 {
-    public class ProductBrand : Entity
+    public class ProductBrand : MongoEntity
     {
         [BsonElement("Name")]
         public required string Name { get; set; }

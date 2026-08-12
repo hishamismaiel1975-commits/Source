@@ -6,7 +6,8 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Platform.Core.Models;
 using Platform.Infrastructure.Persistence.MongoDB.Repositories;
-using Platform.Infrastructure.Persistence.MongoDB.Settings;
+using Platform.Infrastructure.Persistence.Repositories;
+using Platform.Infrastructure.Persistence.Settings;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 

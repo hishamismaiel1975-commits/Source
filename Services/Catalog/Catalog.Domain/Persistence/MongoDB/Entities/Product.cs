@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Platform.Core.Persistence.MongoDB.Entities;
+using Platform.Core.Persistence.Entities;
 
 namespace Catalog.Core.Persistence.MongoDB.Entities
 {
-    public class Product : Entity
+    public class Product : MongoEntity
     {
         public required string Name { get; set; }
         public required string Summary { get; set; }
