@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Platform.Core.Models;
-using Platform.Infrastructure.Persistence.MongoDB.Repositories;
 using Platform.Infrastructure.Persistence.Repositories;
 using Platform.Infrastructure.Persistence.Settings;
 using System.Linq.Expressions;
@@ -13,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace Catalog.Infrastructure.Persistence.MongoDB.Repositories
 {
-    public class ProductRepository : Repository<Product>, IProductRepository
+    public class ProductRepository : MongoRepository<Product>, IProductRepository
     {
         public ProductRepository(IOptions<DatabaseSettings> options) : base(options)
         {

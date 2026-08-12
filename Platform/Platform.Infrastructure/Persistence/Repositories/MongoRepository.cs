@@ -40,7 +40,6 @@ namespace Platform.Infrastructure.Persistence.Repositories
             await _collection.InsertManyAsync(entities);
             return entities;
         }
-
         public async Task<bool> UpdateAsync(T entity)
         {
             var result = await _collection.ReplaceOneAsync(x => x.Id == entity.Id, entity);
@@ -51,7 +50,6 @@ namespace Platform.Infrastructure.Persistence.Repositories
             var result = await _collection.DeleteOneAsync(x => x.Id == id);
             return result.IsAcknowledged && result.DeletedCount > 0;
         }
-
         public async Task<Pagination<T>> ApplyDataFilters(FilterDefinition<T> filter, Dictionary<string, Expression<Func<T, object>>> sortMap, string sort
             , int pageIndex, int pageSize)
         {
@@ -82,7 +80,6 @@ namespace Platform.Infrastructure.Persistence.Repositories
                 .ToListAsync()
             };
         }
-
         public async Task<int> CountAsync()
         {
             return (int)await _collection.CountDocumentsAsync(_ => true);
