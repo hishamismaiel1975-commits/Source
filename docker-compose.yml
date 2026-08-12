@@ -1,10 +1,4 @@
 services:
-  catalogdb:
-   image: mongo
-   restart: always
-   volumes:
-     - mongo_data:/data/db
-
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     restart: always
@@ -12,13 +6,19 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
     depends_on:
-      - catalogdb 
+      - catalogmongodb 
     environment:
       - ASPNETCORE_HTTP_PORTS=80
       - "DatabaseSettings__DatabaseName=CatalogDb"
       - "DatabaseSettings__ProductCollectionName=Products"
       - "DatabaseSettings__BrandCollectionName=Brands"
       - "DatabaseSettings__TypeCollectionName=Types"
+
+  catalogmongodb:
+   image: mongo
+   restart: always
+   volumes:
+     - mongo_data:/data/db
        
 volumes:
   mongo_data:

@@ -1,16 +1,18 @@
 services:
-  catalogdb:
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development     
+      - "DatabaseSettings__ConnectionString=mongodb://admin1234567890@catalogmongodb:27017/?authSource=admin&ssl=false"
+    ports:
+      - "8081:80"
+
+  catalogmongodb:
     ports:
       - "2001:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: 123
+      MONGO_INITDB_ROOT_PASSWORD: admin1234567890
   
-  catalog.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development     
-      - "DatabaseSettings__ConnectionString=mongodb://admin:123@catalogdb:27017/?authSource=admin&ssl=false"
-    ports:
-      - "8081:80"
+  
     
     
