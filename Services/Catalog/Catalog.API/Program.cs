@@ -23,9 +23,14 @@ BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String))
 
 //Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
+builder.Services.AddScoped(typeof(IRedisRepository<>), typeof(RedisRepository<>));
+
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ITypeRepository, TypeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+
 
 // Bind strongly-typed settings
 builder.Services.Configure<DatabaseSettings>(
@@ -36,6 +41,13 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
+});
+
+//Add Redis Cache
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        builder.Configuration["Redis:ConnectionString"];
 });
 
 var app = builder.Build();

@@ -7,6 +7,7 @@ services:
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
     depends_on:
       - mongodb 
+      - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
       - "DatabaseSettings__DatabaseName=CatalogDb"
@@ -22,6 +23,10 @@ services:
     restart: always
     volumes:
       - sqlserver_data:/var/opt/mssql     
+  
+  redis:
+    image: redis:8
+    restart: always
 
 volumes:
   mongo_data:
