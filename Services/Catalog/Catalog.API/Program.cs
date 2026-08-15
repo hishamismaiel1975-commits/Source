@@ -30,13 +30,6 @@ BsonClassMap.RegisterClassMap<Entity>(map =>
        .SetSerializer(new GuidSerializer(BsonType.String));
 });
 
-
-//Add Custom Services
-builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
-builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
-
-
 // Bind strongly-typed settings
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("DatabaseSettings"));
@@ -47,6 +40,11 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
     var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
+
+//Add Custom Services
+builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 //Add Redis Cache
 builder.Services.AddStackExchangeRedisCache(options =>

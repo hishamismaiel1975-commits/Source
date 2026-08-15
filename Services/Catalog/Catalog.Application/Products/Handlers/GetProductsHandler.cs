@@ -12,13 +12,13 @@ namespace Catalog.Application.Products.Handlers
     public class GetProductsHandler : IRequestHandler<GetProductsQuery, Pagination<ProductResponse>>
     {
         private readonly IRepository<Product> _productRepository;
-
         public GetProductsHandler(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }
         public async Task<Pagination<ProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
+
             var filters = new List<Expression<Func<Product, bool>>>();
 
             if (!string.IsNullOrWhiteSpace(request.ProductName))
@@ -44,7 +44,9 @@ namespace Catalog.Application.Products.Handlers
                 ["type"] = x => x.Type.Name
             };
 
-            var products = await _productRepository.GetPagedAsync(filters, request.SortBy, sortMap, request.PageIndex, request.PageSize);
+
+
+            var products = await _productRepository.GetPagedAsync(filters, null, request.SortBy, sortMap, request.PageIndex, request.PageSize);
             return ProductMapper.ToResponse(products);
         }
     }

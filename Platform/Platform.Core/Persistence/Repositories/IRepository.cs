@@ -15,8 +15,9 @@ public interface IRepository<T>
     Task<int> CountAsync();
 
     //sortBy desc when starts with '-' and asc when not, sortMap is a dictionary that maps the sortBy string to the corresponding expression
-    Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
-                                      int? pageIndex, int? pageSize);
+    Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, IEnumerable<IncludeDefinition>? includes,
+     string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
+     int? pageIndex, int? pageSize);
 
     // Command
     Task CreateAsync(T entity);
@@ -28,5 +29,4 @@ public interface IRepository<T>
     Task DeleteAsync(T entity);
     Task DeleteManyAsync(IEnumerable<T> entities);
     Task DeleteByIdAsync(Guid id);
-
 }

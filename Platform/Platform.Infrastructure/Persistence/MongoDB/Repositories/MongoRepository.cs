@@ -1,7 +1,10 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Entities;
 using Platform.Core.Persistence.Repositories;
+using Platform.Infrastructure.Persistence.MongoDB.Settings;
 using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.MongoDB.Repositories;
@@ -11,9 +14,10 @@ public class MongoRepository<T> : IRepository<T>
 {
     private readonly IMongoCollection<T> _collection;
 
-    public MongoRepository(IMongoDatabase database)
+    public MongoRepository(IMongoClient client, IOptions<MongoDbSettings> options)
     {
-        _collection = database.GetCollection<T>(typeof(T).Name);
+        var database = client.GetDatabase(options.Value.DatabaseName);
+        _collection = database.GetCollection<T>($"{typeof(T).Name}s");
     }
 
     // Query
@@ -55,9 +59,13 @@ public class MongoRepository<T> : IRepository<T>
     }
 
     //sortBy desc when starts with '-' and asc when not, sortMap is a dictionary that maps the sortBy string to the corresponding expression
-    public async Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
-                                                   int? pageIndex, int? pageSize)
+    public async Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, IEnumerable<IncludeDefinition>? includes,
+    string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
+    int? pageIndex, int? pageSize)
     {
+        var currentPage = pageIndex ?? 1;
+        var currentPageSize = pageSize ?? 10;
+
         var filterDef = Builders<T>.Filter.Empty;
 
         if (filters != null)
@@ -70,8 +78,32 @@ public class MongoRepository<T> : IRepository<T>
 
         var totalCount = await _collection.CountDocumentsAsync(filterDef);
 
-        var query = _collection.Find(filterDef);
+        var totalPages = (int)Math.Ceiling(
+            (double)totalCount / currentPageSize);
 
+        var query = _collection
+              .Aggregate()
+              .Match(filterDef);
+
+        // Includes need to test it
+        if (includes != null)
+        {
+            foreach (var include in includes)
+            {
+                var lookupStage = new BsonDocument("$lookup",
+                    new BsonDocument
+                    {
+                { "from", $"{include.ForeignEntity}s" },
+                { "localField", include.PrimaryField },
+                { "foreignField", "_id" },
+                { "as", include.ForeignEntity }
+                    });
+
+                query = query.AppendStage<T>(lookupStage);
+            }
+        }
+
+        // Sorting
         if (!string.IsNullOrWhiteSpace(sortBy))
         {
             var descending = sortBy.StartsWith('-');
@@ -86,13 +118,14 @@ public class MongoRepository<T> : IRepository<T>
         }
 
         var data = await query
-            .Skip((pageIndex - 1) * pageSize)
-            .Limit(pageSize)
+            .Skip((currentPage - 1) * currentPageSize)
+            .Limit(currentPageSize)
             .ToListAsync();
 
         return new Pagination<T>(
-            pageIndex ?? 1,
-            pageSize ?? 10,
+            currentPage,
+            currentPageSize,
+            totalPages,
             (int)totalCount,
             data);
     }
@@ -146,6 +179,21 @@ public class MongoRepository<T> : IRepository<T>
     {
         await _collection.DeleteOneAsync(
             x => x.Id == id);
+    }
+
+    public async Task test(string foreignEntity, string primaryField)
+    {
+
+        var result = await _collection.Aggregate()
+                .Match(x => x.Id == new Guid("6f4c5131-4565-4e29-bb8e-c75c97e9b037"))
+                .Lookup($"{foreignEntity}s", primaryField, "_id", foreignEntity)
+                .FirstOrDefaultAsync();
+
+    }
+
+    public class ProductBrand : Entity
+    {
+        public required string Name { get; set; }
     }
 
 
