@@ -20,6 +20,8 @@ namespace Catalog.Application.Products.Handlers
         {
 
             var filters = new List<Expression<Func<Product, bool>>>();
+            var includes = new List<Type>();
+
 
             if (!string.IsNullOrWhiteSpace(request.ProductName))
                 filters.Add(x => x.Name.Contains(request.ProductName));
@@ -46,7 +48,7 @@ namespace Catalog.Application.Products.Handlers
 
 
 
-            var products = await _productRepository.GetPagedAsync(filters, null, request.SortBy, sortMap, request.PageIndex, request.PageSize);
+            var products = await _productRepository.GetPagedAsync(filters, includes, request.SortBy, sortMap, request.PageIndex, request.PageSize);
             return ProductMapper.ToResponse(products);
         }
     }

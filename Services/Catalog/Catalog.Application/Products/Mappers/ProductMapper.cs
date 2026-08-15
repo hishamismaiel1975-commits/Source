@@ -11,6 +11,7 @@ namespace Catalog.Application.Products.Mappers
     [Mapper]
     public static partial class ProductMapper
     {
+
         public static partial ProductResponse ToResponse(Product product);
         public static partial Pagination<ProductResponse> ToResponse(Pagination<Product> pagination);
         public static partial IList<ProductResponse> ToResponse(IEnumerable<Product> products);

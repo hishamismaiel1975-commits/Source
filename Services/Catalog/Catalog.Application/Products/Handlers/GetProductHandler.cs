@@ -19,7 +19,7 @@ namespace Catalog.Application.Products.Handlers
         {
             var product = await _productRepository.GetByIdAsync(request.Id);
             return ProductMapper.ToResponse(product);
-
         }
     }
+
 }

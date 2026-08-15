@@ -58,7 +58,7 @@ public class MongoRepository<T> : IRepository<T>
     }
 
     //sortBy desc when starts with '-' and asc when not, sortMap is a dictionary that maps the sortBy string to the corresponding expression
-    public async Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, IEnumerable<IncludeDefinition>? includes,
+    public async Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, IReadOnlyCollection<Type>? includes,
     string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
     int? pageIndex, int? pageSize)
     {
@@ -84,7 +84,7 @@ public class MongoRepository<T> : IRepository<T>
               .Aggregate()
               .Match(filterDef);
 
-        // Includes //need to test it
+        // Includes
         if (includes != null)
         {
             foreach (var include in includes)
@@ -92,13 +92,22 @@ public class MongoRepository<T> : IRepository<T>
                 var lookupStage = new BsonDocument("$lookup",
                     new BsonDocument
                     {
-                { "from", $"{include.ForeignEntity}s" },
-                { "localField", include.PrimaryField },
+                { "from", $"{include.Name}s" },
+                { "localField",$"{include.Name}Id" },
                 { "foreignField", "_id" },
-                { "as", $"{include.ForeignEntity}s" }
+                { "as", $"{include.Name}" }
                     });
 
                 query = query.AppendStage<T>(lookupStage);
+
+                var unwindStage = new BsonDocument("$unwind",
+                    new BsonDocument
+                    {
+                 { "path", $"${include.Name}" },
+                 { "preserveNullAndEmptyArrays", true }
+                    });
+
+                query = query.AppendStage<T>(unwindStage);
             }
         }
 
@@ -178,16 +187,6 @@ public class MongoRepository<T> : IRepository<T>
     {
         await _collection.DeleteOneAsync(
             x => x.Id == id);
-    }
-
-    public async Task test(string foreignEntity, string primaryField)
-    {
-
-        var result = await _collection.Aggregate()
-                .Match(x => x.Id == new Guid("6f4c5131-4565-4e29-bb8e-c75c97e9b037"))
-                .Lookup($"{foreignEntity}s", primaryField, "_id", foreignEntity)
-                .FirstOrDefaultAsync();
-
     }
 
     public class ProductBrand : Entity
