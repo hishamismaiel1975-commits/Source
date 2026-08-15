@@ -1,4 +1,4 @@
-﻿namespace Platform.Infrastructure.Persistence.MongoDB.Settings;
+﻿namespace Platform.Infrastructure.Persistence.MongoDB;
 
 public class MongoDbSettings
 {

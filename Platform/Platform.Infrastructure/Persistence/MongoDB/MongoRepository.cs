@@ -4,10 +4,9 @@ using MongoDB.Driver;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Entities;
 using Platform.Core.Persistence.Repositories;
-using Platform.Infrastructure.Persistence.MongoDB.Settings;
 using System.Linq.Expressions;
 
-namespace Platform.Infrastructure.Persistence.MongoDB.Repositories;
+namespace Platform.Infrastructure.Persistence.MongoDB;
 
 public class MongoRepository<T> : IRepository<T>
     where T : Entity
@@ -85,7 +84,7 @@ public class MongoRepository<T> : IRepository<T>
               .Aggregate()
               .Match(filterDef);
 
-        // Includes need to test it
+        // Includes //need to test it
         if (includes != null)
         {
             foreach (var include in includes)
