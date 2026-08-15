@@ -2,30 +2,31 @@
 using Platform.Core.Persistence.Entities;
 using System.Linq.Expressions;
 
-namespace Platform.Core.Persistence.Repositories
+namespace Platform.Core.Persistence.Repositories;
+
+public interface IRepository<T>
+    where T : Entity
 {
-    public interface IRepository<T> where T : Entity
-    {
-        // Query
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null);
-        Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
-        Task<T?> GetByIdAsync(Guid id);
-        Task<bool> ExistsAsync(Guid id);
-        Task<int> CountAsync();
+    // Query
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+    Task<T?> GetByIdAsync(Guid id);
+    Task<bool> ExistsAsync(Guid id);
+    Task<int> CountAsync();
 
-        // Command
-        void Create(T entity);
-        void CreateMany(IEnumerable<T> entities);
+    //sortBy desc when starts with '-' and asc when not, sortMap is a dictionary that maps the sortBy string to the corresponding expression
+    Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
+                                      int? pageIndex, int? pageSize);
 
-        void Update(T entity);
-        void UpdateMany(IEnumerable<T> entities);
+    // Command
+    Task CreateAsync(T entity);
+    Task CreateManyAsync(IEnumerable<T> entities);
 
-        void Delete(T entity);
-        void DeleteMany(IEnumerable<T> entities);
-        Task DeleteByIdAsync(Guid id);
+    Task UpdateAsync(T entity);
+    Task UpdateManyAsync(IEnumerable<T> entities);
 
-        // Sort & Filtering & Pagination
-        Task<Pagination<T>> ApplyDataFiltersAsync(IQueryable<T> filter, Dictionary<string, Expression<Func<T, object>>> sortMap, string sort, int pageIndex, int pageSize);
+    Task DeleteAsync(T entity);
+    Task DeleteManyAsync(IEnumerable<T> entities);
+    Task DeleteByIdAsync(Guid id);
 
-    }
 }

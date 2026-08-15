@@ -3,13 +3,13 @@
 namespace Catalog.Application.Products.Commands
 {
     public record UpdateProductCommand(
-    string Id,
+    Guid Id,
     string Name,
     string Summary,
     string Description,
     string ImageFile,
-    string BrandId,
-    string TypeId,
+    Guid BrandId,
+    Guid TypeId,
     decimal Price) : IRequest;
 
 }

@@ -1,15 +1,16 @@
 using Catalog.Application;
-using Catalog.Core.Persistence.MongoDB.Repositories;
 using Catalog.Infrastructure.Data;
-using Catalog.Infrastructure.Persistence.MongoDB.Repositories;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Platform.API.Extensions;
+using Platform.Core.Persistence.Entities;
+using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;
-using Platform.Infrastructure.Persistence.Settings;
+using Platform.Infrastructure.Persistence.MongoDB.Repositories;
+using Platform.Infrastructure.Persistence.MongoDB.Settings;
 using Platform.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,25 +22,29 @@ builder.AddPlatform<Program, Application>();
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
 
+//Register Primary Key for mongo entities
+BsonClassMap.RegisterClassMap<Entity>(map =>
+{
+    map.AutoMap();
+    map.MapIdMember(x => x.Id)
+       .SetSerializer(new GuidSerializer(BsonType.String));
+});
+
+
 //Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
-
-builder.Services.AddScoped(typeof(IRedisRepository<>), typeof(RedisRepository<>));
-
-builder.Services.AddScoped<IBrandRepository, BrandRepository>();
-builder.Services.AddScoped<ITypeRepository, TypeRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
+builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 
 // Bind strongly-typed settings
-builder.Services.Configure<DatabaseSettings>(
+builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("DatabaseSettings"));
 
 // Register MongoClient as singleton
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
-    var settings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
     return new MongoClient(settings.ConnectionString);
 });
 
@@ -55,8 +60,7 @@ var app = builder.Build();
 //Seed Mongo db on startup 
 using (var scope = app.Services.CreateScope())
 {
-    var options = scope.ServiceProvider.GetRequiredService<IOptions<DatabaseSettings>>();
-    await DatabaseSeeder.SeedAsync(options);
+    await DatabaseSeeder.SeedAsync(scope.ServiceProvider);
 }
 
 // Configure the HTTP request pipeline.

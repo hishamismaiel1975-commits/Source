@@ -1,18 +1,17 @@
 ﻿using Catalog.Core.Persistence.MongoDB.Entities;
-using Catalog.Infrastructure.Persistence.MongoDB.Repositories;
-using Microsoft.Extensions.Options;
-using Platform.Infrastructure.Persistence.Settings;
+using Microsoft.Extensions.DependencyInjection;
+using Platform.Core.Persistence.Repositories;
 using System.Text.Json;
 
 namespace Catalog.Infrastructure.Data
 {
     public class DatabaseSeeder
     {
-        public static async Task SeedAsync(IOptions<DatabaseSettings> options)
+        public static async Task SeedAsync(IServiceProvider services)
         {
-            var _brandRepository = new BrandRepository(options);
-            var _typeRepository = new TypeRepository(options);
-            var _productRepository = new ProductRepository(options);
+            var _brandRepository = services.GetRequiredService<IRepository<ProductBrand>>();
+            var _typeRepository = services.GetRequiredService<IRepository<ProductType>>();
+            var _productRepository = services.GetRequiredService<IRepository<Product>>();
 
             var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedData");
 
@@ -39,11 +38,8 @@ namespace Catalog.Infrastructure.Data
                 var list = JsonSerializer.Deserialize<List<Product>>(data) ?? new List<Product>();
                 foreach (var product in list)
                 {
-                    //Reset Id to let Mongo generate one
-                    product.Id = null;
-                    //Default Created Date if not set
-                    if (product.CreatedDate == default)
-                        product.CreatedDate = DateTime.UtcNow;
+                    //Set Created Date
+                    product.CreatedDate = DateTime.UtcNow;
                 }
                 await _productRepository.CreateManyAsync(list);
             }

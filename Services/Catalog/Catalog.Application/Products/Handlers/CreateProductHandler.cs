@@ -1,19 +1,20 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Persistence.MongoDB.Repositories;
+using Catalog.Core.Persistence.MongoDB.Entities;
 using MediatR;
 using Platform.Core.Exceptions;
+using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IBrandRepository _brandRepository;
-        private readonly ITypeRepository _typeRepository;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<ProductBrand> _brandRepository;
+        private readonly IRepository<ProductType> _typeRepository;
 
-        public CreateProductHandler(IProductRepository productRepository, IBrandRepository brandRepository, ITypeRepository typeRepository)
+        public CreateProductHandler(IRepository<Product> productRepository, IRepository<ProductBrand> brandRepository, IRepository<ProductType> typeRepository)
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
@@ -32,12 +33,8 @@ namespace Catalog.Application.Products.Handlers
 
             //Match to Entity
             var product = ProductMapper.ToEntity(request, brand, type, DateTimeOffset.UtcNow);
-            var newProduct = await _productRepository.CreateAsync(product);
-            if (newProduct == null)
-            {
-                AppException.Throw("FailedToCreate", $"Failed to create product {request.Name}.");
-            }
-            return ProductMapper.ToResponse(newProduct);
+            await _productRepository.CreateAsync(product);
+            return ProductMapper.ToResponse(product);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Platform.Core.Persistence.Repositories;
 using System.Text.Json;
 
-public class RedisRepository<T> : IRedisRepository<T>
+public class RedisRepository<T> : ICacheRepository<T>
     where T : class
 {
     private readonly IDistributedCache _cache;

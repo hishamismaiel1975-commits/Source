@@ -1,18 +1,19 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Mappers;
-using Catalog.Core.Persistence.MongoDB.Repositories;
+using Catalog.Core.Persistence.MongoDB.Entities;
 using MediatR;
 using Platform.Core.Exceptions;
+using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IBrandRepository _brandRepository;
-        private readonly ITypeRepository _typeRepository;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<ProductBrand> _brandRepository;
+        private readonly IRepository<ProductType> _typeRepository;
 
-        public UpdateProductHandler(IProductRepository productRepository, IBrandRepository brandRepository, ITypeRepository typeRepository)
+        public UpdateProductHandler(IRepository<Product> productRepository, IRepository<ProductBrand> brandRepository, IRepository<ProductType> typeRepository)
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
@@ -37,12 +38,7 @@ namespace Catalog.Application.Products.Handlers
             var updatedProduct = ProductMapper.ToEntity(request, brand, type, existing.CreatedDate);
 
             //Step 3: Save the record
-            var status = await _productRepository.UpdateAsync(updatedProduct);
-            if (!status)
-            {
-                AppException.Throw("FailedToUpdate", $"Failed to update product with id {request.Id}");
-            }
-
+            await _productRepository.UpdateAsync(updatedProduct);
         }
     }
 

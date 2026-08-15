@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Specifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
@@ -24,7 +23,7 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet("{id}")]
-        public async Task<Result<ProductResponse>> GetProductById(string id)
+        public async Task<Result<ProductResponse>> GetProductById(Guid id)
         {
             var query = new ProductsApp.Queries.GetProductQuery(id);
             var result = await _mediator.Send(query);
@@ -32,9 +31,17 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<Result<Pagination<ProductResponse>>> GetProducts([FromQuery] CatalogSpecParams specParams)
+        public async Task<Result<Pagination<ProductResponse>>> GetProducts(
+            string? ProductName,
+            string? BrandName,
+            string? TypeName,
+            Guid? BrandId,
+            Guid? TypeId,
+            string? SortBy,
+            int? PageIndex,
+            int? PageSize)
         {
-            var query = new ProductsApp.Queries.GetProductsQuery(specParams);
+            var query = new ProductsApp.Queries.GetProductsQuery(ProductName, BrandName, TypeName, BrandId, TypeId, SortBy, PageIndex, PageSize);
             var result = await _mediator.Send(query);
             return Result<Pagination<ProductResponse>>.Success(result);
         }
@@ -47,14 +54,14 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpPut("{id}")]
-        public async Task<Result<ProductResponse>> UpdateProduct(string id, UpdateProductCommand command)
+        public async Task<Result<ProductResponse>> UpdateProduct(Guid id, UpdateProductCommand command)
         {
             await _mediator.Send(command);
             return Result<ProductResponse>.Success();
         }
 
         [HttpDelete("{id}")]
-        public async Task<Result<ProductResponse>> DeleteProduct(string id)
+        public async Task<Result<ProductResponse>> DeleteProduct(Guid id)
         {
             var command = new ProductsApp.Commands.DeleteProductCommand(id);
             await _mediator.Send(command);

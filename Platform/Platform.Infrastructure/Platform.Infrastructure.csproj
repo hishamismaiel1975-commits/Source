@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Platform.Core\Platform.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\EFCore\" />
+  </ItemGroup>
+
 </Project>

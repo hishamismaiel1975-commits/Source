@@ -1,26 +1,21 @@
 ﻿using Catalog.Application.Products.Commands;
-using Catalog.Core.Persistence.MongoDB.Repositories;
+using Catalog.Core.Persistence.MongoDB.Entities;
 using MediatR;
-using Platform.Core.Exceptions;
+using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class DeleteProductHandler : IRequestHandler<DeleteProductCommand>
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public DeleteProductHandler(IProductRepository productRepository)
+        public DeleteProductHandler(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }
         public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var status = await _productRepository.DeleteAsync(request.Id);
-            if (!status)
-            {
-                AppException.Throw("FailedToDeleteProduct", $"Failed to delete product with id {request.Id}.");
-
-            }
+            await _productRepository.DeleteByIdAsync(request.Id);
         }
     }
 }
