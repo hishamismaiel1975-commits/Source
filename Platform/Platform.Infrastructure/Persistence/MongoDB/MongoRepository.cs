@@ -95,7 +95,7 @@ public class MongoRepository<T> : IRepository<T>
                 { "from", $"{include.ForeignEntity}s" },
                 { "localField", include.PrimaryField },
                 { "foreignField", "_id" },
-                { "as", include.ForeignEntity }
+                { "as", $"{include.ForeignEntity}s" }
                     });
 
                 query = query.AppendStage<T>(lookupStage);
