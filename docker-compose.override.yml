@@ -3,6 +3,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development     
       - "DatabaseSettings__ConnectionString=mongodb://admin:pass_123456789@mongodb:27017"
+      # - "DatabaseSettings__ConnectionString=Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
       - "Redis__ConnectionString=redis:6379"
    
     ports:
@@ -24,6 +25,5 @@ services:
 
 
 
-     # - "DatabaseSettings__ConnectionString=Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
     
     

@@ -6,12 +6,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Platform.Application.Behaviors;
+using Platform.Core.Persistence.Entities;
+using Platform.Infrastructure.Persistence.MongoDB;
 using Serilog;
 using System.Reflection;
 
@@ -147,6 +154,33 @@ namespace Platform.API.Extensions
             app.MapControllers();
 
             return app;
+        }
+
+        public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder)
+        {
+            //Register custom Serializers
+            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+            BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+
+            //Register Primary Key for mongo entities
+            BsonClassMap.RegisterClassMap<Entity>(map =>
+            {
+                map.AutoMap();
+                map.MapIdMember(x => x.Id)
+                   .SetSerializer(new GuidSerializer(BsonType.String));
+            });
+
+            // Bind strongly-typed settings
+            builder.Services.Configure<MongoDbSettings>(
+                builder.Configuration.GetSection("DatabaseSettings"));
+
+            // Register MongoClient as singleton
+            builder.Services.AddSingleton<IMongoClient>(sp =>
+            {
+                var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
+                return new MongoClient(settings.ConnectionString);
+            });
+            return builder;
         }
     }
 }
