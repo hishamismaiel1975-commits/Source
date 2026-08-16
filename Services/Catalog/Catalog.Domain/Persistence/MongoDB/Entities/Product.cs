@@ -16,8 +16,6 @@ namespace Catalog.Core.Persistence.MongoDB.Entities
         [BsonRepresentation(BsonType.Decimal128)]
         public required decimal Price { get; set; }
         public required DateTimeOffset CreatedDate { get; set; }
-        public Guid? BrandId { get; set; }
-        public Guid? TypeId { get; set; }
 
     }
 }

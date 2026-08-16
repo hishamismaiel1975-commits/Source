@@ -21,11 +21,8 @@ namespace Catalog.Application.Products.Handlers
 
             var filters = new List<Expression<Func<Product, bool>>>();
 
-            var includes = new List<Expression<Func<Product, object>>>
-            {
-                x => x.Brand,
-               x => x.Type
-            };
+            var includes = new List<Expression<Func<Product, object>>>();
+
 
             if (!string.IsNullOrWhiteSpace(request.ProductName))
                 filters.Add(x => x.Name.Contains(request.ProductName));

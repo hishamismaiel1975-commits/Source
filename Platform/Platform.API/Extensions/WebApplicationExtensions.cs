@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -18,7 +17,6 @@ using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Platform.Application.Behaviors;
 using Platform.Core.Persistence.Entities;
-using Platform.Infrastructure.Persistence.MongoDB;
 using Serilog;
 using System.Reflection;
 
@@ -124,8 +122,6 @@ namespace Platform.API.Extensions
 
             return builder;
         }
-
-        // Configure the HTTP request pipeline.
         public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
             app.UseSerilogRequestLogging();
@@ -155,7 +151,6 @@ namespace Platform.API.Extensions
 
             return app;
         }
-
         public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder)
         {
             //Register custom Serializers
@@ -170,16 +165,22 @@ namespace Platform.API.Extensions
                    .SetSerializer(new GuidSerializer(BsonType.String));
             });
 
-            // Bind strongly-typed settings
-            builder.Services.Configure<MongoDbSettings>(
-                builder.Configuration.GetSection("DatabaseSettings"));
-
             // Register MongoClient as singleton
-            builder.Services.AddSingleton<IMongoClient>(sp =>
+            builder.Services.AddSingleton<IMongoClient>(options =>
             {
-                var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
-                return new MongoClient(settings.ConnectionString);
+                return new MongoClient(builder.Configuration["MongoDbSettings:ConnectionString"]);
             });
+
+            return builder;
+        }
+        public static WebApplicationBuilder AddRedis(this WebApplicationBuilder builder)
+        {
+            // Add Redis Cache
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration["RedisSettings:ConnectionString"];
+            });
+
             return builder;
         }
     }

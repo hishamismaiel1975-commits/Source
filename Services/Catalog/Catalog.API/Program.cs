@@ -14,17 +14,14 @@ builder.AddPlatform<Program, Application>();
 //Add MongoDB Services
 builder.AddMongoDB();
 
+// Add Redis Cache
+builder.AddRedis();
+
 //Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
-//Add Redis Cache
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration =
-        builder.Configuration["Redis:ConnectionString"];
-});
 
 var app = builder.Build();
 

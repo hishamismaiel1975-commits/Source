@@ -10,10 +10,10 @@ services:
       - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
-      - "DatabaseSettings__DatabaseName=CatalogDb"
+      
 
   mongodb:
-   image: mongo
+   image: mongo:latest
    restart: always
    volumes:
      - mongo_data:/data/db
@@ -25,7 +25,7 @@ services:
       - sqlserver_data:/var/opt/mssql     
   
   redis:
-    image: redis:8
+    image: redis:latest
     restart: always
 
 volumes:

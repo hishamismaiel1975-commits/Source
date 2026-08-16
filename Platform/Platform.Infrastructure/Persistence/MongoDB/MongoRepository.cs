@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Platform.Core.Models;
@@ -12,9 +12,9 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
 {
     private readonly IMongoCollection<T> _collection;
 
-    public MongoRepository(IMongoClient client, IOptions<MongoDbSettings> options)
+    public MongoRepository(IMongoClient client, IConfiguration configuration)
     {
-        var database = client.GetDatabase(options.Value.DatabaseName);
+        var database = client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]);
         _collection = database.GetCollection<T>($"{typeof(T).Name}s");
     }
 

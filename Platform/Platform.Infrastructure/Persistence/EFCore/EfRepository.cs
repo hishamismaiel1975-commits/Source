@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.EFCore;
 
-public class EfRepository<T> : IRepository<T> where T : Entity
+public class EFRepository<T> : IRepository<T> where T : Entity
 {
     protected readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
 
-    public EfRepository(DbContext context)
+    public EFRepository(DbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();
@@ -128,33 +128,35 @@ public class EfRepository<T> : IRepository<T> where T : Entity
     // =========================================================
     public async Task CreateAsync(T entity)
     {
-        await _dbSet.AddAsync(entity);
+        _dbSet.Add(entity);
+        await _context.SaveChangesAsync();
     }
     public async Task CreateManyAsync(IEnumerable<T> entities)
     {
-        await _dbSet.AddRangeAsync(entities);
+        _dbSet.AddRange(entities);
+        await _context.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(T entity)
+    public async Task UpdateAsync(T entity)
     {
         _dbSet.Update(entity);
-        return Task.CompletedTask;
+        await _context.SaveChangesAsync();
     }
-    public Task UpdateManyAsync(IEnumerable<T> entities)
+    public async Task UpdateManyAsync(IEnumerable<T> entities)
     {
         _dbSet.UpdateRange(entities);
-        return Task.CompletedTask;
+        await _context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(T entity)
+    public async Task DeleteAsync(T entity)
     {
         _dbSet.Remove(entity);
-        return Task.CompletedTask;
+        await _context.SaveChangesAsync();
     }
-    public Task DeleteManyAsync(IEnumerable<T> entities)
+    public async Task DeleteManyAsync(IEnumerable<T> entities)
     {
         _dbSet.RemoveRange(entities);
-        return Task.CompletedTask;
+        await _context.SaveChangesAsync();
     }
     public async Task DeleteByIdAsync(Guid id)
     {
@@ -164,7 +166,9 @@ public class EfRepository<T> : IRepository<T> where T : Entity
         if (entity is not null)
         {
             _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
         }
+
     }
 
 
