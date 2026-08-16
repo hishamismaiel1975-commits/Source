@@ -9,8 +9,8 @@ namespace Catalog.Application.Products.Responses
         string Summary,
         string Description,
         string ImageFile,
-        ProductBrand Brand,
-        ProductType Type,
+        Brand Brand,
+        Core.Persistence.MongoDB.Entities.Type Type,
         decimal Price,
         DateTimeOffset CreatedDate
     );

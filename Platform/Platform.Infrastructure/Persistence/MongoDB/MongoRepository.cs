@@ -8,8 +8,7 @@ using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.MongoDB;
 
-public class MongoRepository<T> : IRepository<T>
-    where T : Entity
+public class MongoRepository<T> : IRepository<T> where T : Entity
 {
     private readonly IMongoCollection<T> _collection;
 
@@ -20,6 +19,7 @@ public class MongoRepository<T> : IRepository<T>
     }
 
     // Query
+    // =========================================================
     public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null)
     {
         var filter = predicate is null
@@ -57,10 +57,12 @@ public class MongoRepository<T> : IRepository<T>
         return (int)count;
     }
 
-    //sortBy desc when starts with '-' and asc when not, sortMap is a dictionary that maps the sortBy string to the corresponding expression
-    public async Task<Pagination<T>> GetPagedAsync(IEnumerable<Expression<Func<T, bool>>>? filters, IReadOnlyCollection<Type>? includes,
-    string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
-    int? pageIndex, int? pageSize)
+    // Paging / Filtering / Sorting / Includes
+    // sortBy desc when starts with '-' and asc when not
+    // sortMap is a dictionary that maps the sortBy string to the corresponding expression
+    // =========================================================
+    public async Task<Pagination<T>> GetPagedAsync(IReadOnlyCollection<Expression<Func<T, bool>>>? filters, IReadOnlyCollection<Expression<Func<T, object>>>? includes,
+        string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap, int? pageIndex, int? pageSize)
     {
         var currentPage = pageIndex ?? 1;
         var currentPageSize = pageSize ?? 10;
@@ -89,13 +91,14 @@ public class MongoRepository<T> : IRepository<T>
         {
             foreach (var include in includes)
             {
+                var name = GetPropertyName(include);
                 var lookupStage = new BsonDocument("$lookup",
                     new BsonDocument
                     {
-                { "from", $"{include.Name}s" },
-                { "localField",$"{include.Name}Id" },
+                { "from", $"{name}s" },
+                { "localField",$"{name}Id" },
                 { "foreignField", "_id" },
-                { "as", $"{include.Name}" }
+                { "as", $"{name}" }
                     });
 
                 query = query.AppendStage<T>(lookupStage);
@@ -103,7 +106,7 @@ public class MongoRepository<T> : IRepository<T>
                 var unwindStage = new BsonDocument("$unwind",
                     new BsonDocument
                     {
-                 { "path", $"${include.Name}" },
+                 { "path", $"${name}" },
                  { "preserveNullAndEmptyArrays", true }
                     });
 
@@ -139,6 +142,7 @@ public class MongoRepository<T> : IRepository<T>
     }
 
     // Command
+    // =========================================================
     public async Task CreateAsync(T entity)
     {
         await _collection.InsertOneAsync(entity);
@@ -189,10 +193,27 @@ public class MongoRepository<T> : IRepository<T>
             x => x.Id == id);
     }
 
-    public class ProductBrand : Entity
+
+    private static string GetPropertyName(
+    Expression<Func<T, object>> expression)
     {
-        public required string Name { get; set; }
+        Expression body = expression.Body;
+
+        // Handles:
+        // x => x.Brand
+        // x => x.BrandId
+        if (body is UnaryExpression unary &&
+            unary.NodeType == ExpressionType.Convert)
+        {
+            body = unary.Operand;
+        }
+
+        if (body is MemberExpression member)
+        {
+            return member.Member.Name;
+        }
+
+        throw new ArgumentException(
+            $"Expression '{expression}' does not represent a property.");
     }
-
-
 }

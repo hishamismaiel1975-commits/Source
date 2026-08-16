@@ -10,10 +10,10 @@ namespace Catalog.Application.Products.Handlers
     public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
     {
         private readonly IRepository<Product> _productRepository;
-        private readonly IRepository<ProductBrand> _brandRepository;
-        private readonly IRepository<ProductType> _typeRepository;
+        private readonly IRepository<Brand> _brandRepository;
+        private readonly IRepository<Core.Persistence.MongoDB.Entities.Type> _typeRepository;
 
-        public UpdateProductHandler(IRepository<Product> productRepository, IRepository<ProductBrand> brandRepository, IRepository<ProductType> typeRepository)
+        public UpdateProductHandler(IRepository<Product> productRepository, IRepository<Brand> brandRepository, IRepository<Core.Persistence.MongoDB.Entities.Type> typeRepository)
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;

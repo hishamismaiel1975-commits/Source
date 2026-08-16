@@ -2,7 +2,7 @@
 
 namespace Catalog.Core.Persistence.MongoDB.Entities
 {
-    public class ProductType : Entity
+    public class Type : Entity
     {
         public required string Name { get; set; }
     }

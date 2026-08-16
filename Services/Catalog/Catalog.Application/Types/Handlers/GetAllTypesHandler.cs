@@ -9,9 +9,9 @@ namespace Catalog.Application.Types.Handlers
 {
     public class GetAllTypesHandler : IRequestHandler<GetAllTypesQuery, IList<TypesResponse>>
     {
-        private readonly IRepository<ProductType> _typeRepository;
+        private readonly IRepository<Core.Persistence.MongoDB.Entities.Type> _typeRepository;
 
-        public GetAllTypesHandler(IRepository<ProductType> repository)
+        public GetAllTypesHandler(IRepository<Core.Persistence.MongoDB.Entities.Type> repository)
         {
             _typeRepository = repository;
         }

@@ -9,8 +9,8 @@ namespace Catalog.Infrastructure.Data
     {
         public static async Task SeedAsync(IServiceProvider services)
         {
-            var _brandRepository = services.GetRequiredService<IRepository<ProductBrand>>();
-            var _typeRepository = services.GetRequiredService<IRepository<ProductType>>();
+            var _brandRepository = services.GetRequiredService<IRepository<Brand>>();
+            var _typeRepository = services.GetRequiredService<IRepository<Core.Persistence.MongoDB.Entities.Type>>();
             var _productRepository = services.GetRequiredService<IRepository<Product>>();
 
             var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedData");
@@ -19,7 +19,7 @@ namespace Catalog.Infrastructure.Data
             if (await _brandRepository.CountAsync() == 0)
             {
                 var data = await File.ReadAllTextAsync(Path.Combine(SeedBasePath, "brands.json"));
-                var list = JsonSerializer.Deserialize<List<ProductBrand>>(data) ?? new List<ProductBrand>();
+                var list = JsonSerializer.Deserialize<List<Brand>>(data) ?? new List<Brand>();
                 await _brandRepository.CreateManyAsync(list);
             }
 
@@ -27,7 +27,7 @@ namespace Catalog.Infrastructure.Data
             if (await _typeRepository.CountAsync() == 0)
             {
                 var data = await File.ReadAllTextAsync(Path.Combine(SeedBasePath, "types.json"));
-                var list = JsonSerializer.Deserialize<List<ProductType>>(data) ?? new List<ProductType>();
+                var list = JsonSerializer.Deserialize<List<Core.Persistence.MongoDB.Entities.Type>>(data) ?? new List<Core.Persistence.MongoDB.Entities.Type>();
                 await _typeRepository.CreateManyAsync(list);
             }
 

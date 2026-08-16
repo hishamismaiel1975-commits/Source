@@ -19,11 +19,11 @@ namespace Catalog.Application.Products.Mappers
         [MapperIgnoreSource(nameof(CreateProductCommand.BrandId))]
         [MapperIgnoreSource(nameof(CreateProductCommand.TypeId))]
         [MapperIgnoreTarget(nameof(Product.Id))]
-        public static partial Product ToEntity(CreateProductCommand command, ProductBrand brand, ProductType type, DateTimeOffset CreatedDate);
+        public static partial Product ToEntity(CreateProductCommand command, Brand brand, Core.Persistence.MongoDB.Entities.Type type, DateTimeOffset CreatedDate);
 
         [MapperIgnoreSource(nameof(UpdateProductCommand.BrandId))]
         [MapperIgnoreSource(nameof(UpdateProductCommand.TypeId))]
-        public static partial Product ToEntity(UpdateProductCommand command, ProductBrand brand, ProductType type, DateTimeOffset CreatedDate);
+        public static partial Product ToEntity(UpdateProductCommand command, Brand brand, Core.Persistence.MongoDB.Entities.Type type, DateTimeOffset CreatedDate);
 
     }
 }

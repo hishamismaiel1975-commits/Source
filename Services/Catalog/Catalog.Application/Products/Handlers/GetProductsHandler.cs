@@ -20,8 +20,12 @@ namespace Catalog.Application.Products.Handlers
         {
 
             var filters = new List<Expression<Func<Product, bool>>>();
-            var includes = new List<Type>();
 
+            var includes = new List<Expression<Func<Product, object>>>
+            {
+                x => x.Brand,
+               x => x.Type
+            };
 
             if (!string.IsNullOrWhiteSpace(request.ProductName))
                 filters.Add(x => x.Name.Contains(request.ProductName));
@@ -45,7 +49,6 @@ namespace Catalog.Application.Products.Handlers
                 ["brand"] = x => x.Brand.Name,
                 ["type"] = x => x.Type.Name
             };
-
 
 
             var products = await _productRepository.GetPagedAsync(filters, includes, request.SortBy, sortMap, request.PageIndex, request.PageSize);

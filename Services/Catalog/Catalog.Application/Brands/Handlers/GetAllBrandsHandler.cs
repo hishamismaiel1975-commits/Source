@@ -9,10 +9,10 @@ namespace Catalog.Application.Brands.Handlers
 {
     public class GetAllBrandsHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandResponse>>
     {
-        private readonly IRepository<ProductBrand> _brandRepository;
-        private readonly ICacheRepository<ProductBrand> _redisRepository;
+        private readonly IRepository<Brand> _brandRepository;
+        private readonly ICacheRepository<Brand> _redisRepository;
 
-        public GetAllBrandsHandler(IRepository<ProductBrand> brandRepository, ICacheRepository<ProductBrand> redisRepository)
+        public GetAllBrandsHandler(IRepository<Brand> brandRepository, ICacheRepository<Brand> redisRepository)
         {
             _brandRepository = brandRepository;
             _redisRepository = redisRepository;
