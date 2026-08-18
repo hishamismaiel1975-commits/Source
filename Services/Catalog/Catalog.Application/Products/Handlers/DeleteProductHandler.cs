@@ -1,5 +1,5 @@
 ﻿using Catalog.Application.Products.Commands;
-using Catalog.Core.Persistence.MongoDB.Entities;
+using Catalog.Core.Persistence.Entities;
 using MediatR;
 using Platform.Core.Persistence.Repositories;
 

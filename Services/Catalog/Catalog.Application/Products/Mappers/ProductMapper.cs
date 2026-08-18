@@ -1,6 +1,6 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Persistence.MongoDB.Entities;
+using Catalog.Core.Persistence.Entities;
 using Platform.Core.Models;
 using Riok.Mapperly.Abstractions;
 
@@ -16,14 +16,14 @@ namespace Catalog.Application.Products.Mappers
         public static partial Pagination<ProductResponse> ToResponse(Pagination<Product> pagination);
         public static partial IList<ProductResponse> ToResponse(IEnumerable<Product> products);
 
-        [MapperIgnoreSource(nameof(CreateProductCommand.BrandId))]
-        [MapperIgnoreSource(nameof(CreateProductCommand.TypeId))]
         [MapperIgnoreTarget(nameof(Product.Id))]
-        public static partial Product ToEntity(CreateProductCommand command, Brand brand, Core.Persistence.MongoDB.Entities.Type type, DateTimeOffset CreatedDate);
+        [MapperIgnoreTarget(nameof(Product.ProductBrand))]
+        [MapperIgnoreTarget(nameof(Product.ProductType))]
+        public static partial Product ToEntity(CreateProductCommand command, DateTime createdDate);
 
-        [MapperIgnoreSource(nameof(UpdateProductCommand.BrandId))]
-        [MapperIgnoreSource(nameof(UpdateProductCommand.TypeId))]
-        public static partial Product ToEntity(UpdateProductCommand command, Brand brand, Core.Persistence.MongoDB.Entities.Type type, DateTimeOffset CreatedDate);
+        [MapperIgnoreTarget(nameof(Product.ProductBrand))]
+        [MapperIgnoreTarget(nameof(Product.ProductType))]
+        public static partial Product ToEntity(UpdateProductCommand command, DateTime createdDate);
 
     }
 }

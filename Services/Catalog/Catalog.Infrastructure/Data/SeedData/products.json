@@ -6,14 +6,8 @@
     "Price": 3500,
     "ImageFile": "images/products/adidas_shoe-1.png",
     "Summary": "Adidas Quick Force Indoor Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -23,14 +17,8 @@
     "Price": 3375,
     "ImageFile": "images/products/adidas_shoe-2.png",
     "Summary": "Adidas Quick Force Indoor Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -40,14 +28,8 @@
     "Price": 3375,
     "ImageFile": "images/products/adidas_shoe-3.png",
     "Summary": "Adidas Quick Force Indoor Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -57,14 +39,8 @@
     "Price": 4249,
     "ImageFile": "images/products/asics_shoe-1.png",
     "Summary": "Asics Gel Rocket 8 Indoor Court Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "ASICS"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -74,14 +50,8 @@
     "Price": 3499,
     "ImageFile": "images/products/asics_shoe-2.png",
     "Summary": "Asics Gel Rocket 8 Indoor Court Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "ASICS"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -91,14 +61,8 @@
     "Price": 3499,
     "ImageFile": "images/products/asics_shoe-3.png",
     "Summary": "Asics Gel Rocket 8 Indoor Court Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "ASICS"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -108,14 +72,8 @@
     "Price": 2392,
     "ImageFile": "images/products/victor_shoe-1.png",
     "Summary": "Victor SHW503 F Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Victor"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -125,14 +83,8 @@
     "Price": 3000,
     "ImageFile": "images/products/victor_shoe-2.png",
     "Summary": "Victor SHW503 F Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Victor"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -142,14 +94,8 @@
     "Price": 2590,
     "ImageFile": "images/products/yonex_shoe-1.png",
     "Summary": "Yonex Super Ace Light Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -159,14 +105,8 @@
     "Price": 3500,
     "ImageFile": "images/products/yonex_shoe-2.png",
     "Summary": "Yonex Super Ace Light Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -176,14 +116,8 @@
     "Price": 3700,
     "ImageFile": "images/products/yonex_shoe-3.png",
     "Summary": "Yonex Super Ace Light Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -193,14 +127,8 @@
     "Price": 4999,
     "ImageFile": "images/products/puma_shoe-1.png",
     "Summary": "Puma 19 FH Rubber Spike Cricket Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Puma"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -210,14 +138,8 @@
     "Price": 5200,
     "ImageFile": "images/products/puma_shoe-2.png",
     "Summary": "Puma Super Ace Light Badminton Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Puma"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -227,14 +149,8 @@
     "Price": 5700,
     "ImageFile": "images/products/puma_shoe-3.png",
     "Summary": "Puma 19 FH Rubber Spike Cricket Shoes",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Puma"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -244,14 +160,8 @@
     "Price": 4125,
     "ImageFile": "images/products/babolat_shoe-1.png",
     "Summary": "Babolat Shadow Spirit Mens Badminton Shoes (Cloisonne/Strike)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -261,14 +171,8 @@
     "Price": 5249,
     "ImageFile": "images/products/babolat_shoe-2.png",
     "Summary": "Babolat Shadow Tour Mens Badminton Shoes (White/Blue)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -278,14 +182,8 @@
     "Price": 2999,
     "ImageFile": "images/products/babolat_shoe-3.png",
     "Summary": "Babolat Shadow Team Womens Badminton Shoes (Black/Peony)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Shoes"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -295,14 +193,8 @@
     "Price": 6099,
     "ImageFile": "images/products/yonex-racket-1.png",
     "Summary": "Yonex VCORE Pro 100 A Tennis Racquet (270gm, Strung)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -312,14 +204,8 @@
     "Price": 6399,
     "ImageFile": "images/products/yonex-racket-2.png",
     "Summary": "Yonex VCORE Pro 100 A Tennis Racquet (290gm, Strung)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -329,14 +215,8 @@
     "Price": 13299,
     "ImageFile": "images/products/yonex-racket-3.png",
     "Summary": "Yonex VCORE Pro 100 A Tennis Racquet (290gm, Strung)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -346,14 +226,8 @@
     "Price": 6999,
     "ImageFile": "images/products/babolat-racket-1.png",
     "Summary": "Babolat Boost D Tennis Racquet (260gm, Strung)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -363,14 +237,8 @@
     "Price": 13000,
     "ImageFile": "images/products/babolat-racket-2.png",
     "Summary": "Babolat Pure Aero 2019 Superlite Tennis Racquet",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -380,65 +248,41 @@
     "Price": 34000,
     "ImageFile": "images/products/babolat-racket-3.png",
     "Summary": "Babolat Pure Drive VS Tennis Racquet (Pair, 300gm, Strung)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Rackets"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
     "Id": "3a70f627-cae4-48d3-b0df-312ff9746a67",
     "Name": "Adidas FIFA World Cup 2018 OMB Football (White/Red/Black)",
-    "Description": "Featuring an innovative surface panel design, this is the match ball used during football's FIFA World Cup™. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
+    "Description": "Featuring an innovative surface panel design, this is the match ball used during FIFA's World Cup. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
     "Price": 2499,
     "ImageFile": "images/products/adidas_football-1.png",
     "Summary": "Adidas FIFA World Cup 2018 OMB Football (White/Red/Black)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
     "Id": "b045fa21-52cc-439e-917e-13e1722862b5",
     "Name": "Adidas FIFA World Cup 2018 OMB Football",
-    "Description": "Featuring an innovative surface panel design, this is the match ball used during football's FIFA World Cup™. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
+    "Description": "Featuring an innovative surface panel design, this is the match ball used during FIFA's World Cup. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
     "Price": 3200,
     "ImageFile": "images/products/adidas_football-2.png",
     "Summary": "Adidas FIFA World Cup 2018 OMB Football",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
     "Id": "10701edd-d200-4b32-8bb8-f69064969820",
     "Name": "Adidas FIFA World Cup Top Glider Ball",
-    "Description": "Featuring an innovative surface panel design, this is the match ball used during football's FIFA World Cup™. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
+    "Description": "Featuring an innovative surface panel design, this is the match ball used during FIFA's World Cup. Inspired by Russia's urban landscapes, a pixelated graphic pays tribute to the iconic Telstar ball. Its thermally bonded seamless surface designs.",
     "Price": 2499,
     "ImageFile": "images/products/adidas_football-3.png",
     "Summary": "Adidas FIFA World Cup 2023 OMB Football",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Adidas"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -448,14 +292,8 @@
     "Price": 1525,
     "ImageFile": "images/products/Nike-Football-1.png",
     "Summary": "Nike Pitch Premier League Football (Yellow/Purple)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Nike"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -465,14 +303,8 @@
     "Price": 1525,
     "ImageFile": "images/products/Nike-Football-2.png",
     "Summary": "Nike Manchester City Supporters Football (Berry)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Nike"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -482,14 +314,8 @@
     "Price": 1450,
     "ImageFile": "images/products/Nike-Football-3.png",
     "Summary": "Nike Mercurial Veer Football (White/Green/Black)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Football"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Nike"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -499,14 +325,8 @@
     "Price": 4550,
     "ImageFile": "images/products/babolat-kitback-1.png",
     "Summary": "Babolat Team Line Racket 12 Kit Bag (Fluorescent Red)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -516,14 +336,8 @@
     "Price": 9799,
     "ImageFile": "images/products/babolat-kitback-2.png",
     "Summary": "Babolat Pure Strike RH X12 Kit Bag (White/Red)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -533,14 +347,8 @@
     "Price": 4550,
     "ImageFile": "images/products/babolat-kitback-3.png",
     "Summary": "Babolat Team Line 12 Racquet Kit Bag (Silver)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Babolat"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -550,14 +358,8 @@
     "Price": 1999,
     "ImageFile": "images/products/yonex-kitback-1.png",
     "Summary": "Yonex SUNR 4826TK BT6-SR Badminton Kit Bag (Black/Red/White)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -567,14 +369,8 @@
     "Price": 1499,
     "ImageFile": "images/products/yonex-kitback-2.png",
     "Summary": "Yonex SUNR LRB05 MS BT6 S Badminton Kit Bag (Blue/Red)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   },
   {
@@ -584,14 +380,8 @@
     "Price": 1499,
     "ImageFile": "images/products/yonex-kitback-3.png",
     "Summary": "Yonex SUNR LRB05 MS BT6 S Badminton Kit Bag (Grey/Orange)",
-    "Type": {
-      "Id": "e83b5a19-6472-4f20-bd91-3c758a026e54",
-      "Name": "Kit Bags"
-    },
-    "Brand": {
-      "Id": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
-      "Name": "Yonex"
-    },
+    "BrandId": "b47c129e-8a63-4d75-91f2-5e306c7ab814",
+    "TypeId": "e83b5a19-6472-4f20-bd91-3c758a026e54",
     "CreatedDate": "2026-08-04T00:00:00Z"
   }
 ]

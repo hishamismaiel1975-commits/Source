@@ -1,17 +1,21 @@
-﻿using Catalog.Core.Persistence.MongoDB.Entities;
+﻿using Catalog.Core.Persistence.Entities;
 
 namespace Catalog.Application.Products.Responses
 {
     public record ProductResponse
    (
-        string Id,
+        Guid Id,
         string Name,
         string Summary,
         string Description,
         string ImageFile,
-        Brand Brand,
-        Core.Persistence.MongoDB.Entities.Type Type,
+        Guid BrandId,
+        Guid TypeId,
         decimal Price,
-        DateTimeOffset CreatedDate
+        DateTime CreatedDate,
+
+        ProductBrand? ProductBrand,
+        ProductType? ProductType
+
     );
 }

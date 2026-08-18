@@ -1,8 +1,8 @@
 ﻿using Platform.Core.Persistence.Entities;
 
-namespace Catalog.Core.Persistence.MongoDB.Entities
+namespace Catalog.Core.Persistence.Entities
 {
-    public class Type : Entity
+    public class ProductBrand : Entity
     {
         public required string Name { get; set; }
     }

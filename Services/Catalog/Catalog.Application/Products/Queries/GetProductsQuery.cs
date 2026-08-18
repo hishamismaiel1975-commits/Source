@@ -6,8 +6,6 @@ namespace Catalog.Application.Products.Queries
 {
     public record GetProductsQuery(
          string? ProductName,
-         string? BrandName,
-         string? TypeName,
          Guid? BrandId,
          Guid? TypeId,
          string? SortBy,

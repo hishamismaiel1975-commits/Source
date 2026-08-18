@@ -11,4 +11,5 @@ namespace Catalog.Application.Products.Commands
     Guid BrandId,
     Guid TypeId,
     decimal Price) : IRequest<ProductResponse>;
+
 }

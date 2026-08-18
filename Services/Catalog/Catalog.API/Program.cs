@@ -1,5 +1,6 @@
 using Catalog.Application;
 using Catalog.Infrastructure.Data;
+using Catalog.Infrastructure.Persistence;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;
@@ -11,13 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add Platform Services
 builder.AddPlatform<Program, Application>();
 
-//Add MongoDB Services
+// Add MongoDB Services
 builder.AddMongoDB();
+
+// Configure MongoDB
+MongoDbConfiguration.Configure();
 
 // Add Redis Cache
 builder.AddRedis();
 
-//Add Custom Services
+// Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));

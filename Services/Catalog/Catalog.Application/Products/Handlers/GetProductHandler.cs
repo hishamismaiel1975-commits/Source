@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
-using Catalog.Core.Persistence.MongoDB.Entities;
+using Catalog.Core.Persistence.Entities;
 using MediatR;
 using Platform.Core.Persistence.Repositories;
 
