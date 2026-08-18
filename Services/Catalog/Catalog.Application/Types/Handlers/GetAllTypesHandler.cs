@@ -2,15 +2,15 @@
 using Catalog.Application.Types.Queries;
 using Catalog.Application.Types.Responses;
 using MediatR;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.MongoDB;
 
 namespace Catalog.Application.Types.Handlers
 {
     public class GetAllTypesHandler : IRequestHandler<GetAllTypesQuery, IList<TypesResponse>>
     {
-        private readonly IRepository<Core.Persistence.Entities.ProductType> _typeRepository;
+        private readonly IMongoRepository<Core.Persistence.Entities.ProductType> _typeRepository;
 
-        public GetAllTypesHandler(IRepository<Core.Persistence.Entities.ProductType> repository)
+        public GetAllTypesHandler(IMongoRepository<Core.Persistence.Entities.ProductType> repository)
         {
             _typeRepository = repository;
         }

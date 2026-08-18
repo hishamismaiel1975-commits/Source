@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.EFCore;
 
 namespace Platform.Infrastructure.Persistence.EFCore
 {

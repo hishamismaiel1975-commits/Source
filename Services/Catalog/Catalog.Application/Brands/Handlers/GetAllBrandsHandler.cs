@@ -3,16 +3,17 @@ using Catalog.Application.Brands.Queries;
 using Catalog.Application.Brands.Responses;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.Cache;
+using Platform.Core.Persistence.Repositories.MongoDB;
 
 namespace Catalog.Application.Brands.Handlers
 {
     public class GetAllBrandsHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandResponse>>
     {
-        private readonly IRepository<ProductBrand> _brandRepository;
+        private readonly IMongoRepository<ProductBrand> _brandRepository;
         private readonly ICacheRepository<ProductBrand> _redisRepository;
 
-        public GetAllBrandsHandler(IRepository<ProductBrand> brandRepository, ICacheRepository<ProductBrand> redisRepository)
+        public GetAllBrandsHandler(IMongoRepository<ProductBrand> brandRepository, ICacheRepository<ProductBrand> redisRepository)
         {
             _brandRepository = brandRepository;
             _redisRepository = redisRepository;

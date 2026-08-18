@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.EFCore;
 using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.EFCore;
@@ -10,13 +10,11 @@ public class EFRepository<T> : IRepository<T> where T : Entity
 {
     protected readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
-
     public EFRepository(DbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();
     }
-
 
     // Query
     // =========================================================
@@ -48,7 +46,6 @@ public class EFRepository<T> : IRepository<T> where T : Entity
     {
         return await _dbSet.CountAsync();
     }
-
 
     // Paging / Filtering / Sorting / Includes
     // sortBy desc when starts with '-' and asc when not
@@ -122,7 +119,6 @@ public class EFRepository<T> : IRepository<T> where T : Entity
             totalCount,
             data);
     }
-
 
     // Command
     // =========================================================

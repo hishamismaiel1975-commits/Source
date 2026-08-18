@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.Cache;
 using System.Text.Json;
 
 public class RedisRepository<T> : ICacheRepository<T>

@@ -2,14 +2,14 @@
 using Platform.Core.Persistence.Entities;
 using System.Linq.Expressions;
 
-namespace Platform.Core.Persistence.Repositories;
+namespace Platform.Core.Persistence.Repositories.EFCore;
 
 public interface IRepository<T> where T : Entity
 {
     // Query
     // =========================================================
-    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null);
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filters = null);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filters);
     Task<T?> GetByIdAsync(Guid id);
     Task<bool> ExistsAsync(Guid id);
     Task<int> CountAsync();

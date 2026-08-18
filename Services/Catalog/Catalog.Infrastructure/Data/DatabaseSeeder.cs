@@ -1,6 +1,6 @@
 ﻿using Catalog.Core.Persistence.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.EFCore;
 using System.Text.Json;
 
 namespace Catalog.Infrastructure.Data

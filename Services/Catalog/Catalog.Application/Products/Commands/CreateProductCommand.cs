@@ -8,8 +8,8 @@ namespace Catalog.Application.Products.Commands
     string Summary,
     string Description,
     string ImageFile,
-    Guid BrandId,
-    Guid TypeId,
+    Guid ProductBrandId,
+    Guid ProductTypeId,
     decimal Price) : IRequest<ProductResponse>;
 
 }

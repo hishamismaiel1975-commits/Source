@@ -2,17 +2,16 @@
 using Catalog.Application.Products.Mappers;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.EFCore;
+using Platform.Core.Persistence.Repositories.MongoDB;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class UpdateProductHandler : IRequestHandler<UpdateProductCommand>
     {
-        private readonly IRepository<Product> _productRepository;
-        private readonly IRepository<ProductBrand> _brandRepository;
-        private readonly IRepository<Core.Persistence.Entities.ProductType> _typeRepository;
+        private readonly IMongoRepository<Product> _productRepository;
 
-        public UpdateProductHandler(IRepository<Product> productRepository, IRepository<ProductBrand> brandRepository, IRepository<Core.Persistence.Entities.ProductType> typeRepository)
+        public UpdateProductHandler(IMongoRepository<Product> productRepository, IRepository<ProductBrand> brandRepository, IRepository<Core.Persistence.Entities.ProductType> typeRepository)
         {
             _productRepository = productRepository;
         }

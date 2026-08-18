@@ -31,11 +31,11 @@ public class UpdateProductCommandValidator
             .NotEmpty()
             .WithMessage("ProductImageFileRequired");
 
-        RuleFor(x => x.BrandId)
+        RuleFor(x => x.ProductBrandId)
             .NotEmpty()
             .WithMessage("ProductBrandIdRequired");
 
-        RuleFor(x => x.TypeId)
+        RuleFor(x => x.ProductTypeId)
             .NotEmpty()
             .WithMessage("ProductTypeIdRequired");
 

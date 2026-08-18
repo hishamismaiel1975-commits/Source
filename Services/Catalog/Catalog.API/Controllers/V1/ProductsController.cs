@@ -33,15 +33,13 @@ namespace Catalog.API.Controllers.V1
         [HttpGet]
         public async Task<Result<Pagination<ProductResponse>>> GetProducts(
             string? ProductName,
-            string? BrandName,
-            string? TypeName,
-            Guid? BrandId,
-            Guid? TypeId,
+            Guid? ProductBrandId,
+            Guid? ProductTypeId,
             string? SortBy,
             int? PageIndex,
             int? PageSize)
         {
-            var query = new ProductsApp.Queries.GetProductsQuery(ProductName, BrandName, TypeName, BrandId, TypeId, SortBy, PageIndex, PageSize);
+            var query = new ProductsApp.Queries.GetProductsQuery(ProductName, ProductBrandId, ProductTypeId, SortBy, PageIndex, PageSize);
             var result = await _mediator.Send(query);
             return Result<Pagination<ProductResponse>>.Success(result);
         }

@@ -2,7 +2,8 @@ using Catalog.Application;
 using Catalog.Infrastructure.Data;
 using Catalog.Infrastructure.Persistence;
 using Platform.API.Extensions;
-using Platform.Core.Persistence.Repositories;
+using Platform.Core.Persistence.Repositories.Cache;
+using Platform.Core.Persistence.Repositories.MongoDB;
 using Platform.Core.Services.Localization;
 using Platform.Infrastructure.Persistence.MongoDB;
 using Platform.Infrastructure.Services.Localization;
@@ -24,7 +25,7 @@ builder.AddRedis();
 // Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
 
 
 var app = builder.Build();
