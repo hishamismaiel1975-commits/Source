@@ -3,7 +3,6 @@ using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
-using MongoDB.Driver;
 using Platform.Core.Extensions;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Repositories;
@@ -23,8 +22,6 @@ namespace Catalog.Application.Products.Handlers
 
             var filters = new List<Expression<Func<Product, bool>>>();
             var includes = new List<Expression<Func<Product, object>>>();
-
-            var builder = Builders<Product>.Filter;
 
             filters.AddIf(
                  !string.IsNullOrWhiteSpace(request.ProductName),
