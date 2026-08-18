@@ -7,19 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\SeedData\brands.json" />
-    <None Remove="Data\SeedData\products.json" />
-    <None Remove="Data\SeedData\types.json" />
+    <None Remove="Seed\Data\brands.json" />
+    <None Remove="Seed\Data\products.json" />
+    <None Remove="Seed\Data\types.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\SeedData\brands.json">
+    <Content Include="Seed\Data\brands.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\SeedData\products.json">
+    <Content Include="Seed\Data\products.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\SeedData\types.json">
+    <Content Include="Seed\Data\types.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

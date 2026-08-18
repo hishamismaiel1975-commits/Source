@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Platform.Core.Persistence.Repositories;
 using System.Text.Json;
 
-namespace Catalog.Infrastructure.Data
+namespace Catalog.Infrastructure.Seed
 {
     public class DatabaseSeeder
     {
