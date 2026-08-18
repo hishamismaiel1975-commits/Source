@@ -35,11 +35,15 @@ namespace Catalog.Application.Products.Handlers
                 request.TypeId.HasValue,
                 x => x.ProductTypeId == request.TypeId!.Value);
 
+            includes.Add(x => x.ProductBrand);
+            includes.Add(x => x.ProductType);
+
             var sortMap = new Dictionary<string, Expression<Func<Product, object>>>
             {
                 ["name"] = x => x.Name,
                 ["price"] = x => x.Price
             };
+
 
             var products = await _productRepository.GetPagedAsync(filters, includes, request.SortBy, sortMap, request.PageIndex, request.PageSize);
             return ProductMapper.ToResponse(products);

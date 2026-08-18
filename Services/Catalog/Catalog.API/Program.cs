@@ -1,6 +1,6 @@
 using Catalog.Application;
-using Catalog.Infrastructure.Data;
 using Catalog.Infrastructure.Persistence.MongoDB;
+using Catalog.Infrastructure.Seed;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;

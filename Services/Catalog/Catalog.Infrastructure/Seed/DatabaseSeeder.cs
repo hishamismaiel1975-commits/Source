@@ -10,10 +10,10 @@ namespace Catalog.Infrastructure.Seed
         public static async Task SeedAsync(IServiceProvider services)
         {
             var _brandRepository = services.GetRequiredService<IRepository<ProductBrand>>();
-            var _typeRepository = services.GetRequiredService<IRepository<Core.Persistence.Entities.ProductType>>();
+            var _typeRepository = services.GetRequiredService<IRepository<ProductType>>();
             var _productRepository = services.GetRequiredService<IRepository<Product>>();
 
-            var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedData");
+            var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Seed", "Data");
 
             //Seed Brands
             if (await _brandRepository.CountAsync() == 0)
@@ -27,7 +27,7 @@ namespace Catalog.Infrastructure.Seed
             if (await _typeRepository.CountAsync() == 0)
             {
                 var data = await File.ReadAllTextAsync(Path.Combine(SeedBasePath, "types.json"));
-                var list = JsonSerializer.Deserialize<List<Core.Persistence.Entities.ProductType>>(data) ?? new List<Core.Persistence.Entities.ProductType>();
+                var list = JsonSerializer.Deserialize<List<ProductType>>(data) ?? new List<ProductType>();
                 await _typeRepository.CreateManyAsync(list);
             }
 

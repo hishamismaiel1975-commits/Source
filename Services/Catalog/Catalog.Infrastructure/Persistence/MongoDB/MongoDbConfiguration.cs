@@ -1,5 +1,4 @@
-﻿using Catalog.Core.Persistence.Entities;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using Platform.Core.Persistence.Entities;
@@ -34,15 +33,5 @@ public static class MongoDbConfiguration
             });
         }
 
-        if (!BsonClassMap.IsClassMapRegistered(typeof(Product)))
-        {
-            BsonClassMap.RegisterClassMap<Product>(map =>
-            {
-                map.AutoMap();
-
-                map.UnmapMember(x => x.ProductBrand);
-                map.UnmapMember(x => x.ProductType);
-            });
-        }
     }
 }
