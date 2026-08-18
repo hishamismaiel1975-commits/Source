@@ -1,15 +1,15 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
-using Platform.Core.Persistence.Repositories.MongoDB;
+using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class DeleteProductHandler : IRequestHandler<DeleteProductCommand>
     {
-        private readonly IMongoRepository<Product> _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public DeleteProductHandler(IMongoRepository<Product> productRepository)
+        public DeleteProductHandler(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }

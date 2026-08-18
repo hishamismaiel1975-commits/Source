@@ -1,8 +1,8 @@
 using Catalog.Application;
 using Catalog.Infrastructure.Data;
+using Catalog.Infrastructure.Persistence.MongoDB;
 using Platform.API.Extensions;
-using Platform.Core.Persistence.Repositories.Cache;
-using Platform.Core.Persistence.Repositories.MongoDB;
+using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;
 using Platform.Infrastructure.Persistence.MongoDB;
 using Platform.Infrastructure.Services.Localization;
@@ -15,13 +15,16 @@ builder.AddPlatform<Program, Application>();
 // Add MongoDB Services
 builder.AddMongoDB();
 
+// Configure MongoDB Serializers and Class Maps
+MongoDbConfiguration.Configure();
+
 // Add Redis Cache
 builder.AddRedis();
 
 // Add Custom Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
-builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 
 var app = builder.Build();

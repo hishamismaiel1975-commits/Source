@@ -1,6 +1,6 @@
 ﻿using Platform.Core.Persistence.Entities;
 
-namespace Platform.Core.Persistence.Repositories.EFCore;
+namespace Platform.Core.Persistence.Repositories;
 
 public interface ITranRepository<T> where T : Entity
 {

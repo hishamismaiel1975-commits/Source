@@ -1,6 +1,6 @@
 ﻿using Catalog.Core.Persistence.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Core.Persistence.Repositories.MongoDB;
+using Platform.Core.Persistence.Repositories;
 using System.Text.Json;
 
 namespace Catalog.Infrastructure.Data
@@ -9,9 +9,9 @@ namespace Catalog.Infrastructure.Data
     {
         public static async Task SeedAsync(IServiceProvider services)
         {
-            var _brandRepository = services.GetRequiredService<IMongoRepository<ProductBrand>>();
-            var _typeRepository = services.GetRequiredService<IMongoRepository<Core.Persistence.Entities.ProductType>>();
-            var _productRepository = services.GetRequiredService<IMongoRepository<Product>>();
+            var _brandRepository = services.GetRequiredService<IRepository<ProductBrand>>();
+            var _typeRepository = services.GetRequiredService<IRepository<Core.Persistence.Entities.ProductType>>();
+            var _productRepository = services.GetRequiredService<IRepository<Product>>();
 
             var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Data", "SeedData");
 

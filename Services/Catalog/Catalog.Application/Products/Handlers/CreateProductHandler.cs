@@ -3,15 +3,15 @@ using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
-using Platform.Core.Persistence.Repositories.MongoDB;
+using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
 {
     public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
     {
-        private readonly IMongoRepository<Product> _productRepository;
+        private readonly IRepository<Product> _productRepository;
 
-        public CreateProductHandler(IMongoRepository<Product> productRepository)
+        public CreateProductHandler(IRepository<Product> productRepository)
         {
             _productRepository = productRepository;
         }

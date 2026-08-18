@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories.EFCore;
+using Platform.Core.Persistence.Repositories;
 using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.EFCore;

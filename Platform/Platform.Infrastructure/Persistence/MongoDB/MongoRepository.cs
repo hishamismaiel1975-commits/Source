@@ -3,12 +3,12 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories.MongoDB;
+using Platform.Core.Persistence.Repositories;
 using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.MongoDB;
 
-public class MongoRepository<T> : IMongoRepository<T> where T : Entity
+public class MongoRepository<T> : IRepository<T> where T : Entity
 {
     private readonly IMongoCollection<T> _collection;
 
@@ -20,15 +20,16 @@ public class MongoRepository<T> : IMongoRepository<T> where T : Entity
 
     // Query
     // =========================================================
-    public async Task<IEnumerable<T>> GetAllAsync(FilterDefinition<T>? filter = null)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
     {
-        filter ??= Builders<T>.Filter.Empty;
+        var filterDefinition = filter is null ? Builders<T>.Filter.Empty : FilterBuilder.Build(filter);
         return await _collection
-            .Find(filter)
+            .Find(filterDefinition)
             .ToListAsync();
     }
-    public async Task<T?> FirstOrDefaultAsync(FilterDefinition<T> filter)
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter)
     {
+        var filterDefinition = FilterBuilder.Build(filter);
         return await _collection
             .Find(filter)
             .FirstOrDefaultAsync();
@@ -58,9 +59,16 @@ public class MongoRepository<T> : IMongoRepository<T> where T : Entity
     // sortBy desc when starts with '-' and asc when not
     // sortMap is a dictionary that maps the sortBy string to the corresponding expression
     // =========================================================
-    public async Task<Pagination<T>> GetPagedAsync(IReadOnlyCollection<FilterDefinition<T>>? filters, IReadOnlyCollection<Expression<Func<T, object>>>? includes,
-        string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap, int? pageIndex, int? pageSize)
+    public async Task<Pagination<T>> GetPagedAsync(
+        IReadOnlyCollection<Expression<Func<T, bool>>>? filters,
+        IReadOnlyCollection<Expression<Func<T, object>>>? includes,
+        string? sortBy,
+        IReadOnlyDictionary<string,
+        Expression<Func<T, object>>> sortMap,
+        int? pageIndex,
+        int? pageSize)
     {
+
         var currentPage = pageIndex ?? 1;
         var currentPageSize = pageSize ?? 10;
 
@@ -69,7 +77,13 @@ public class MongoRepository<T> : IMongoRepository<T> where T : Entity
 
         if (filters is not null && filters.Count > 0)
         {
-            filterDef = builder.And(filters);
+            foreach (var expression in filters)
+            {
+                var mongoFilter =
+                    FilterBuilder.Build(expression);
+
+                filterDef &= mongoFilter;
+            }
         }
 
         var totalCount = await _collection.CountDocumentsAsync(filterDef);

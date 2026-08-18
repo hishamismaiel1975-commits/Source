@@ -1,4 +1,4 @@
-﻿namespace Platform.Core.Persistence.Repositories.EFCore
+﻿namespace Platform.Core.Persistence.Repositories
 {
     public interface IUnitOfWork
     {

@@ -2,7 +2,7 @@
 using Platform.Core.Persistence.Entities;
 using System.Linq.Expressions;
 
-namespace Platform.Core.Persistence.Repositories.EFCore;
+namespace Platform.Core.Persistence.Repositories;
 
 public interface IRepository<T> where T : Entity
 {
