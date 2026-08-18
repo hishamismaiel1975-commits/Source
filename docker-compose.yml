@@ -4,7 +4,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Services/Catalog.Mongo/Catalog.API/Dockerfile
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
     depends_on:
       - mongodb 
       - redis

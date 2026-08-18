@@ -4,14 +4,13 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "catalog.mongo.api",
+      "composeLaunchServiceName": "catalog.api",
       "composeLaunchUrl": "http://localhost:8001/swagger",
       "serviceActions": {
-        "catalog.mongo.api": "StartDebugging",
+        "catalog.api": "StartDebugging",
         "mongodb": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
         "sqlserver": "StartWithoutDebugging",
-        "catalog.sqlserver.api": "StartDebugging"
       }
     }
   }

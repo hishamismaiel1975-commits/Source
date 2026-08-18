@@ -1,5 +1,5 @@
 services:
-  catalog.mongo.api:
+  catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development     
       - MongoDbSettings__ConnectionString=mongodb://admin:pass_123456789@mongodb:27017

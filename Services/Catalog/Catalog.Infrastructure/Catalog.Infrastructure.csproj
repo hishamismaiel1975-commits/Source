@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Platform\Platform.Infrastructure\Platform.Infrastructure.csproj" />
-    <ProjectReference Include="..\Catalog.Core\Catalog.Mongo.Core.csproj" />
+    <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
