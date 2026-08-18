@@ -12,8 +12,8 @@ namespace Catalog.Core.Persistence.Entities
         public required Guid ProductTypeId { get; set; }
         public required decimal Price { get; set; }
         public required DateTime CreatedDate { get; set; }
-        public ProductBrand? ProductBrand { get; set; }
-        public ProductType? ProductType { get; set; }
+        public ProductBrand ProductBrand { get; set; }
+        public ProductType ProductType { get; set; }
 
     }
 }
