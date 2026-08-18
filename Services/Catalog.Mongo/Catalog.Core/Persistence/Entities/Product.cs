@@ -1,4 +1,5 @@
-﻿using Platform.Core.Persistence.Entities;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Platform.Core.Persistence.Entities;
 
 namespace Catalog.Core.Persistence.Entities
 {
@@ -13,7 +14,10 @@ namespace Catalog.Core.Persistence.Entities
         public required decimal Price { get; set; }
         public required DateTime CreatedDate { get; set; }
 
+        [BsonIgnore]
         public ProductBrand? ProductBrand { get; set; }
+
+        [BsonIgnore]
         public ProductType? ProductType { get; set; }
 
     }

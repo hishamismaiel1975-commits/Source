@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Platform\Platform.Core\Platform.Core.csproj" />
-    <ProjectReference Include="..\Catalog.Domain\Catalog.Core.csproj" />
+    <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 
 </Project>

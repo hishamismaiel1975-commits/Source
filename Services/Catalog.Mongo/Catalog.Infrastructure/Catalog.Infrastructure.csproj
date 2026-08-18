@@ -31,7 +31,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Platform\Platform.Infrastructure\Platform.Infrastructure.csproj" />
-    <ProjectReference Include="..\Catalog.Domain\Catalog.Core.csproj" />
+    <ProjectReference Include="..\Catalog.Core\Catalog.Mongo.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistence\" />
   </ItemGroup>
 
 </Project>

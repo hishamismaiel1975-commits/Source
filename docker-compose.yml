@@ -1,16 +1,16 @@
 services:
   catalog.api:
-    image: ${DOCKER_REGISTRY-}catalogapi
+    image: ${DOCKER_REGISTRY-}catalogmongoapi
     restart: always
     build:
       context: .
-      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+      dockerfile: Services/Catalog.Mongo/Catalog.API/Dockerfile
     depends_on:
       - mongodb 
       - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
-      
+
 
   mongodb:
    image: mongo:latest

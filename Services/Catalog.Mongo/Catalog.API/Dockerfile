@@ -4,37 +4,33 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8080
 
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
+COPY ["Services/Catalog.Mongo/Catalog.API/Catalog.Mongo.API.csproj", "Services/Catalog.Mongo/Catalog.API/"]
 COPY ["Platform/Platform.API/Platform.API.csproj", "Platform/Platform.API/"]
-COPY ["Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Services/Catalog/Catalog.Application/"]
+COPY ["Platform/Platform.Application/Platform.Application.csproj", "Platform/Platform.Application/"]
 COPY ["Platform/Platform.Core/Platform.Core.csproj", "Platform/Platform.Core/"]
-COPY ["Services/Catalog/Catalog.Domain/Catalog.Core.csproj", "Services/Catalog/Catalog.Domain/"]
-COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
 COPY ["Platform/Platform.Infrastructure/Platform.Infrastructure.csproj", "Platform/Platform.Infrastructure/"]
-
-
-RUN dotnet restore "./Services/Catalog/Catalog.API/Catalog.API.csproj"
+COPY ["Services/Catalog.Mongo/Catalog.Application/Catalog.Mongo.Application.csproj", "Services/Catalog.Mongo/Catalog.Application/"]
+COPY ["Services/Catalog.Mongo/Catalog.Core/Catalog.Mongo.Core.csproj", "Services/Catalog.Mongo/Catalog.Core/"]
+COPY ["Services/Catalog.Mongo/Catalog.Infrastructure/Catalog.Mongo.Infrastructure.csproj", "Services/Catalog.Mongo/Catalog.Infrastructure/"]
+RUN dotnet restore "./Services/Catalog.Mongo/Catalog.API/Catalog.Mongo.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Catalog/Catalog.API"
-RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Catalog.Mongo/Catalog.API"
+RUN dotnet build "./Catalog.Mongo.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Catalog.Mongo.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-
-
-
-ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+ENTRYPOINT ["dotnet", "Catalog.Mongo.API.dll"]

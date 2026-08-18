@@ -1,6 +1,5 @@
 using Catalog.Application;
 using Catalog.Infrastructure.Data;
-using Catalog.Infrastructure.Persistence;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories.Cache;
 using Platform.Core.Persistence.Repositories.MongoDB;
@@ -15,9 +14,6 @@ builder.AddPlatform<Program, Application>();
 
 // Add MongoDB Services
 builder.AddMongoDB();
-
-// Configure MongoDB
-MongoDbConfiguration.Configure();
 
 // Add Redis Cache
 builder.AddRedis();

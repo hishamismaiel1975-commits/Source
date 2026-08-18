@@ -7,12 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Platform.Application.Behaviors;
+using Platform.Core.Persistence.Entities;
 using Serilog;
 using System.Reflection;
 
@@ -149,6 +153,18 @@ namespace Platform.API.Extensions
         }
         public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder)
         {
+            // Global serializers
+            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+            BsonSerializer.RegisterSerializer(new DecimalSerializer(BsonType.Decimal128));
+            BsonSerializer.RegisterSerializer(new DateTimeSerializer(BsonType.DateTime));
+
+            // Entity mapping
+            BsonClassMap.RegisterClassMap<Entity>(map =>
+            {
+                map.AutoMap();
+                map.MapIdMember(x => x.Id);
+            });
+
             // Register MongoClient as singleton
             builder.Services.AddSingleton<IMongoClient>(options =>
             {
