@@ -2,7 +2,7 @@
 using Platform.Core.Persistence.Entities;
 using Platform.Core.Persistence.Repositories;
 
-namespace Platform.Infrastructure.Persistence.EFCore;
+namespace Platform.Infrastructure.Persistence.EFCore.Repositories;
 
 public class EFTranRepository<T> : ITranRepository<T> where T : Entity
 {

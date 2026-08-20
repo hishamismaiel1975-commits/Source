@@ -4,7 +4,7 @@ using Catalog.Infrastructure.Seed;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;
-using Platform.Infrastructure.Persistence.MongoDB;
+using Platform.Infrastructure.Persistence.MongoDB.Repositories;
 using Platform.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);

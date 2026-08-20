@@ -8,8 +8,10 @@ public interface IRepository<T> where T : Entity
 {
     // Query
     // =========================================================
-    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filters = null);
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filters);
+    Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, IReadOnlyCollection<Expression<Func<T, object>>>? includes = null);
+    Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>>? filter = null);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, IReadOnlyCollection<Expression<Func<T, object>>>? includes = null);
+    Task<TResult?> FirstOrDefaultAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>> filter);
     Task<T?> GetByIdAsync(Guid id);
     Task<bool> ExistsAsync(Guid id);
     Task<int> CountAsync();
@@ -18,9 +20,20 @@ public interface IRepository<T> where T : Entity
     // sortBy desc when starts with '-' and asc when not
     // sortMap is a dictionary that maps the sortBy string to the corresponding expression
     // =========================================================
-    Task<Pagination<T>> GetPagedAsync(IReadOnlyCollection<Expression<Func<T, bool>>>? filters, IReadOnlyCollection<Expression<Func<T, object>>>? includes,
-     string? sortBy, IReadOnlyDictionary<string, Expression<Func<T, object>>> sortMap,
-     int? pageIndex, int? pageSize);
+    Task<Pagination<T>> GetPagedAsync(
+        IReadOnlyCollection<Expression<Func<T, bool>>>? filters = null,
+        IReadOnlyCollection<Expression<Func<T, object>>>? includes = null,
+        string? sortBy = null,
+        IReadOnlyDictionary<string, Expression<Func<T, object>>>? sortMap = null,
+        int? pageIndex = null, int? pageSize = null);
+    Task<Pagination<TResult>> GetPagedAsync<TResult>(
+    Expression<Func<T, TResult>> select,
+    IReadOnlyCollection<Expression<Func<T, bool>>>? filters = null,
+    string? sortBy = null,
+    IReadOnlyDictionary<string, Expression<Func<T, object>>>? sortMap = null,
+    int? pageIndex = null,
+    int? pageSize = null)
+    where TResult : class;
 
     // Command
     // =========================================================

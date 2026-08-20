@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Platform.Core.Persistence.Repositories;
 
-namespace Platform.Infrastructure.Persistence.EFCore
+namespace Platform.Infrastructure.Persistence.EFCore.Repositories
 {
     public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {

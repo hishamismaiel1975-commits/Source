@@ -4,7 +4,7 @@ using System.Collections;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
-namespace Platform.Infrastructure.Persistence.MongoDB;
+namespace Platform.Infrastructure.Persistence.MongoDB.Extensions;
 
 //Convert Expression<Func<T, bool>> to FilterDefinition<T> for MongoDB queries case-insensitive
 public static class FilterBuilder

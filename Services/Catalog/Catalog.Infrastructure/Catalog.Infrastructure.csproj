@@ -34,4 +34,8 @@
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\SQLServer\" />
+  </ItemGroup>
+
 </Project>
