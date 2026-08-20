@@ -18,6 +18,9 @@ public class CatalogDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Set the default collation for the database to Case Insensitive
+        modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
+
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(CatalogDbContext).Assembly);
     }
