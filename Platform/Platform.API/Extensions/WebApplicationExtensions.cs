@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
@@ -167,5 +168,18 @@ namespace Platform.API.Extensions
 
             return builder;
         }
+        public static WebApplicationBuilder AddSqlServer<TDbContext>(this WebApplicationBuilder builder)
+        where TDbContext : DbContext
+        {
+            var connectionString = builder.Configuration["SQLServerSettings:ConnectionString"];
+            builder.Services.AddDbContext<TDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            return builder;
+        }
+
+
     }
 }

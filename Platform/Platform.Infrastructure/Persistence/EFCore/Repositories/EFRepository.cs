@@ -7,9 +7,10 @@ using System.Linq.Expressions;
 
 namespace Platform.Infrastructure.Persistence.EFCore.Repositories;
 
-public class EFRepository<T> : IRepository<T> where T : Entity
+public class EFRepository<T> : IRepository<T>
+    where T : Entity
 {
-    protected readonly DbContext _context;
+    private readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
     public EFRepository(DbContext context)
     {

@@ -1,10 +1,11 @@
 using Catalog.Application;
-using Catalog.Infrastructure.Persistence.MongoDB;
+using Catalog.Infrastructure.Persistence.SQLServer;
 using Catalog.Infrastructure.Seed;
+using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services.Localization;
-using Platform.Infrastructure.Persistence.MongoDB.Repositories;
+using Platform.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,20 +13,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add Platform Services
 builder.AddPlatform<Program, Application>();
 
-// Add MongoDB Services
-builder.AddMongoDB();
+// Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
+//builder.AddMongoDB();
+//MongoDbConfiguration.Configure();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
-// Configure MongoDB Serializers and Class Maps
-MongoDbConfiguration.Configure();
+//// Add SQL Server Database Service & SQL Server Repository Services
+builder.AddSqlServer<CatalogDbContext>();
+builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
-// Add Redis Cache
+// Add Redis Cache Service & Repository Services
 builder.AddRedis();
-
-// Add Custom Services
-builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
+// Add Other Services
+builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
 var app = builder.Build();
 

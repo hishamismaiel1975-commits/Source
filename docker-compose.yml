@@ -1,6 +1,6 @@
 services:
   catalog.api:
-    image: ${DOCKER_REGISTRY-}catalogmongoapi
+    image: ${DOCKER_REGISTRY-}catalog-api
     restart: always
     build:
       context: .

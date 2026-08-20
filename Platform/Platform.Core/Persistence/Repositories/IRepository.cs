@@ -4,22 +4,30 @@ using System.Linq.Expressions;
 
 namespace Platform.Core.Persistence.Repositories;
 
+
 public interface IRepository<T> where T : Entity
 {
     // Query
     // =========================================================
+
+    /// <summary>Dynamically applies Include and ThenInclude to nested navigation properties.</summary>
     Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, IReadOnlyCollection<Expression<Func<T, object>>>? includes = null);
     Task<IEnumerable<TResult>> GetAllAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>>? filter = null);
+
+    /// <summary>Dynamically applies Include and ThenInclude to nested navigation properties.</summary>
     Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, IReadOnlyCollection<Expression<Func<T, object>>>? includes = null);
     Task<TResult?> FirstOrDefaultAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>> filter);
     Task<T?> GetByIdAsync(Guid id);
     Task<bool> ExistsAsync(Guid id);
     Task<int> CountAsync();
 
-    // Paging / Filtering / Sorting / Includes
-    // sortBy desc when starts with '-' and asc when not
-    // sortMap is a dictionary that maps the sortBy string to the corresponding expression
-    // =========================================================
+    /// <summary>
+    /// Paging / Filtering / Sorting / Includes.
+    /// Supports descending sort when sortBy starts with '-' and ascending otherwise.
+    /// sortMap maps the sortBy string to the corresponding expression.
+    /// Dynamically applies Include and ThenInclude to nested navigation properties.
+    /// </summary>
+    /// =========================================================
     Task<Pagination<T>> GetPagedAsync(
         IReadOnlyCollection<Expression<Func<T, bool>>>? filters = null,
         IReadOnlyCollection<Expression<Func<T, object>>>? includes = null,
