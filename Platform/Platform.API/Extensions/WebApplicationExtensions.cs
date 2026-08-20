@@ -179,7 +179,17 @@ namespace Platform.API.Extensions
 
             return builder;
         }
+        public static WebApplicationBuilder AddPostgreSQL<DBContext>(this WebApplicationBuilder builder)
+            where DBContext : DbContext
+        {
+            builder.Services.AddDbContext<DBContext>(options =>
+            {
+                options.UseNpgsql(
+                    builder.Configuration["PostgreSQLSettings:ConnectionString"]);
+            });
 
+            return builder;
+        }
 
     }
 }

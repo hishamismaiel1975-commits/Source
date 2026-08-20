@@ -7,6 +7,8 @@ services:
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
     depends_on:
       - mongodb 
+      - sqlserver
+      - postgres
       - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
@@ -22,7 +24,13 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
     volumes:
-      - sqlserver_data:/var/opt/mssql     
+      - sqlserver_data:/var/opt/mssql 
+  
+  postgres:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql
   
   redis:
     image: redis:latest
@@ -31,6 +39,7 @@ services:
 volumes:
   mongo_data:
   sqlserver_data:
+  postgres_data:
   
   
 

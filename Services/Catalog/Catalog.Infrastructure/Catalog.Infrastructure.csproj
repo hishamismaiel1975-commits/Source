@@ -44,4 +44,8 @@
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\PostgreSQL\Migrations\" />
+  </ItemGroup>
+
 </Project>

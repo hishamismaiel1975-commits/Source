@@ -1,5 +1,5 @@
 using Catalog.Application;
-using Catalog.Infrastructure.Persistence.SQLServer;
+using Catalog.Infrastructure.Persistence.PostgreSQL;
 using Catalog.Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
@@ -18,10 +18,16 @@ builder.AddPlatform<Program, Application>();
 //MongoDbConfiguration.Configure();
 //builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
-//// Add SQL Server Database Service & SQL Server Repository Services
-builder.AddSqlServer<CatalogDbContext>();
-builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
+// Add SQL Server Database Service & SQL Server Repository Services
+//builder.AddSqlServer<CatalogDbContext>();
+//builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+
+// Add PostgreSQL Database Service & PostgreSQL Repository Services
+builder.AddPostgreSQL<CatalogPostgresDbContext>();
+builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogPostgresDbContext>());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();

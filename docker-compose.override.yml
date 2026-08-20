@@ -1,31 +1,34 @@
 services:
   catalog.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development     
+      - ASPNETCORE_ENVIRONMENT=Development
       - MongoDbSettings__ConnectionString=mongodb://admin:pass_123456789@mongodb:27017
       - MongoDbSettings__DatabaseName=Catalog
       - SQLServerSettings__ConnectionString=Server=sqlserver,1433;Database=Catalog;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
-      - RedisSettings__ConnectionString=redis:6379  
-   
+      - PostgreSQLSettings__ConnectionString=Host=postgres;Port=5432;Database=Catalog;User Id=admin;Password=pass_123456789;
+      - RedisSettings__ConnectionString=redis:6379
+
     ports:
       - "8001:80"
 
-
   mongodb:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=pass_123456789
     ports:
       - "2001:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: pass_123456789
 
   sqlserver:
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=pass_123456789
     ports:
-      - "2002:1433" 
+      - "2002:1433"
 
-
-
-    
-    
+  postgres:
+    environment:
+      - POSTGRES_DB=Catalog
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pass_123456789
+    ports:
+      - "2003:5432"
