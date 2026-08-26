@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Persistence\PostgreSQL\Migrations\" />
+    <Folder Include="Persistence\SQLServer\Migrations\" />
   </ItemGroup>
 
 </Project>
