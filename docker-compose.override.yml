@@ -1,4 +1,10 @@
 services:
+  discount.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8002:80"
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -7,7 +13,6 @@ services:
       - SQLServerSettings__ConnectionString=Server=sqlserver,1433;Database=Catalog;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
       - PostgreSQLSettings__ConnectionString=Host=postgres;Port=5432;Database=Catalog;User Id=admin;Password=pass_123456789;
       - RedisSettings__ConnectionString=redis:6379
-
     ports:
       - "8001:80"
 
@@ -32,3 +37,5 @@ services:
       - POSTGRES_PASSWORD=pass_123456789
     ports:
       - "2003:5432"
+
+

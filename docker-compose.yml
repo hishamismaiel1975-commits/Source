@@ -1,4 +1,11 @@
 services:
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discount-grpc
+    restart: always
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalog-api
     restart: always
@@ -12,7 +19,6 @@ services:
       - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
-
 
   mongodb:
    image: mongo:latest
@@ -35,6 +41,7 @@ services:
   redis:
     image: redis:latest
     restart: always
+
 
 volumes:
   mongo_data:

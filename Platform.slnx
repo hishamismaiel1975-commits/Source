@@ -1,5 +1,8 @@
 <Solution>
-  <Folder Name="/ApiGateway/" />
+  <Folder Name="/Contracts/">
+    <File Path="Contracts/discount.proto" />
+  </Folder>
+  <Folder Name="/Gateway/" />
   <Folder Name="/Infrastructure/" />
   <Folder Name="/Infrastructure/Portainer/">
     <File Path="Infrastructure/Portainer/docker-compose.yml" />
@@ -16,6 +19,9 @@
     <Project Path="Services/Catalog/Catalog.Application/Catalog.Application.csproj" />
     <Project Path="Services/Catalog/Catalog.Core/Catalog.Core.csproj" />
     <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Services/Discount/">
+    <Project Path="Services/Discount/Discount.Grpc/Discount.Grpc.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
