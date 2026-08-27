@@ -3,6 +3,7 @@ using Catalog.Infrastructure.Persistence.MongoDB;
 using Catalog.Infrastructure.Persistence.PostgreSQL;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using Catalog.Infrastructure.Seed;
+using Discount.Grpc;
 using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
@@ -38,6 +39,14 @@ builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>)
 
 // Add Other Services
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
+// Add Grpc Client Service for Discount Service
+builder.Services.AddGrpcClient<DiscountService.DiscountServiceClient>(options =>
+{
+    options.Address = new Uri(
+        builder.Configuration["GrpcSettings:DiscountUrl"]!
+    );
+});
 
 var app = builder.Build();
 

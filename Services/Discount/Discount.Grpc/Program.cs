@@ -17,6 +17,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
+// Add gRPC service to the request pipeline.
 app.MapGrpcService<DiscountGrpcService>();
 //For postman support
 app.MapGrpcReflectionService();

@@ -47,6 +47,18 @@
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.33.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.76.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="..\..\..\Contracts\discount.proto" GrpcServices="Client" Link="Protos\discount.proto" />
+	</ItemGroup>
+	
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
@@ -60,4 +72,6 @@
     </None>
   </ItemGroup>
 
+	
+	
 </Project>

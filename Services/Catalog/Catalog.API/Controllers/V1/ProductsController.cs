@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
+using Discount.Grpc;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
@@ -16,10 +17,13 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly DiscountService.DiscountServiceClient _discountClient;
 
-        public ProductsController(IMediator mediator)
+
+        public ProductsController(IMediator mediator, DiscountService.DiscountServiceClient discountClient)
         {
             _mediator = mediator;
+            _discountClient = discountClient;
         }
 
         [HttpGet("{id}")]
@@ -51,19 +55,26 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public async Task<Result<ProductResponse>> UpdateProduct(Guid id, UpdateProductCommand command)
         {
             await _mediator.Send(command);
             return Result<ProductResponse>.Success();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         public async Task<Result<ProductResponse>> DeleteProduct(Guid id)
         {
             var command = new ProductsApp.Commands.DeleteProductCommand(id);
             await _mediator.Send(command);
             return Result<ProductResponse>.Success();
+        }
+
+        [HttpGet("discount/{id:guid}")]
+        public async Task<Result<GetDiscountResponse>> GetProductDiscount(Guid id)
+        {
+            var response = await _discountClient.GetDiscountAsync(new GetDiscountRequest { ProductId = id.ToString() });
+            return Result<GetDiscountResponse>.Success(response);
         }
 
     }
