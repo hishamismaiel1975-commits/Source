@@ -12,11 +12,6 @@ services:
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
-    depends_on:
-      - mongodb 
-      - sqlserver
-      - postgres
-      - redis
     environment:
       - ASPNETCORE_HTTP_PORTS=80
 
