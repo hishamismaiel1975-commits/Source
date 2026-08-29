@@ -74,5 +74,15 @@ services:
       retries: 5
       start_period: 10s
 
+  rabbitmq:
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: pass_123456789
+    ports:
+      - "2004:15672"
+
+volumes:
+  rabbitmq_data:
+
 
 

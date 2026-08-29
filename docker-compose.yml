@@ -16,7 +16,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=80
 
   mongodb:
-   image: mongo:latest
+   image: mongo:8.3.8
    restart: always
    volumes:
      - mongo_data:/data/db
@@ -28,20 +28,25 @@ services:
       - sqlserver_data:/var/opt/mssql 
   
   postgres:
-    image: postgres:latest
+    image: postgres:18.6
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql
   
   redis:
-    image: redis:latest
+    image: redis:8.2
     restart: always
-
+  
+  rabbitmq:
+    image: rabbitmq:4.2-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
 volumes:
   mongo_data:
   sqlserver_data:
   postgres_data:
+  rabbitmq_data:
   
   
 
