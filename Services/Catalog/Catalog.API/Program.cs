@@ -1,7 +1,5 @@
 using Catalog.Application;
 using Catalog.Infrastructure.Grpc;
-using Catalog.Infrastructure.Persistence.MongoDB;
-using Catalog.Infrastructure.Persistence.PostgreSQL;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +7,6 @@ using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services;
 using Platform.Infrastructure.Persistence.EFCore.Repositories;
-using Platform.Infrastructure.Persistence.MongoDB.Repositories;
 using Platform.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,18 +15,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddPlatform<Program, Application>();
 
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
-builder.AddMongoDB();
-MongoDbConfiguration.Configure();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+//builder.AddMongoDB();
+//MongoDbConfiguration.Configure();
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+
+// Add PostgreSQL Database Service & PostgreSQL Repository Services
+//builder.AddPostgreSQL<CatalogPostgresDbContext>();
+//builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogPostgresDbContext>());
+//builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<CatalogDbContext>();
 builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
-
-// Add PostgreSQL Database Service & PostgreSQL Repository Services
-builder.AddPostgreSQL<CatalogPostgresDbContext>();
-builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogPostgresDbContext>());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
 

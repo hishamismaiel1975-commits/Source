@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add gRPC & gRPC reflection for postman support
 builder.Services.AddGrpc();
-
-// Add gRPC reflection service for postman support
 builder.Services.AddGrpcReflection();
-
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(80, listenOptions =>
@@ -19,9 +17,8 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
-// Add gRPC service to the request pipeline.
+// Add gRPC service to the request pipeline & reflection for postman support
 app.MapGrpcService<DiscountGrpcService>();
-// For postman support
 app.MapGrpcReflectionService();
 
 

@@ -16,12 +16,16 @@ public class CatalogDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         base.OnModelCreating(modelBuilder);
 
         // Set the default collation for the database to Case Insensitive
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
-        modelBuilder.ApplyConfigurationsFromAssembly(
-            typeof(CatalogDbContext).Assembly);
+        modelBuilder.Entity<Product>()
+        .Property(x => x.Price)
+        .HasPrecision(18, 2);
+
     }
 }
+
