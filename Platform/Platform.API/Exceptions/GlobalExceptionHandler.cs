@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Platform.API.Responses;
-using Platform.Core.Services.Localization;
+using Platform.Core.Services;
 using System.Text.Json;
 
 namespace Platform.API.Exceptions

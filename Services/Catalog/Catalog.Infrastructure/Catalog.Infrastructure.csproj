@@ -7,19 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Seed\Data\brands.json" />
-    <None Remove="Seed\Data\products.json" />
-    <None Remove="Seed\Data\types.json" />
+    <None Remove="Persistence\Seed\Data\brands.json" />
+    <None Remove="Persistence\Seed\Data\products.json" />
+    <None Remove="Persistence\Seed\Data\types.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Seed\Data\brands.json">
+    <Content Include="Persistence\Seed\Data\brands.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Seed\Data\products.json">
+    <Content Include="Persistence\Seed\Data\products.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Seed\Data\types.json">
+    <Content Include="Persistence\Seed\Data\types.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -37,6 +37,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.11" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+	  <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -48,5 +50,17 @@
     <Folder Include="Persistence\PostgreSQL\Migrations\" />
     <Folder Include="Persistence\SQLServer\Migrations\" />
   </ItemGroup>
-
+	
+	<ItemGroup>
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.83.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.33.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.83.0">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="..\..\..\Contracts\Grpc\discount.proto" GrpcServices="Client" />
+	</ItemGroup>
+	
 </Project>

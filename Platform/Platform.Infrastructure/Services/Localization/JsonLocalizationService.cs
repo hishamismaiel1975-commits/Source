@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Platform.Core.Services.Localization;
+using Platform.Core.Services;
 using System.Collections.Frozen;
 using System.Text.Json;
 

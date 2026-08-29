@@ -29,7 +29,7 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
 
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.11" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.1-preview.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.17.0" />
     <PackageReference Include="Serilog" Version="4.4.0" />
@@ -43,21 +43,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Platform\Platform.API\Platform.API.csproj" />
+    <ProjectReference Include="..\..\..\Platform\Platform.Infrastructure\Platform.Infrastructure.csproj" />
     <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.76.0" />
-		<PackageReference Include="Google.Protobuf" Version="3.33.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.76.0">
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-	</ItemGroup>
 	
-	<ItemGroup>
-		<Protobuf Include="..\..\..\Contracts\discount.proto" GrpcServices="Client" Link="Protos\discount.proto" />
-	</ItemGroup>
+	
+
 	
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Platform.Core.Persistence.Repositories;
 using System.Text.Json;
 
-namespace Catalog.Infrastructure.Seed
+namespace Catalog.Infrastructure.Persistence.Seed
 {
     public class DatabaseSeeder
     {
@@ -13,7 +13,7 @@ namespace Catalog.Infrastructure.Seed
             var _typeRepository = services.GetRequiredService<IRepository<ProductType>>();
             var _productRepository = services.GetRequiredService<IRepository<Product>>();
 
-            var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Seed", "Data");
+            var SeedBasePath = Path.Combine(AppContext.BaseDirectory, "Persistence", "Seed", "Data");
 
             //Seed Brands
             if (await _brandRepository.CountAsync() == 0)

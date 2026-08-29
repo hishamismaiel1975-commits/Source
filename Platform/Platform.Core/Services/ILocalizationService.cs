@@ -1,4 +1,4 @@
-﻿namespace Platform.Core.Services.Localization
+﻿namespace Platform.Core.Services
 {
     public interface ILocalizationService
     {

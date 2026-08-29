@@ -10,13 +10,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Contracts\discount.proto" GrpcServices="Server" Link="Protos\discount.proto" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.83.0" />
+		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.83.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />	
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.83.0" />
-    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.83.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
+	  <Protobuf Include="..\..\..\Contracts\Grpc\discount.proto" GrpcServices="Server" />
   </ItemGroup>
 
 

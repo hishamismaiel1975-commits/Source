@@ -1,5 +1,5 @@
 services:
-  discount.grpc:
+  discount.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
@@ -13,7 +13,7 @@ services:
       - SQLServerSettings__ConnectionString=Server=sqlserver,1433;Database=Catalog;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
       - PostgreSQLSettings__ConnectionString=Host=postgres;Port=5432;Database=Catalog;User Id=admin;Password=pass_123456789;
       - RedisSettings__ConnectionString=redis:6379
-      - GrpcSettings__DiscountUrl=http://discount.grpc
+      - GrpcSettings__DiscountUrl=http://discount.api
     ports:
       - "8001:80"
 

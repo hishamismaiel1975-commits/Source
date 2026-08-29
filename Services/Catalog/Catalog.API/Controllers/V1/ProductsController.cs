@@ -1,7 +1,8 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
-using Discount.Grpc;
+using Catalog.Core.DTOs;
+using Catalog.Core.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
@@ -17,13 +18,12 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly DiscountService.DiscountServiceClient _discountClient;
+        private readonly IDiscountService _discountService;
 
-
-        public ProductsController(IMediator mediator, DiscountService.DiscountServiceClient discountClient)
+        public ProductsController(IMediator mediator, IDiscountService discountService)
         {
             _mediator = mediator;
-            _discountClient = discountClient;
+            _discountService = discountService;
         }
 
         [HttpGet("{id}")]
@@ -71,10 +71,10 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet("discount/{id:guid}")]
-        public async Task<Result<GetDiscountResponse>> GetProductDiscount(Guid id)
+        public async Task<Result<DiscountDTO>> GetProductDiscount(Guid id)
         {
-            var response = await _discountClient.GetDiscountAsync(new GetDiscountRequest { ProductId = id.ToString() });
-            return Result<GetDiscountResponse>.Success(response);
+            var response = await _discountService.GetDiscountAsync(id);
+            return Result<DiscountDTO>.Success(response);
         }
 
     }

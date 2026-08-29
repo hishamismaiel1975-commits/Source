@@ -1,10 +1,10 @@
-services:
-  discount.api:
-    image: ${DOCKER_REGISTRY-}discount-api
+  services:
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discount-grpc
     restart: always
     build:
       context: .
-      dockerfile: Services/Discount/Discount.api/Dockerfile
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalog-api

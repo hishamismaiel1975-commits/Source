@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Platform\Platform.Core\Platform.Core.csproj" />
+    <ProjectReference Include="..\..\Discount\Discount.Grpc\Discount.API.csproj" />
   </ItemGroup>
 
 </Project>

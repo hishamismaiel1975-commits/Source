@@ -1,6 +1,7 @@
 <Solution>
-  <Folder Name="/Contracts/">
-    <File Path="Contracts/discount.proto" />
+  <Folder Name="/Contracts/" />
+  <Folder Name="/Contracts/Grpc/">
+    <File Path="Contracts/Grpc/discount.proto" />
   </Folder>
   <Folder Name="/Gateway/" />
   <Folder Name="/Infrastructure/" />
@@ -21,7 +22,7 @@
     <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/Services/Discount/">
-    <Project Path="Services/Discount/Discount.Grpc/Discount.Grpc.csproj" />
+    <Project Path="Services/Discount/Discount.API/Discount.API.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
