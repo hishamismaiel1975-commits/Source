@@ -14,6 +14,5 @@ namespace Catalog.Core.Persistence.Entities
         public required DateTime CreatedDate { get; set; }
         public ProductBrand ProductBrand { get; set; }
         public ProductType ProductType { get; set; }
-
     }
 }

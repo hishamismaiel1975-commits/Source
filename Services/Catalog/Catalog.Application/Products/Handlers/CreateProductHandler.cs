@@ -17,9 +17,9 @@ namespace Catalog.Application.Products.Handlers
         }
         public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = ProductMapper.ToEntity(request, DateTime.Now);
+            var product = ProductMapper.ToEntity(request, DateTime.UtcNow);
             await _productRepository.CreateAsync(product);
-            return ProductMapper.ToResponse(product);
+            return ProductResponseMapper.ToResponse(product);
         }
     }
 }
