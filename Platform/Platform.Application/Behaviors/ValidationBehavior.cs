@@ -36,7 +36,7 @@ namespace Platform.Application.Behaviors
 
             if (failures.Count != 0)
             {
-                throw new ValidationException(failures);
+                1throw new ValidationException(failures);
             }
 
             return await next();
