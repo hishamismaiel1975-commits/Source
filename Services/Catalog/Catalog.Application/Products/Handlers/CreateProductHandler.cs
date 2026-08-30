@@ -4,7 +4,7 @@ using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using MediatR;
 using Platform.Core.Persistence.Repositories;
-using Platform.Core.Time;
+
 
 namespace Catalog.Application.Products.Handlers
 {
@@ -18,9 +18,9 @@ namespace Catalog.Application.Products.Handlers
         }
         public async Task<ProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = ProductMapper.ToEntity(request, SaudiTime.Now);
+            var product = ProductEntityMapper.ToEntity(request);
             await _productRepository.CreateAsync(product);
-            return ProductMapper.ToResponse(product);
+            return ProductResponseMapper.ToResponse(product);
         }
     }
 }

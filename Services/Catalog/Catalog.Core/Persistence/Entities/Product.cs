@@ -11,7 +11,7 @@ namespace Catalog.Core.Persistence.Entities
         public required Guid ProductBrandId { get; set; }
         public required Guid ProductTypeId { get; set; }
         public required decimal Price { get; set; }
-        public required DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
         public ProductBrand ProductBrand { get; set; }
         public ProductType ProductType { get; set; }
     }

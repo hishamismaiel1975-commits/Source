@@ -45,7 +45,7 @@ namespace Catalog.Application.Products.Handlers
             };
 
             var products = await _productRepository.GetPagedAsync(filters, includes, request.SortBy, sortMap, request.PageIndex, request.PageSize);
-            return ProductMapper.ToResponse(products);
+            return ProductResponseMapper.ToResponse(products);
         }
     }
 }

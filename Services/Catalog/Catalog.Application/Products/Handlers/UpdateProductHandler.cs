@@ -17,7 +17,8 @@ namespace Catalog.Application.Products.Handlers
         public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var existing = await _productRepository.GetByIdAsync(request.Id);
-            var updatedProduct = ProductMapper.ToEntity(request, existing.CreatedDate);
+            var updatedProduct = ProductEntityMapper.ToEntity(request);
+            updatedProduct.CreatedDate = existing.CreatedDate;
             await _productRepository.UpdateAsync(updatedProduct);
         }
     }

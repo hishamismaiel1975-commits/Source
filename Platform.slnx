@@ -1,5 +1,7 @@
 <Solution>
-  <Folder Name="/Contracts/" />
+  <Folder Name="/Contracts/">
+    <Project Path="Contracts/EventBus.Messages/EventBus.Messages.csproj" Id="adc0fcdc-5ee7-402a-95f2-9fbd93154da2" />
+  </Folder>
   <Folder Name="/Contracts/Grpc/">
     <File Path="Contracts/Grpc/discount.proto" />
   </Folder>

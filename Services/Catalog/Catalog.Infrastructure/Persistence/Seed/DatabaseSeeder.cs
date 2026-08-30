@@ -1,7 +1,6 @@
 ﻿using Catalog.Core.Persistence.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Core.Persistence.Repositories;
-using Platform.Core.Time;
 using System.Text.Json;
 
 namespace Catalog.Infrastructure.Persistence.Seed
@@ -40,7 +39,7 @@ namespace Catalog.Infrastructure.Persistence.Seed
                 foreach (var product in list)
                 {
                     //Set Created Date
-                    product.CreatedDate = SaudiTime.Now;
+                    product.CreatedDate = DateTime.UtcNow;
                 }
                 await _productRepository.CreateManyAsync(list);
             }
