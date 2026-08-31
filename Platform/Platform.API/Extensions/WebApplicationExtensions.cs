@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -15,6 +15,7 @@ using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Platform.Application.Behaviors;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 namespace Platform.API.Extensions
@@ -23,6 +24,14 @@ namespace Platform.API.Extensions
     {
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder)
         {
+            //Add Serilog 
+            builder.Host.UseSerilog((context, services, configuration) =>
+            {
+                configuration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services);
+            });
+
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();
@@ -53,33 +62,11 @@ namespace Platform.API.Extensions
                     options.SubstituteApiVersionInUrl = true;
                 });
 
-            //Add Serilog 
-            builder.Host.UseSerilog((context, services, configuration) =>
-            {
-                configuration
-                    .MinimumLevel.Information()
-                    .WriteTo.Console();
-            });
 
             //Add Swagger services with API versioning support
-            builder.Services.AddSwaggerGen(options =>
-            {
-                using var serviceProvider = builder.Services.BuildServiceProvider();
-
-                var provider = serviceProvider
-                    .GetRequiredService<IApiVersionDescriptionProvider>();
-
-                foreach (var description in provider.ApiVersionDescriptions)
-                {
-                    options.SwaggerDoc(
-                        description.GroupName,
-                        new OpenApiInfo
-                        {
-                            Title = typeof(TProgram).Assembly.GetName().Name,
-                            Version = description.ApiVersion.ToString()
-                        });
-                }
-            });
+            builder.Services.AddTransient<
+             IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions<TProgram>>();
+            builder.Services.AddSwaggerGen();
 
             //Add OpenTelemetry services
             builder.Services.AddOpenTelemetry()

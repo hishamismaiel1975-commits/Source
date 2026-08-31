@@ -2,6 +2,7 @@ using Catalog.Application;
 using Catalog.Infrastructure.Grpc;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
@@ -39,6 +40,15 @@ builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
 // Add Grpc Client Services
 builder.AddGrpcServices();
+
+// Configure MassTransit here
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+    });
+});
 
 var app = builder.Build();
 

@@ -14,6 +14,7 @@ services:
       PostgreSQLSettings__ConnectionString: Host=postgres;Port=5432;Database=Catalog;User Id=admin;Password=pass_123456789;
       RedisSettings__ConnectionString: redis:6379
       GrpcSettings__DiscountUrl: http://discount.api
+      EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
     depends_on:
       mongodb:
         condition: service_healthy
@@ -22,6 +23,8 @@ services:
       postgres:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
     ports:
       - "8001:80"
@@ -80,6 +83,12 @@ services:
       RABBITMQ_DEFAULT_PASS: pass_123456789
     ports:
       - "2004:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   rabbitmq_data:
