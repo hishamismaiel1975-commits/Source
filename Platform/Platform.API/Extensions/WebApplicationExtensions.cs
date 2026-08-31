@@ -32,6 +32,7 @@ namespace Platform.API.Extensions
                     .ReadFrom.Services(services);
             });
 
+
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddProblemDetails();

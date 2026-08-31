@@ -21,7 +21,6 @@ var app = builder.Build();
 app.MapGrpcService<DiscountGrpcService>();
 app.MapGrpcReflectionService();
 
-
 app.MapGet("/", () =>
     "This is a gRPC service. Use a gRPC client to communicate with it.");
 

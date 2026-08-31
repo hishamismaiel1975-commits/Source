@@ -3,8 +3,8 @@ using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using EventBus.Messages.Events;
-using MassTransit;
 using FreeMediator;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 using Platform.Core.Persistence.Repositories;
 
@@ -33,8 +33,6 @@ namespace Catalog.Application.Products.Handlers
                 ProductId = product.Id,
                 ProjectName = product.Name
             }, cancellationToken);
-
-            _logger.LogInformation("Product created and event published: {ProductId}", product.Id);
 
             return ProductResponseMapper.ToResponse(product);
         }
