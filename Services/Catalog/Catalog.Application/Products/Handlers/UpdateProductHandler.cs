@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Mappers;
 using Catalog.Core.Persistence.Entities;
-using MediatR;
+using FreeMediator;
 using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers

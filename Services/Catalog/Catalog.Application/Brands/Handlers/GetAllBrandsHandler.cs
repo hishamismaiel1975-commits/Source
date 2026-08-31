@@ -2,7 +2,7 @@
 using Catalog.Application.Brands.Queries;
 using Catalog.Application.Brands.Responses;
 using Catalog.Core.Persistence.Entities;
-using MediatR;
+using FreeMediator;
 using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Brands.Handlers

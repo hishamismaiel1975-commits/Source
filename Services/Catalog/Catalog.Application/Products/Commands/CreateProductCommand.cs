@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Products.Responses;
-using MediatR;
+using FreeMediator;
+
 
 namespace Catalog.Application.Products.Commands
 {

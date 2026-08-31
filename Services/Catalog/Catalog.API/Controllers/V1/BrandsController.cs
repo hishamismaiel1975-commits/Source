@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Brands.Responses;
-using MediatR;
+using FreeMediator;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
 using BrandApp = Catalog.Application.Brands;

@@ -1,12 +1,17 @@
 ﻿using FluentValidation;
-using MediatR;
+using FreeMediator;
 
 
 namespace Platform.Application.Behaviors
 {
+
+    /// <summary>
+    /// Implements a validation behavior for the mediator pipeline.
+    /// Uses FluentValidation to validate requests before they are processed by the next handler.
+    /// </summary>
     public sealed class ValidationBehavior<TRequest, TResponse>
         : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : notnull
+        where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

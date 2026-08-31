@@ -3,7 +3,7 @@ using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.DTOs;
 using Catalog.Core.Services;
-using MediatR;
+using FreeMediator;
 using Microsoft.AspNetCore.Mvc;
 using Platform.API.Responses;
 using Platform.Core.Models;

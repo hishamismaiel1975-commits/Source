@@ -1,5 +1,5 @@
 ﻿using Catalog.Application.Products.Responses;
-using MediatR;
+using FreeMediator;
 using Platform.Core.Models;
 
 namespace Catalog.Application.Products.Queries

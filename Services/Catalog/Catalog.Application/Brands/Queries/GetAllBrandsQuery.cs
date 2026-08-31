@@ -1,5 +1,5 @@
 ﻿using Catalog.Application.Brands.Responses;
-using MediatR;
+using FreeMediator;
 
 namespace Catalog.Application.Brands.Queries
 {

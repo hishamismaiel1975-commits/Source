@@ -4,7 +4,7 @@ using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using EventBus.Messages.Events;
 using MassTransit;
-using MediatR;
+using FreeMediator;
 using Microsoft.Extensions.Logging;
 using Platform.Core.Persistence.Repositories;
 

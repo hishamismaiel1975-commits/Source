@@ -4,10 +4,8 @@ using FluentValidation;
 public class CreateProductCommandValidator
     : AbstractValidator<CreateProductCommand>
 {
-    public CreateProductCommandValidator(
-        )
+    public CreateProductCommandValidator()
     {
-
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("ProductNameRequired")

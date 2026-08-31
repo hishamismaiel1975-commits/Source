@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using FluentValidation;
-using MediatR;
+using FreeMediator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -90,15 +90,13 @@ namespace Platform.API.Extensions
                 //  .AddOtlpExporter();
             });
 
-            //Register Mediatr
-            var assemblies = new Assembly[]
-                {
-                     Assembly.GetExecutingAssembly(),
-                     typeof(TMediatr).Assembly
-                };
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+            //Register FreeMediator 
+            builder.Services.AddMediator(config =>
+            {
+                var assemblies = new Assembly[] { Assembly.GetExecutingAssembly(), typeof(TMediatr).Assembly };
+                config.RegisterServicesFromAssemblies(assemblies);
+            });
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
             // Add services to the container.

@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Types.Mappers;
 using Catalog.Application.Types.Queries;
 using Catalog.Application.Types.Responses;
-using MediatR;
+using FreeMediator;
 using Platform.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Types.Handlers

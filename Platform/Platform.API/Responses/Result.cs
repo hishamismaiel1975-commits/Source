@@ -3,7 +3,6 @@
     public sealed class Result<T>
     {
         public bool IsSuccess { get; init; }
-        public string? ErrorMessage { get; init; }
         public IList<string>? ErrorMessages { get; init; }
         public T? data { get; init; }
 
@@ -29,7 +28,7 @@
             return new Result<T>
             {
                 IsSuccess = false,
-                ErrorMessage = error
+                ErrorMessages = new List<string> { error }
             };
         }
 

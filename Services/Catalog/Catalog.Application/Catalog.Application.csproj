@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FreeMediator" Version="1.4.0" />
     <PackageReference Include="MassTransit" Version="9.2.1" />
-    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
   </ItemGroup>
 

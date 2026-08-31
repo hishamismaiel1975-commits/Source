@@ -2,7 +2,7 @@
 using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
-using MediatR;
+using FreeMediator;
 using Platform.Core.Extensions;
 using Platform.Core.Models;
 using Platform.Core.Persistence.Repositories;
