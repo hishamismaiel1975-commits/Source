@@ -3,8 +3,17 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "catalog.api",
+      "composeLaunchUrl": "http://localhost:8001/swagger/index.html",
       "serviceActions": {
-        "catalog.api": "StartDebugging"
+        "catalog.api": "StartDebugging",
+        "discount.api": "StartDebugging",
+        "mongodb": "StartWithoutDebugging",
+        "postgres": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging",
+        "sqlserver": "StartWithoutDebugging"
       }
     }
   }
