@@ -1,11 +1,15 @@
 services:
   discount.api:
+    labels:
+      com.microsoft.visual-studio.project-name: "Discount.API"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     ports:
       - "8002:80"
 
   catalog.api:
+    labels:
+      com.microsoft.visual-studio.project-name: "Catalog.API"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       MongoDbSettings__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017

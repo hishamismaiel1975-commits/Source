@@ -5,11 +5,16 @@
   <Folder Name="/Contracts/Grpc/">
     <File Path="Contracts/Grpc/discount.proto" />
   </Folder>
-  <Folder Name="/Gateway/" />
-  <Folder Name="/Infrastructure/" />
-  <Folder Name="/Infrastructure/Portainer/">
-    <File Path="Infrastructure/Portainer/docker-compose.yml" />
+  <Folder Name="/Deployment/" />
+  <Folder Name="/Deployment/Docker/">
+    <Project Path="Deployment/Docker/docker-compose.dcproj" Id="81dded9d-158b-e303-5f62-77a2896d2a5a">
+      <Build />
+    </Project>
   </Folder>
+  <Folder Name="/Deployment/Portainer/">
+    <File Path="Deployment/Portainer/docker-compose.yml" />
+  </Folder>
+  <Folder Name="/Gateway/" />
   <Folder Name="/Platform/">
     <Project Path="Platform/Platform.API/Platform.API.csproj" Id="c614c9fd-7934-4af6-9ec2-a572fa298e81" />
     <Project Path="Platform/Platform.Application/Platform.Application.csproj" Id="efcfb271-dd50-4d14-9c7a-103faf706ae7" />
@@ -26,7 +31,4 @@
   <Folder Name="/Services/Discount/">
     <Project Path="Services/Discount/Discount.API/Discount.API.csproj" />
   </Folder>
-  <Project Path="docker-compose.dcproj">
-    <Build />
-  </Project>
 </Solution>
