@@ -29,7 +29,7 @@ namespace Catalog.Application.Products.Handlers
             await _productRepository.CreateAsync(product);
             await _publishEndpoint.Publish(new CreateProductEvent
             {
-                Id = Guid.NewGuid(),
+                CorrelationId = Guid.NewGuid(),
                 ProductId = product.Id,
                 ProjectName = product.Name
             }, cancellationToken);

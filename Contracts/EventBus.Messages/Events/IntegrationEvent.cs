@@ -2,18 +2,18 @@
 {
     public class IntegrationEvent
     {
-        public Guid Id { get; set; }
+        public Guid CorrelationId { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public IntegrationEvent()
         {
-            Id = Guid.NewGuid();
+            CorrelationId = Guid.NewGuid();
             CreatedDate = DateTime.UtcNow;
         }
 
         public IntegrationEvent(Guid Id, DateTime CreatedDate)
         {
-            this.Id = Id;
+            this.CorrelationId = Id;
             this.CreatedDate = CreatedDate;
         }
     }
