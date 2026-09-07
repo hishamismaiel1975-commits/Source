@@ -4,12 +4,12 @@ using Platform.Core.Persistence.Repositories;
 
 namespace Platform.Infrastructure.Persistence.EFCore.Repositories;
 
-public class EFTranRepository<T> : ITranRepository<T> where T : Entity
+public class EFTransactionRepository<T> : ITransactionRepository<T> where T : Entity
 {
     protected readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
 
-    public EFTranRepository(DbContext context)
+    public EFTransactionRepository(DbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();

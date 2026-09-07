@@ -2,6 +2,7 @@
 using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 using FreeMediator;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,16 +53,16 @@ namespace Platform.API.Extensions
             // Configure API Versioning
             builder.Services
                .AddApiVersioning(options =>
-                {
-                    options.DefaultApiVersion = new ApiVersion(1, 0);
-                    options.AssumeDefaultVersionWhenUnspecified = true;
-                    options.ReportApiVersions = true;
-                })
+               {
+                   options.DefaultApiVersion = new ApiVersion(1, 0);
+                   options.AssumeDefaultVersionWhenUnspecified = true;
+                   options.ReportApiVersions = true;
+               })
                .AddApiExplorer(options =>
-                {
-                    options.GroupNameFormat = "'v'VVV";
-                    options.SubstituteApiVersionInUrl = true;
-                });
+               {
+                   options.GroupNameFormat = "'v'VVV";
+                   options.SubstituteApiVersionInUrl = true;
+               });
 
 
             //Add Swagger services with API versioning support

@@ -2,7 +2,7 @@
 
 namespace Platform.Core.Persistence.Repositories;
 
-public interface ITranRepository<T> where T : Entity
+public interface ITransactionRepository<T> where T : Entity
 {
     // Command
     // =========================================================

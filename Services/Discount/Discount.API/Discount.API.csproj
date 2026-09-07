@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Contracts\EventBus.Messages\EventBus.Messages.csproj" />
-		<ProjectReference Include="..\..\..\Platform\Platform.API\Platform.API.csproj" />
+		<ProjectReference Include="..\..\..\Platform\Platform.csproj" />
 	</ItemGroup>
 
 

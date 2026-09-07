@@ -29,7 +29,8 @@ builder.AddPlatform<Program, Application>();
 builder.AddSqlServer<CatalogDbContext>();
 builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
-
+builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(EFTransactionRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork<CatalogDbContext>>();
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
@@ -41,12 +42,18 @@ builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 // Add Grpc Client Services
 builder.AddGrpcServices();
 
-// Configure MassTransit here
+// Add MassTransit with RabbitMQ and Entity Framework Outbox
 builder.Services.AddMassTransit(config =>
 {
-    config.UsingRabbitMq((ctx, cfg) =>
+    config.AddEntityFrameworkOutbox<CatalogDbContext>(o =>
+    {
+        o.UseBusOutbox();
+        o.UseSqlServer();
+    });
+    config.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        cfg.ConfigureEndpoints(context);
     });
 });
 

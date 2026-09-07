@@ -1,7 +1,6 @@
 
 using Discount.API.EventBusConsumer;
 using Discount.API.GrpcServices;
-using EventBus.Messages.Constants;
 using MassTransit;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -27,10 +26,7 @@ builder.Services.AddMassTransit(config =>
         cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
 
         // Configure the receive endpoint for the consumer
-        cfg.ReceiveEndpoint(EventBusConstants.CatalogDiscountQueue, c =>
-        {
-            c.ConfigureConsumer<CreateProductConsumer>(context);
-        });
+        cfg.ConfigureEndpoints(context);
     });
 });
 

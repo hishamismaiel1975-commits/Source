@@ -1,4 +1,5 @@
 ﻿using Catalog.Core.Persistence.Entities;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infrastructure.Persistence.SQLServer;
@@ -22,9 +23,18 @@ public class CatalogDbContext : DbContext
         // Set the default collation for the database to Case Insensitive
         modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
+        // MassTransit Outbox tables
+        modelBuilder.AddInboxStateEntity();
+        modelBuilder.AddOutboxMessageEntity();
+        modelBuilder.AddOutboxStateEntity();
+
         modelBuilder.Entity<Product>()
-        .Property(x => x.Price)
-        .HasPrecision(18, 2);
+            .Property(x => x.Price)
+            .HasPrecision(18, 2);
+
+
+
+
 
     }
 }

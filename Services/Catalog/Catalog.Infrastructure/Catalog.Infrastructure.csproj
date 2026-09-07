@@ -36,13 +36,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.11" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
+    <PackageReference Include="MongoDB.Bson" Version="3.11.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
 	  <PackageReference Include="Riok.Mapperly" Version="4.3.1" />
 
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Platform\Platform.Infrastructure\Platform.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Platform\Platform.csproj" />
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 
