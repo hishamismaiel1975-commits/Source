@@ -12,7 +12,9 @@
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.83.0" />
 		<PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.83.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />	
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
+		<PackageReference Include="MassTransit" Version="8.5.10" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.5.10" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,7 @@
 
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\Contracts\EventBus.Messages\EventBus.Messages.csproj" />
 		<ProjectReference Include="..\..\..\Platform\Platform.API\Platform.API.csproj" />
 	</ItemGroup>
 
