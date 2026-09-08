@@ -1,6 +1,6 @@
-﻿using Core.Services.Discount;
-using Core.Services.Discount.DTOs;
-using Discount.GRPC;
+﻿using Discount.GRPC;
+using Platform.Core.DTOs.Discount;
+using Platform.Core.Services;
 
 namespace Infrastructure.Grpc.Discount
 {

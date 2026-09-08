@@ -1,6 +1,6 @@
-﻿using Core.Services.Discount.DTOs;
+﻿using Platform.Core.DTOs.Discount;
 
-namespace Core.Services.Discount;
+namespace Platform.Core.Services;
 
 public interface IDiscountService
 {

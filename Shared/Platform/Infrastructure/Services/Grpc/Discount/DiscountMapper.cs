@@ -1,5 +1,5 @@
-﻿using Core.Services.Discount.DTOs;
-using Discount.GRPC;
+﻿using Discount.GRPC;
+using Platform.Core.DTOs.Discount;
 using Riok.Mapperly.Abstractions;
 
 namespace Infrastructure.Grpc.Discount

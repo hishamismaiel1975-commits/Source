@@ -3,9 +3,9 @@ using Catalog.Application.Products.Mappers;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
-using Core.EventBus.Events;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Platform.Core.EventBus.Events;
 using Platform.Core.Persistence.Repositories;
 
 

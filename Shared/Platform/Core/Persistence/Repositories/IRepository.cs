@@ -1,4 +1,4 @@
-﻿using Platform.Core.Models;
+﻿using Platform.Core.DTOs;
 using Platform.Core.Persistence.Entities;
 using System.Linq.Expressions;
 

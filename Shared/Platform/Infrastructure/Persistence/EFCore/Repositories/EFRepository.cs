@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.Core.Models;
+using Platform.Core.DTOs;
 using Platform.Core.Persistence.Entities;
 using Platform.Core.Persistence.Repositories;
 using Platform.Infrastructure.Persistence.EFCore.Extensions;

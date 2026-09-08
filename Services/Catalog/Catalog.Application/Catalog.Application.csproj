@@ -15,10 +15,6 @@
 
   <ItemGroup>
 
-    <ProjectReference Include="..\..\..\Shared\Core\Core.csproj" />
-
-    <ProjectReference Include="..\..\..\Shared\Infrastructure\Infrastructure.csproj" />
-
     <ProjectReference Include="..\..\..\Shared\Platform\Platform.csproj" />
 
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />

@@ -1,7 +1,7 @@
-﻿using Core.Services.Discount;
-using Discount.GRPC;
+﻿using Discount.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Platform.Core.Services;
 
 namespace Infrastructure.Grpc.Discount;
 
