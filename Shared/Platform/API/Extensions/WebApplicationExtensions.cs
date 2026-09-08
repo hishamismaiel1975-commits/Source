@@ -15,6 +15,9 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.API.Exceptions;
 using Platform.Application.Behaviors;
+using Platform.Core.Services;
+using Platform.Infrastructure.Persistence.EFCore.Interceptors;
+using Platform.Infrastructure.Services;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
@@ -25,6 +28,11 @@ namespace Platform.API.Extensions
     {
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder)
         {
+            // Register Auditing & CurrentUser services
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+            builder.Services.AddScoped<AuditingSaveChangesInterceptor>();
+
             //Add Serilog 
             builder.Host.UseSerilog((context, services, configuration) =>
             {
@@ -32,7 +40,6 @@ namespace Platform.API.Extensions
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services);
             });
-
 
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -63,7 +70,6 @@ namespace Platform.API.Extensions
                    options.GroupNameFormat = "'v'VVV";
                    options.SubstituteApiVersionInUrl = true;
                });
-
 
             //Add Swagger services with API versioning support
             builder.Services.AddTransient<
