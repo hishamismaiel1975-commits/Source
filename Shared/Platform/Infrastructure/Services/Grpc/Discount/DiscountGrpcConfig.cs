@@ -5,9 +5,9 @@ using Platform.Core.Services;
 
 namespace Infrastructure.Grpc.Discount;
 
-public static class GrpcConfiguration
+public static class DiscountGrpcConfig
 {
-    public static WebApplicationBuilder AddDiscountGrpcServices(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddDiscountGrpcService(this WebApplicationBuilder builder)
     {
         builder.Services.AddGrpcClient<DiscountService.DiscountServiceClient>(options =>
         {

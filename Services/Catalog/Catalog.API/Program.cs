@@ -1,7 +1,6 @@
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
-using Infrastructure.Grpc.Discount;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
@@ -9,6 +8,7 @@ using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services;
 using Platform.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Infrastructure.Services;
+using Platform.Infrastructure.Services.HttpClients.Discount;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,8 +39,10 @@ builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>)
 // Add Other Services
 builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
-// Add Discount gRPC Service 
-builder.AddDiscountGrpcServices();
+// Add Discount gRPC Service or Add Discount HTTP Client Service
+//builder.AddDiscountGrpcService();
+builder.AddDiscountHttpClientService();
+
 
 // Add MassTransit with RabbitMQ and Entity Framework Outbox
 builder.Services.AddMassTransit(config =>
