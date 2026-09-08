@@ -61,7 +61,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Contracts\Grpc\discount.proto" GrpcServices="Client" />
+		<Protobuf Include="..\..\..\Infrastructure\Grpc\discount.proto" GrpcServices="Client" />
 	</ItemGroup>
 	
 </Project>

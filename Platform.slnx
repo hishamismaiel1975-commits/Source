@@ -1,15 +1,17 @@
 <Solution>
-  <Folder Name="/Contracts/">
-    <Project Path="Contracts/EventBus.Messages/EventBus.Messages.csproj" Id="adc0fcdc-5ee7-402a-95f2-9fbd93154da2" />
-  </Folder>
-  <Folder Name="/Contracts/Grpc/">
-    <File Path="Contracts/Grpc/discount.proto" />
-  </Folder>
   <Folder Name="/Deployment/" />
   <Folder Name="/Deployment/Portainer/">
     <File Path="../../../../Deployment/Portainer/docker-compose.yml" />
   </Folder>
   <Folder Name="/Gateway/" />
+  <Folder Name="/Infrastructure/" />
+  <Folder Name="/Infrastructure/EventBus/">
+    <Project Path="Infrastructure/EventBus/EventBus.Messages/EventBus.Messages.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/Grpc/">
+    <File Path="Infrastructure/Grpc/discount.proto" />
+  </Folder>
+  <Folder Name="/Infrastructure/HttpClient/" />
   <Folder Name="/Platform/">
     <Project Path="Platform/Platform.csproj" />
   </Folder>

@@ -17,15 +17,14 @@
 		<PackageReference Include="MassTransit.RabbitMQ" Version="8.5.10" />
 	</ItemGroup>
 
-  <ItemGroup>
-	  <Protobuf Include="..\..\..\Contracts\Grpc\discount.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Contracts\EventBus.Messages\EventBus.Messages.csproj" />
-		<ProjectReference Include="..\..\..\Platform\Platform.csproj" />
+	  <ProjectReference Include="..\..\..\Infrastructure\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
+	  <ProjectReference Include="..\..\..\Platform\Platform.csproj" />
 	</ItemGroup>
+
+  <ItemGroup>
+	  <Protobuf Include="..\..\..\Infrastructure\Grpc\discount.proto" GrpcServices="Server" />
+  </ItemGroup>
 
 
 </Project>
