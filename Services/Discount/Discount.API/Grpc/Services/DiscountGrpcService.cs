@@ -1,13 +1,11 @@
 ﻿using Discount.GRPC;
 using Grpc.Core;
 
-namespace Discount.API.GrpcServices;
+namespace Discount.API.Grpc.Services;
 
 public class DiscountGrpcService : DiscountService.DiscountServiceBase
 {
-    public override Task<GetDiscountResponse> GetDiscount(
-        GetDiscountRequest request,
-        ServerCallContext context)
+    public override Task<GetDiscountResponse> GetDiscount(GetDiscountRequest request, ServerCallContext context)
     {
         var response = new GetDiscountResponse
         {

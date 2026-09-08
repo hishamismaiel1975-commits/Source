@@ -7,7 +7,7 @@ namespace Infrastructure.Grpc.Discount
     [Mapper]
     public static partial class DiscountMapper
     {
-        public static partial DiscountDTO ToDTO(GetDiscountResponse discountResponse);
+        public static partial DiscountResponse ToDTO(GetDiscountResponse discountResponse);
 
     }
 }

@@ -1,6 +1,6 @@
 
-using Discount.API.EventBusConsumer;
-using Discount.API.GrpcServices;
+using Discount.API.EventBus.Consumer;
+using Discount.API.Grpc.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -11,6 +11,13 @@ builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
 builder.WebHost.ConfigureKestrel(options =>
 {
+    // REST / HTTP API
+    options.ListenAnyIP(80, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
+
+    // gRPC
     options.ListenAnyIP(81, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
@@ -30,10 +37,21 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Add gRPC service to the request pipeline & reflection for postman support
 app.MapGrpcService<DiscountGrpcService>();
 app.MapGrpcReflectionService();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.MapControllers();
 app.Run();

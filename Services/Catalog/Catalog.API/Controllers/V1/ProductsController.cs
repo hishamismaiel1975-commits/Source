@@ -71,10 +71,10 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet("discount/{id:guid}")]
-        public async Task<Result<DiscountDTO>> GetProductDiscount(Guid id)
+        public async Task<Result<DiscountResponse>> GetProductDiscount(Guid id)
         {
             var response = await _discountService.GetDiscountAsync(id);
-            return Result<DiscountDTO>.Success(response);
+            return Result<DiscountResponse>.Success(response);
         }
 
     }

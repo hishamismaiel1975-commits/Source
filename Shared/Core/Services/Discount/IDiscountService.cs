@@ -4,5 +4,5 @@ namespace Core.Services.Discount;
 
 public interface IDiscountService
 {
-    Task<DiscountDTO> GetDiscountAsync(Guid productId);
+    Task<DiscountResponse> GetDiscountAsync(Guid productId);
 }

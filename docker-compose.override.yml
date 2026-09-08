@@ -29,7 +29,7 @@ services:
       rabbitmq:
         condition: service_healthy
     ports:
-      - "8001:80" # Dev only
+      - "8001:80" 
 
   mongodb:
     environment:

@@ -2,7 +2,7 @@
 using MassTransit;
 using System.Text.Json;
 
-namespace Discount.API.EventBusConsumer
+namespace Discount.API.EventBus.Consumer
 {
     public class CreateProductConsumer : IConsumer<CreateProductEvent>
     {

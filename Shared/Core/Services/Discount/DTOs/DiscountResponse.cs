@@ -1,6 +1,6 @@
 ﻿namespace Core.Services.Discount.DTOs
 {
-    public record DiscountDTO
+    public record DiscountResponse
     (
         Guid ProductId,
         double Amount

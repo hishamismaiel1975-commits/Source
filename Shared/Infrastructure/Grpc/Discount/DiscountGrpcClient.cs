@@ -12,7 +12,7 @@ namespace Infrastructure.Grpc.Discount
             _discountClient = discountClient;
         }
 
-        public async Task<DiscountDTO> GetDiscountAsync(Guid productId)
+        public async Task<DiscountResponse> GetDiscountAsync(Guid productId)
         {
             var response = await _discountClient.GetDiscountAsync(new GetDiscountRequest { ProductId = productId.ToString() });
             return DiscountMapper.ToDTO(response);
