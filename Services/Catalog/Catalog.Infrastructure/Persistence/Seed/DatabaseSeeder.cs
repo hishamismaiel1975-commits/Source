@@ -36,11 +36,6 @@ namespace Catalog.Infrastructure.Persistence.Seed
             {
                 var data = await File.ReadAllTextAsync(Path.Combine(SeedBasePath, "products.json"));
                 var list = JsonSerializer.Deserialize<List<Product>>(data) ?? new List<Product>();
-                foreach (var product in list)
-                {
-                    //Set Created Date
-                    product.CreatedDate = DateTime.UtcNow;
-                }
                 await _productRepository.CreateManyAsync(list);
             }
         }

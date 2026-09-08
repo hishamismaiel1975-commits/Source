@@ -165,20 +165,26 @@ namespace Platform.API.Extensions
         where TDbContext : DbContext
         {
             var connectionString = builder.Configuration["SQLServerSettings:ConnectionString"];
-            builder.Services.AddDbContext<TDbContext>(options =>
+            builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString);
+
+                // Register the Auditing Interceptor with the DbContext
+                options.AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());
+
             });
 
             return builder;
         }
-        public static WebApplicationBuilder AddPostgreSQL<DBContext>(this WebApplicationBuilder builder)
-            where DBContext : DbContext
+        public static WebApplicationBuilder AddPostgreSQL<TDbContext>(this WebApplicationBuilder builder)
+            where TDbContext : DbContext
         {
-            builder.Services.AddDbContext<DBContext>(options =>
+            builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
-                options.UseNpgsql(
-                    builder.Configuration["PostgreSQLSettings:ConnectionString"]);
+                options.UseNpgsql(builder.Configuration["PostgreSQLSettings:ConnectionString"]);
+
+                // Register the Auditing Interceptor with the DbContext
+                options.AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());
             });
 
             return builder;
