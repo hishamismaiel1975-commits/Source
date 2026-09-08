@@ -1,4 +1,4 @@
-﻿using EventBus.Messages.Events;
+﻿using Core.EventBus.Events;
 using MassTransit;
 using System.Text.Json;
 

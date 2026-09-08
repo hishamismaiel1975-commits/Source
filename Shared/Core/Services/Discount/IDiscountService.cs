@@ -1,6 +1,6 @@
-﻿using Catalog.Core.DTOs;
+﻿using Core.Services.Discount.DTOs;
 
-namespace Catalog.Core.Services;
+namespace Core.Services.Discount;
 
 public interface IDiscountService
 {

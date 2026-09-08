@@ -1,9 +1,8 @@
-﻿
-using Catalog.Core.DTOs;
+﻿using Core.Services.Discount.DTOs;
 using Discount.GRPC;
 using Riok.Mapperly.Abstractions;
 
-namespace Catalog.Application.Types.Mappers
+namespace Infrastructure.Grpc.Discount
 {
     [Mapper]
     public static partial class DiscountMapper

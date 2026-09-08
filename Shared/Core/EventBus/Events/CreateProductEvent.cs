@@ -1,4 +1,4 @@
-﻿namespace EventBus.Messages.Events
+﻿namespace Core.EventBus.Events
 {
     public class CreateProductEvent : IntegrationEvent
     {

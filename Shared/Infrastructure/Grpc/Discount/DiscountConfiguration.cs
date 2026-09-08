@@ -1,14 +1,13 @@
-﻿using Catalog.Core.Services;
-using Catalog.Infrastructure.Grpc.Discount;
+﻿using Core.Services.Discount;
 using Discount.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Catalog.Infrastructure.Grpc;
+namespace Infrastructure.Grpc.Discount;
 
 public static class GrpcConfiguration
 {
-    public static WebApplicationBuilder AddGrpcServices(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddDiscountGrpcServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddGrpcClient<DiscountService.DiscountServiceClient>(options =>
         {

@@ -18,12 +18,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Infrastructure\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
-	  <ProjectReference Include="..\..\..\Platform\Platform.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\Core\Core.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\Infrastructure\Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\Platform\Platform.csproj" />
 	</ItemGroup>
 
   <ItemGroup>
-	  <Protobuf Include="..\..\..\Infrastructure\Grpc\discount.proto" GrpcServices="Server" />
+	  <Protobuf Include="..\..\..\Shared\Infrastructure\Grpc\Discount\discount.proto" GrpcServices="Server" />
   </ItemGroup>
 
 

@@ -4,17 +4,6 @@
     <File Path="../../../../Deployment/Portainer/docker-compose.yml" />
   </Folder>
   <Folder Name="/Gateway/" />
-  <Folder Name="/Infrastructure/" />
-  <Folder Name="/Infrastructure/EventBus/">
-    <Project Path="Infrastructure/EventBus/EventBus.Messages/EventBus.Messages.csproj" />
-  </Folder>
-  <Folder Name="/Infrastructure/Grpc/">
-    <File Path="Infrastructure/Grpc/discount.proto" />
-  </Folder>
-  <Folder Name="/Infrastructure/HttpClient/" />
-  <Folder Name="/Platform/">
-    <Project Path="Platform/Platform.csproj" />
-  </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Catalog/">
     <Project Path="Services/Catalog/Catalog.API/Catalog.API.csproj" />
@@ -24,6 +13,11 @@
   </Folder>
   <Folder Name="/Services/Discount/">
     <Project Path="Services/Discount/Discount.API/Discount.API.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Shared/Core/Core.csproj" Id="c03ba40f-54fc-4002-909f-5b8b43b8d1e5" />
+    <Project Path="Shared/Infrastructure/Infrastructure.csproj" />
+    <Project Path="Shared/Platform/Platform.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />

@@ -1,9 +1,8 @@
-﻿using Catalog.Application.Types.Mappers;
-using Catalog.Core.DTOs;
-using Catalog.Core.Services;
+﻿using Core.Services.Discount;
+using Core.Services.Discount.DTOs;
 using Discount.GRPC;
 
-namespace Catalog.Infrastructure.Grpc.Discount
+namespace Infrastructure.Grpc.Discount
 {
     public class DiscountGrpcClient : IDiscountService
     {

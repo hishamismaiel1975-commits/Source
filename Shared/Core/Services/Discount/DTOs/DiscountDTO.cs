@@ -1,4 +1,4 @@
-﻿namespace Catalog.Core.DTOs
+﻿namespace Core.Services.Discount.DTOs
 {
     public record DiscountDTO
     (

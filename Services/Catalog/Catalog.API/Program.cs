@@ -1,7 +1,7 @@
 using Catalog.Application;
-using Catalog.Infrastructure.Grpc;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
+using Infrastructure.Grpc.Discount;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.API.Extensions;
@@ -39,8 +39,8 @@ builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>)
 // Add Other Services
 builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
-// Add Grpc Client Services
-builder.AddGrpcServices();
+// Add Discount gRPC Service 
+builder.AddDiscountGrpcServices();
 
 // Add MassTransit with RabbitMQ and Entity Framework Outbox
 builder.Services.AddMassTransit(config =>

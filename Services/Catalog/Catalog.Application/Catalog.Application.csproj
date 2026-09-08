@@ -15,9 +15,11 @@
 
   <ItemGroup>
 
-    <ProjectReference Include="..\..\..\Infrastructure\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Core\Core.csproj" />
 
-    <ProjectReference Include="..\..\..\Platform\Platform.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Infrastructure\Infrastructure.csproj" />
+
+    <ProjectReference Include="..\..\..\Shared\Platform\Platform.csproj" />
 
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
