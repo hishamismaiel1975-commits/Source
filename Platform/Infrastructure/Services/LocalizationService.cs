@@ -4,14 +4,17 @@ using Platform.Core.Services;
 using System.Collections.Frozen;
 using System.Text.Json;
 
-namespace Platform.Infrastructure.Services.Localization
+namespace Platform.Infrastructure.Services
 {
-    public sealed class JsonLocalizationService : ILocalizationService
+    // This service loads localization resources from JSON files located in the "Localization" folder of the application's content root path.
+    // It provides methods to retrieve localized strings based on the current request's culture,
+    // falling back to English if the specified culture is not found.
+    public sealed class LocalizationService : ILocalizationService
     {
         private readonly FrozenDictionary<string, FrozenDictionary<string, string>> _resources;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JsonLocalizationService(IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        public LocalizationService(IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _resources = LoadResources(environment.ContentRootPath);
             _httpContextAccessor = httpContextAccessor;

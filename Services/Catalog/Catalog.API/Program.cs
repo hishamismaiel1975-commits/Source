@@ -8,7 +8,7 @@ using Platform.API.Extensions;
 using Platform.Core.Persistence.Repositories;
 using Platform.Core.Services;
 using Platform.Infrastructure.Persistence.EFCore.Repositories;
-using Platform.Infrastructure.Services.Localization;
+using Platform.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +37,7 @@ builder.AddRedis();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
 
 // Add Other Services
-builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
 
 // Add Grpc Client Services
 builder.AddGrpcServices();
