@@ -14,6 +14,14 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to listen on port 80 for HTTP requests
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
+});
 
 //Add Serilog 
 builder.Host.UseSerilog((context, services, configuration) =>
@@ -32,16 +40,6 @@ builder.Services.AddOpenApi();
 
 //Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
-
-// Configure Kestrel to listen on port 80 for HTTP requests
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(80, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http1;
-    });
-});
-
 
 // Configure API Versioning
 builder.Services
