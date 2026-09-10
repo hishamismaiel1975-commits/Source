@@ -7,6 +7,8 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
 using Platform.Lib.API.Extensions;
+using Platform.Lib.Core.Services;
+using Platform.Lib.Infrastructure.Services.Localization;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -86,7 +88,11 @@ builder.Services.AddOpenTelemetry()
      // logging.AddOtlpExporter();
  });
 
+// Add Localization Service
+builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
 builder.Services.AddControllers();
+
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
