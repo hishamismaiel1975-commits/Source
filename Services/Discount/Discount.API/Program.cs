@@ -6,23 +6,25 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add gRPC & gRPC reflection for postman support
-builder.Services.AddGrpc();
-builder.Services.AddGrpcReflection();
+// Configure Kestrel to listen on specific ports
 builder.WebHost.ConfigureKestrel(options =>
 {
-    // REST / HTTP API
     options.ListenAnyIP(80, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1;
     });
 
-    // gRPC
+    // gRPC services require HTTP/2, so configure Kestrel to support it
     options.ListenAnyIP(81, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http2;
     });
 });
+
+
+// Add gRPC & gRPC reflection for postman support
+builder.Services.AddGrpc();
+builder.Services.AddGrpcReflection();
 
 // Add MassTransit with RabbitMQ configuration
 builder.Services.AddMassTransit(config =>

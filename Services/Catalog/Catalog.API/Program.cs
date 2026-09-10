@@ -3,12 +3,12 @@ using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Platform.API.Extensions;
-using Platform.Core.Persistence.Repositories;
-using Platform.Core.Services;
-using Platform.Infrastructure.Persistence.EFCore.Repositories;
-using Platform.Infrastructure.Services;
-using Platform.Infrastructure.Services.HttpClients.Discount;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
+using Platform.Lib.API.Extensions;
+using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Core.Services;
+using Platform.Lib.Infrastructure.Services.Discount.HttpClients;
+using Platform.Lib.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +37,7 @@ builder.AddRedis();
 builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
 
 // Add Other Services
-builder.Services.AddSingleton<ILocalizationService, LocalizationService>();
+builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
 // Add Discount gRPC Service or Add Discount HTTP Client Service
 //builder.AddDiscountGrpcService();

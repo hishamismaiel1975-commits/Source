@@ -1,4 +1,4 @@
-﻿namespace Platform.Core.DTOs
+﻿namespace Platform.Lib.Core.DTOs
 {
     public sealed class Pagination<T> where T : class
     {

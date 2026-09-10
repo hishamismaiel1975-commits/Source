@@ -4,7 +4,7 @@ using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Platform.Infrastructure.Persistence.EFCore.Extensions;
+namespace Platform.Lib.Infrastructure.Persistence.EFCore.Extensions;
 
 /// <summary>
 /// Provides dynamic Entity Framework Core include support.

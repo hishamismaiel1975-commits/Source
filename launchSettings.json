@@ -13,7 +13,8 @@
         "postgres": "StartWithoutDebugging",
         "rabbitmq": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
-        "sqlserver": "StartWithoutDebugging"
+        "sqlserver": "StartWithoutDebugging",
+        "identity.api": "StartDebugging"
       }
     }
   }

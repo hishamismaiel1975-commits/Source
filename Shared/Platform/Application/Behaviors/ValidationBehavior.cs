@@ -2,7 +2,7 @@
 using FreeMediator;
 
 
-namespace Platform.Application.Behaviors
+namespace Platform.Lib.Application.Behaviors
 {
 
     /// <summary>

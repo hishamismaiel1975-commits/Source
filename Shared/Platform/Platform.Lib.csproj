@@ -56,7 +56,8 @@
 
 
 	<ItemGroup>
-		<Protobuf Include="Infrastructure\Services\Grpc\Discount\discount.proto" GrpcServices="Client" />
+		<Protobuf Include="Infrastructure\Services\Discount\Grpc\discount.proto" GrpcServices="Client" />
+		
 	</ItemGroup>
 
 </Project>

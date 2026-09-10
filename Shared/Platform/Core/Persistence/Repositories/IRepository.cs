@@ -1,8 +1,8 @@
-﻿using Platform.Core.DTOs;
-using Platform.Core.Persistence.Entities;
+﻿using Platform.Lib.Core.DTOs;
+using Platform.Lib.Core.Persistence.Entities;
 using System.Linq.Expressions;
 
-namespace Platform.Core.Persistence.Repositories;
+namespace Platform.Lib.Core.Persistence.Repositories;
 
 
 public interface IRepository<T> where T : Entity

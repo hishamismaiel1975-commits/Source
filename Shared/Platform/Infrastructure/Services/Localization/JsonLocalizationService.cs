@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Platform.Core.Services;
+using Platform.Lib.Core.Services;
 using System.Collections.Frozen;
 using System.Text.Json;
 
-namespace Platform.Infrastructure.Services
+namespace Platform.Lib.Infrastructure.Services.Localization
 {
     // This service loads localization resources from JSON files located in the "Localization" folder of the application's content root path.
     // It provides methods to retrieve localized strings based on the current request's culture,
     // falling back to English if the specified culture is not found.
-    public sealed class LocalizationService : ILocalizationService
+    public sealed class JsonLocalizationService : ILocalizationService
     {
         private readonly FrozenDictionary<string, FrozenDictionary<string, string>> _resources;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public LocalizationService(IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
+        public JsonLocalizationService(IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
         {
             _resources = LoadResources(environment.ContentRootPath);
             _httpContextAccessor = httpContextAccessor;

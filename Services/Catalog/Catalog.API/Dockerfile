@@ -12,13 +12,9 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
-COPY ["Platform/Platform.API/Platform.API.csproj", "Platform/Platform.API/"]
-COPY ["Platform/Platform.Application/Platform.Application.csproj", "Platform/Platform.Application/"]
-COPY ["Platform/Platform.Core/Platform.Core.csproj", "Platform/Platform.Core/"]
-COPY ["Platform/Platform.Infrastructure/Platform.Infrastructure.csproj", "Platform/Platform.Infrastructure/"]
+COPY ["Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
 COPY ["Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Services/Catalog/Catalog.Application/"]
 COPY ["Services/Catalog/Catalog.Core/Catalog.Core.csproj", "Services/Catalog/Catalog.Core/"]
-COPY ["Services/Discount/Discount.Grpc/Discount.API.csproj", "Services/Discount/Discount.Grpc/"]
 COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
 RUN dotnet restore "./Services/Catalog/Catalog.API/Catalog.API.csproj"
 COPY . .

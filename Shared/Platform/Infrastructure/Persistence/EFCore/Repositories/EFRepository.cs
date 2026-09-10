@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.Core.DTOs;
-using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories;
-using Platform.Infrastructure.Persistence.EFCore.Extensions;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Extensions;
+using Platform.Lib.Core.DTOs;
+using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Persistence.Repositories;
 using System.Linq.Expressions;
 
-namespace Platform.Infrastructure.Persistence.EFCore.Repositories;
+namespace Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 
 public class EFRepository<T> : IRepository<T>
     where T : Entity

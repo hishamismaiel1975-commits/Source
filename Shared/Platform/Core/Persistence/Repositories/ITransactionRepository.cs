@@ -1,6 +1,6 @@
-﻿using Platform.Core.Persistence.Entities;
+﻿using Platform.Lib.Core.Persistence.Entities;
 
-namespace Platform.Core.Persistence.Repositories;
+namespace Platform.Lib.Core.Persistence.Repositories;
 
 public interface ITransactionRepository<T> where T : Entity
 {

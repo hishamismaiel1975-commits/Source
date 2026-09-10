@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Platform.API.Extensions;
+namespace Platform.Lib.API.Extensions;
 
 public class ConfigureSwaggerOptions<TProgram> : IConfigureOptions<SwaggerGenOptions>
 {

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Platform.Core.DTOs;
-using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories;
-using Platform.Infrastructure.Persistence.MongoDB.Extensions;
+using Platform.Lib.Infrastructure.Persistence.MongoDB.Extensions;
+using Platform.Lib.Core.DTOs;
+using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Persistence.Repositories;
 using System.Linq.Expressions;
 
-namespace Platform.Infrastructure.Persistence.MongoDB.Repositories;
+namespace Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
 
 public class MongoRepository<T> : IRepository<T> where T : Entity
 {

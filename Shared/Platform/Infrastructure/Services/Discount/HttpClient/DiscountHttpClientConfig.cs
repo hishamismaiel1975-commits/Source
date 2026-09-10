@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Core.Services;
+using Platform.Lib.Core.Services;
 
-namespace Platform.Infrastructure.Services.HttpClients.Discount;
+namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients;
 
 public static class DiscountHttpClientConfig
 {

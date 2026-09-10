@@ -1,4 +1,4 @@
-﻿namespace Platform.Core.Persistence.Repositories
+﻿namespace Platform.Lib.Core.Persistence.Repositories
 {
     public interface ICacheRepository<T> where T : class
     {

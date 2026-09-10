@@ -4,7 +4,9 @@ using FluentValidation;
 using FreeMediator;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,21 +15,30 @@ using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using Platform.API.Exceptions;
-using Platform.Application.Behaviors;
-using Platform.Core.Services;
-using Platform.Infrastructure.Persistence.EFCore.Interceptors;
-using Platform.Infrastructure.Services;
+using Platform.Lib.API.Exceptions;
+using Platform.Lib.Application.Behaviors;
+using Platform.Lib.Core.Services;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
+using Platform.Lib.Infrastructure.Services.Security;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
-namespace Platform.API.Extensions
+namespace Platform.Lib.API.Extensions
 {
     public static class WebApplicationExtensions
     {
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder)
         {
+            // Configure Kestrel to listen on port 80 for HTTP requests
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(80, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http1;
+                });
+            });
+
             // Register Auditing & CurrentUser services
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -96,7 +107,11 @@ namespace Platform.API.Extensions
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation();
                 //  .AddOtlpExporter();
-            });
+            })
+             .WithLogging(logging =>
+             {
+                 // logging.AddOtlpExporter();
+             });
 
             //Register FreeMediator 
             builder.Services.AddMediator(config =>
@@ -107,7 +122,7 @@ namespace Platform.API.Extensions
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
-            // Add services to the container.
+
             builder.Services.AddControllers();
 
             return builder;
@@ -136,7 +151,6 @@ namespace Platform.API.Extensions
 
             app.UseAuthorization();
             app.UseExceptionHandler();
-
             app.MapControllers();
 
             return app;

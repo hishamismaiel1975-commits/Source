@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Platform\Platform.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>
 

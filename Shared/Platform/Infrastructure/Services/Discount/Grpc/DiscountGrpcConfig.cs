@@ -1,9 +1,9 @@
 ﻿using Discount.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Core.Services;
+using Platform.Lib.Core.Services;
 
-namespace Infrastructure.Grpc.Discount;
+namespace Platform.Lib.Infrastructure.Services.Discount.Grpc;
 
 public static class DiscountGrpcConfig
 {

@@ -1,4 +1,4 @@
-﻿using Platform.Core.Persistence.Entities;
+﻿using Platform.Lib.Core.Persistence.Entities;
 
 namespace Catalog.Core.Persistence.Entities
 {

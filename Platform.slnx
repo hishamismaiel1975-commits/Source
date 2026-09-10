@@ -14,8 +14,11 @@
   <Folder Name="/Services/Discount/">
     <Project Path="Services/Discount/Discount.API/Discount.API.csproj" />
   </Folder>
+  <Folder Name="/Services/Identity/">
+    <Project Path="Services/Identity/Identity.API/Identity.API/Identity.API.csproj" Id="b5ac3fd2-2663-4eeb-a409-bc7dc5433799" />
+  </Folder>
   <Folder Name="/Shared/">
-    <Project Path="Shared/Platform/Platform.csproj" />
+    <Project Path="Shared/Platform/Platform.Lib.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />

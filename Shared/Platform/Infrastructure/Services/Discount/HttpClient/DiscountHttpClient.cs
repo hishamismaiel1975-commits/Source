@@ -1,8 +1,8 @@
-﻿using Platform.Core.DTOs.Discount;
-using Platform.Core.Services;
+﻿using Platform.Lib.Core;
+using Platform.Lib.Core.Services;
 using System.Net.Http.Json;
 
-namespace Platform.Infrastructure.Services.HttpClients.Discount
+namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients
 {
     public class DiscountHttpClient : IDiscountService
     {

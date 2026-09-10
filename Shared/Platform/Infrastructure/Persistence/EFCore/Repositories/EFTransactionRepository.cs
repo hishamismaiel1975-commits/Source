@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.Core.Persistence.Entities;
-using Platform.Core.Persistence.Repositories;
+using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Persistence.Repositories;
 
-namespace Platform.Infrastructure.Persistence.EFCore.Repositories;
+namespace Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 
 public class EFTransactionRepository<T> : ITransactionRepository<T> where T : Entity
 {

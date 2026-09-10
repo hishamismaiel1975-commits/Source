@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Platform.Core.Services;
+using Platform.Lib.Core.Services;
 using System.Security.Claims;
 
-namespace Platform.Infrastructure.Services;
+namespace Platform.Lib.Infrastructure.Services.Security;
 
 public sealed class CurrentUserService : ICurrentUserService
 {

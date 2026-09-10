@@ -1,4 +1,4 @@
-﻿namespace Platform.API.Responses
+﻿namespace Platform.Lib.API.Responses
 {
     public sealed class Result<T>
     {

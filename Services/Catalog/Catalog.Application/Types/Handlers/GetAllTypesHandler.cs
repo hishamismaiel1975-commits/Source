@@ -2,7 +2,7 @@
 using Catalog.Application.Types.Queries;
 using Catalog.Application.Types.Responses;
 using FreeMediator;
-using Platform.Core.Persistence.Repositories;
+using Platform.Lib.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Types.Handlers
 {

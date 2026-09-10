@@ -2,7 +2,7 @@
 using Catalog.Application.Types.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Mvc;
-using Platform.API.Responses;
+using Platform.Lib.API.Responses;
 using TypeApp = Catalog.Application.Types;
 
 

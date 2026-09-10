@@ -18,11 +18,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\Shared\Platform\Platform.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Shared\Platform\Infrastructure\Services\Grpc\Discount\discount.proto" GrpcServices="Server" />
+		<Protobuf Include="..\..\..\Shared\Platform\Infrastructure\Services\Discount\Grpc\discount.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 

@@ -1,4 +1,4 @@
-﻿namespace Platform.Core.Exceptions
+﻿namespace Platform.Lib.Core.Exceptions
 {
     public static class AppException
     {

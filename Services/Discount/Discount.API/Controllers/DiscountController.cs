@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Platform.Core.DTOs.Discount;
+using Platform.Lib.Core;
 
 namespace Discount.API.Controllers
 {

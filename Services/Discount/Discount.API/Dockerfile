@@ -11,14 +11,11 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Discount/Discount.Grpc/Discount.API.csproj", "Services/Discount/Discount.Grpc/"]
-COPY ["Platform/Platform.API/Platform.API.csproj", "Platform/Platform.API/"]
-COPY ["Platform/Platform.Application/Platform.Application.csproj", "Platform/Platform.Application/"]
-COPY ["Platform/Platform.Core/Platform.Core.csproj", "Platform/Platform.Core/"]
-COPY ["Platform/Platform.Infrastructure/Platform.Infrastructure.csproj", "Platform/Platform.Infrastructure/"]
-RUN dotnet restore "./Services/Discount/Discount.Grpc/Discount.API.csproj"
+COPY ["Services/Discount/Discount.API/Discount.API.csproj", "Services/Discount/Discount.API/"]
+COPY ["Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
+RUN dotnet restore "./Services/Discount/Discount.API/Discount.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Discount/Discount.Grpc"
+WORKDIR "/src/Services/Discount/Discount.API"
 RUN dotnet build "./Discount.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

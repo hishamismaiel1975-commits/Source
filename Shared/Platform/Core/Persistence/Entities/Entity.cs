@@ -1,6 +1,6 @@
 ﻿using SequentialGuid;
 
-namespace Platform.Core.Persistence.Entities
+namespace Platform.Lib.Core.Persistence.Entities
 {
     public abstract class Entity
     {

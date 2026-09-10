@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Platform.Core.Persistence.Entities;
-using Platform.Core.Services;
+using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Services;
 
-namespace Platform.Infrastructure.Persistence.EFCore.Interceptors;
+namespace Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 
 public sealed class AuditingSaveChangesInterceptor : SaveChangesInterceptor
 {

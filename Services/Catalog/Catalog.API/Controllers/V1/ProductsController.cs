@@ -3,10 +3,10 @@ using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Mvc;
-using Platform.API.Responses;
-using Platform.Core.DTOs;
-using Platform.Core.DTOs.Discount;
-using Platform.Core.Services;
+using Platform.Lib.API.Responses;
+using Platform.Lib.Core;
+using Platform.Lib.Core.DTOs;
+using Platform.Lib.Core.Services;
 using ProductsApp = Catalog.Application.Products;
 
 
