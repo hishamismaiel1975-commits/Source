@@ -1,7 +1,8 @@
 services:
 
  identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
+    image: ${DOCKER_REGISTRY-}identity-api
+    restart: always
     build:
       context: .
       dockerfile: Services/Identity/Identity.API/Identity.API/Dockerfile
