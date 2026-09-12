@@ -3,6 +3,12 @@ services:
   identity.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      IdentitySettings__ConnectionString: "Server=sqlserver,1433;Database=Identity;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
+      IdentitySettings__SecretKey: "879b274c-9cab-4afa-a868-bf5d3038c8d7"
+      IdentitySettings__Issuer: "ecommerce.identity"
+      IdentitySettings__Audience: "ecommerce.clients"
+      IdentitySettings__AccessTokenLifetimeInMinutes: 60    # 1 Hour 
+      IdentitySettings__RefreshTokenLifetimeInMinutes: 1440 # 24 hours
     ports:
        - "8001:80" 
 

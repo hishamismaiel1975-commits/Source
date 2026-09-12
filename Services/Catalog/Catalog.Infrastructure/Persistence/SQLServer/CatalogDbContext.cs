@@ -31,11 +31,6 @@ public class CatalogDbContext : DbContext
         modelBuilder.Entity<Product>()
             .Property(x => x.Price)
             .HasPrecision(18, 2);
-
-
-
-
-
     }
 }
 

@@ -1,7 +1,14 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Identity.API.Configuration;
+using Identity.API.Data;
+using Identity.API.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -88,6 +95,45 @@ builder.Services.AddOpenTelemetry()
 
 // Add Localization Service
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
+var identitySettings = builder.Configuration.GetSection("IdentitySettings").Get<IdentitySettings>();
+
+// Add DbContext for Identity
+builder.Services.AddDbContext<AppIdentityContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString(identitySettings.ConnectionString));
+});
+
+// Add Identity services
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<AppIdentityContext>()
+    .AddDefaultTokenProviders();
+
+// Add JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+  .AddJwtBearer(options =>
+  {
+      options.RequireHttpsMetadata = false;
+      options.TokenValidationParameters = new TokenValidationParameters
+      {
+          ValidateIssuer = true,
+          ValidateAudience = true,
+          ValidateLifetime = true,
+
+          ValidIssuer = identitySettings.Issuer,
+          ValidAudience = identitySettings.Audience,
+          IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(identitySettings.SecretKey))
+      };
+  });
+
+builder.Services.AddAuthorization(options =>
+{
+    //options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+});
 
 builder.Services.AddControllers();
 
