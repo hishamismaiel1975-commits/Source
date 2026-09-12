@@ -1,8 +1,5 @@
 <Solution>
   <Folder Name="/Deployment/" />
-  <Folder Name="/Deployment/Portainer/">
-    <File Path="../../../../Deployment/Portainer/docker-compose.yml" />
-  </Folder>
   <Folder Name="/Gateway/" />
   <Folder Name="/Services/" />
   <Folder Name="/Services/Catalog/">

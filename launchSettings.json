@@ -4,8 +4,8 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "catalog.api",
-      "composeLaunchUrl": "http://localhost:8001/swagger/index.html",
+      "composeLaunchServiceName": "",
+      "composeLaunchUrl": "",
       "serviceActions": {
         "catalog.api": "StartDebugging",
         "discount.api": "StartDebugging",

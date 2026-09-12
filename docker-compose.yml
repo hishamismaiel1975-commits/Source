@@ -1,5 +1,5 @@
 services:
-
+ 
  identity.api:
     image: ${DOCKER_REGISTRY-}identity-api
     restart: always
@@ -54,15 +54,28 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+ portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+ redisinsight:
+    image: redis/redisinsight:latest
+    restart: always
+    volumes:
+        - redisinsight_data:/data
+ 
 volumes:
   mongo_data:
   sqlserver_data:
   postgres_data:
   rabbitmq_data:
+  portainer_data:
+  redisinsight_data:
   
-
-  
-
 
   
 

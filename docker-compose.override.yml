@@ -1,5 +1,5 @@
 services:
-
+  
   identity.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
@@ -104,6 +104,17 @@ services:
       start_period: 10s
     ports:
       - "2004:15672"
+
+  portainer:
+    ports:
+      - "2005:9000"
+  
+  redisinsight:
+    depends_on:
+      redis:
+        condition: service_healthy
+    ports:
+      - "2006:5540"
 
   
 
