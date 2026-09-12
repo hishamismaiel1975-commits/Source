@@ -159,6 +159,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     });
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseExceptionHandler();
 app.MapControllers();

@@ -22,15 +22,15 @@
     <PackageReference Include="FreeMediator" Version="1.4.0" />
     <PackageReference Include="MassTransit" Version="8.5.10" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.10" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.11" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.11">
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.12" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.12" />
 
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.12" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.18.0" />
