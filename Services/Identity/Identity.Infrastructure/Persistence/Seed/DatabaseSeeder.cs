@@ -28,20 +28,6 @@ namespace Identity.Infrastructure.Persistence.Seed
                             NameEn = "System Administrator",
                             NameAr = "مدير النظام",
                             IsBuiltIn= true
-                        },
-                           new Role
-                        {
-                            Name = "Customer",
-                            NameEn = "Customer",
-                            NameAr = "عميل",
-                            IsBuiltIn= true
-                        },
-                             new Role
-                        {
-                            Name = "Gust",
-                            NameEn = "Guest",
-                            NameAr = "زائر",
-                            IsBuiltIn= true
                         }
 
                     };
@@ -64,23 +50,8 @@ namespace Identity.Infrastructure.Persistence.Seed
                             NameEn = "Admin",
                             NameAr = "مدير",
                             IsBuiltIn= true
-                        },
-                        new User
-                        {
-                            UserName = "Guest",
-                            Password = "123",
-                            NameEn = "Guest",
-                            NameAr = "زائر",
-                            IsBuiltIn= true
-                        },
-                           new User
-                        {
-                            UserName = "Customer1",
-                            Password = "123",
-                            NameEn = "Customer1",
-                            NameAr = "1 عميل",
-                            IsBuiltIn= false
                         }
+
                     };
 
                 await userRepository.CreateManyAsync(existingUsers);
