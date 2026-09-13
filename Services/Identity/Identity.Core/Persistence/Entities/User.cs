@@ -10,7 +10,7 @@ namespace Identity.Core.Persistence.Entities
         public required string NameAr { get; set; }
         public required string PasswordHash { get; set; }
         public UserType UserType { get; set; }
-        public int? RoleId { get; set; }
+        public Guid? RoleId { get; set; }
         public bool IsActive { get; set; }
         public required bool IsBuiltIn { get; set; }
 

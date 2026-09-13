@@ -52,7 +52,9 @@ namespace Identity.Infrastructure.Persistence.Seed
                             NameAr = "مدير",
                             UserType    = UserType.Employee,
                             IsBuiltIn= true,
-                            IsActive=true
+                            IsActive=true,
+                            RoleId= existingRoles.First(r => r.Name == "Admin").Id
+
                         },
                             new User
                         {
@@ -62,7 +64,8 @@ namespace Identity.Infrastructure.Persistence.Seed
                             NameAr = "عميل 1",
                             UserType    = UserType.Customer,
                             IsBuiltIn= false,
-                            IsActive=true
+                            IsActive=true,
+                            RoleId=null
                         }
                     };
 
