@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Types.Responses;
 using FreeMediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
 using TypeApp = Catalog.Application.Types;
@@ -21,6 +22,7 @@ namespace Catalog.API.Controllers.V1
         }
 
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<Result<IList<TypesResponse>>> GetTypes()
         {

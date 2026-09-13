@@ -2,9 +2,11 @@
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
 using FreeMediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
 using Platform.Lib.Core;
+using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Services;
 using ProductsApp = Catalog.Application.Products;
@@ -26,6 +28,7 @@ namespace Catalog.API.Controllers.V1
             _discountService = discountService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<Result<ProductResponse>> GetProductById(Guid id)
         {
@@ -34,6 +37,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success(result);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<Result<Pagination<ProductResponse>>> GetProducts(
             string? ProductName,
@@ -48,6 +52,8 @@ namespace Catalog.API.Controllers.V1
             return Result<Pagination<ProductResponse>>.Success(result);
         }
 
+
+        [Authorize(Policy = PermissionConstants.Product.Create)]
         [HttpPost]
         public async Task<Result<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
@@ -55,6 +61,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success(result);
         }
 
+        [Authorize(Policy = PermissionConstants.Product.Update)]
         [HttpPut("{id:guid}")]
         public async Task<Result<ProductResponse>> UpdateProduct(Guid id, UpdateProductCommand command)
         {
@@ -62,6 +69,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success();
         }
 
+        [Authorize(Policy = PermissionConstants.Product.Delete)]
         [HttpDelete("{id:guid}")]
         public async Task<Result<ProductResponse>> DeleteProduct(Guid id)
         {

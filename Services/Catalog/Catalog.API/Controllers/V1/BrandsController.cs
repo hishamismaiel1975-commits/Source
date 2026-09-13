@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Catalog.Application.Brands.Responses;
 using FreeMediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
 using BrandApp = Catalog.Application.Brands;
@@ -20,6 +21,7 @@ namespace Catalog.API.Controllers.V1
             _mediator = mediator;
         }
 
+        [AllowAnonymous]
         [HttpGet()]
         public async Task<Result<IList<BrandResponse>>> GetBrands()
         {

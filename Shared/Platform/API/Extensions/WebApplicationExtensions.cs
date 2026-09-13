@@ -19,6 +19,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
 using Platform.Lib.Application.Behaviors;
+using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.Persistence.MongoDB;
 using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services;
@@ -150,9 +151,30 @@ namespace Platform.Lib.API.Extensions
                   };
               });
 
+            // Add Authorization Policies for Permissions Dynamical From AllPermissions Class
             builder.Services.AddAuthorization(options =>
             {
-                //options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+                var permissionTypes = typeof(PermissionConstants)
+                    .GetNestedTypes();
+
+                foreach (var type in permissionTypes)
+                {
+                    var permissions = type
+                        .GetFields(BindingFlags.Public |
+                                   BindingFlags.Static |
+                                   BindingFlags.FlattenHierarchy)
+                        .Where(x => x.FieldType == typeof(string))
+                        .Select(x => x.GetValue(null)?.ToString())
+                        .Where(x => !string.IsNullOrEmpty(x));
+
+                    foreach (var permission in permissions)
+                    {
+                        options.AddPolicy(permission!, policy =>
+                        {
+                            policy.RequireClaim("permission", permission!);
+                        });
+                    }
+                }
             });
 
             builder.Services.AddControllers();

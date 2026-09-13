@@ -1,6 +1,6 @@
 ﻿namespace Platform.Lib.Core.Authorization
 {
-    public static class AllPermissions
+    public static class PermissionConstants
     {
         public static class Brand
         {
