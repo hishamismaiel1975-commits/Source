@@ -3,6 +3,7 @@ using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 using FreeMediator;
 using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,14 +12,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
 using Platform.Lib.Application.Behaviors;
+using Platform.Lib.Core.Persistence.MongoDB;
+using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
+using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
+using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -94,14 +101,14 @@ namespace Platform.Lib.API.Extensions
                  resource.AddService(
                 typeof(TProgram).Assembly.GetName().Name!);
              })
-            .WithTracing(tracing =>
+             .WithTracing(tracing =>
             {
                 tracing
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation();
                 //  .AddOtlpExporter();
             })
-            .WithMetrics(metrics =>
+             .WithMetrics(metrics =>
             {
                 metrics
                 .AddAspNetCoreInstrumentation()
@@ -122,8 +129,36 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
+            // Add JWT Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+              .AddJwtBearer(options =>
+              {
+                  options.RequireHttpsMetadata = false;
+                  options.TokenValidationParameters = new TokenValidationParameters
+                  {
+                      ValidateIssuer = true,
+                      ValidateAudience = true,
+                      ValidateLifetime = true,
+
+                      ValidIssuer = builder.Configuration["JWT:Issuer"],
+                      ValidAudience = builder.Configuration["JWT:Audience"],
+                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
+                  };
+              });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                //options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+            });
 
             builder.Services.AddControllers();
+
+            // Add Localization Service
+            builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
             return builder;
         }
@@ -149,19 +184,25 @@ namespace Platform.Lib.API.Extensions
                 });
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseExceptionHandler();
             app.MapControllers();
 
             return app;
         }
-        public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder, IMongoDbConfiguration mongoDbConfiguration)
         {
+            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
             // Register MongoClient as singleton
             builder.Services.AddSingleton<IMongoClient>(options =>
             {
-                return new MongoClient(builder.Configuration["MongoDbSettings:ConnectionString"]);
+                return new MongoClient(connectionString);
             });
+
+            mongoDbConfiguration.Configure();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+
 
             return builder;
         }
@@ -173,12 +214,14 @@ namespace Platform.Lib.API.Extensions
                 options.Configuration = builder.Configuration["RedisSettings:ConnectionString"];
             });
 
+            builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
+
             return builder;
         }
         public static WebApplicationBuilder AddSqlServer<TDbContext>(this WebApplicationBuilder builder)
         where TDbContext : DbContext
         {
-            var connectionString = builder.Configuration["SQLServerSettings:ConnectionString"];
+            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString);
@@ -187,20 +230,27 @@ namespace Platform.Lib.API.Extensions
                 options.AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());
 
             });
-
+            builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<TDbContext>());
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+            builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(EFTransactionRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
             return builder;
         }
         public static WebApplicationBuilder AddPostgreSQL<TDbContext>(this WebApplicationBuilder builder)
             where TDbContext : DbContext
         {
+            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
-                options.UseNpgsql(builder.Configuration["PostgreSQLSettings:ConnectionString"]);
+                options.UseNpgsql(connectionString);
 
                 // Register the Auditing Interceptor with the DbContext
                 options.AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());
             });
-
+            //builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogPostgresDbContext>());
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+            builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(EFTransactionRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
             return builder;
         }
 

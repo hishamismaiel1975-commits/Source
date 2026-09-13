@@ -2,13 +2,14 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Persistence.MongoDB;
 
 namespace Catalog.Infrastructure.Persistence.MongoDB;
 
 // Configure MongoDB Serializers and Class Maps
-public static class MongoDbConfiguration
+public class MongoDbConfiguration : IMongoDbConfiguration
 {
-    public static void Configure()
+    public void Configure()
     {
         RegisterSerializers();
         RegisterClassMaps();

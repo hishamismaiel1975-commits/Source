@@ -36,8 +36,10 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Shared\Platform\Platform.Lib.csproj" />
-    <ProjectReference Include="..\..\Identity.Core\Identity.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
+    <ProjectReference Include="..\Identity.Application\Identity.Application.csproj" />
+    <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
+    <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

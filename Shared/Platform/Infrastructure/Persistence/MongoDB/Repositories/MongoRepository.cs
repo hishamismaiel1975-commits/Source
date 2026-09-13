@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Platform.Lib.Infrastructure.Persistence.MongoDB.Extensions;
 using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Persistence.Entities;
 using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Infrastructure.Persistence.MongoDB.Extensions;
 using System.Linq.Expressions;
 
 namespace Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
@@ -15,7 +15,7 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
 
     public MongoRepository(IMongoClient client, IConfiguration configuration)
     {
-        var database = client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]);
+        var database = client.GetDatabase(configuration["DbSettings:DatabaseName"]);
         _collection = database.GetCollection<T>($"{typeof(T).Name}s");
     }
 

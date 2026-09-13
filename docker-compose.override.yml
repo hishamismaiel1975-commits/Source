@@ -3,12 +3,12 @@ services:
   identity.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      IdentitySettings__ConnectionString: "Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
-      IdentitySettings__SecretKey: "879b274c-9cab-4afa-a868-bf5d3038c8d7"
-      IdentitySettings__Issuer: "ecommerce.identity"
-      IdentitySettings__Audience: "ecommerce.clients"
-      IdentitySettings__AccessTokenLifetimeInMinutes: 60    # 1 Hour 
-      IdentitySettings__RefreshTokenLifetimeInMinutes: 1440 # 24 hours
+      DbSettings__ConnectionString: "Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
+      JWT__SecretKey: "879b274c-9cab-4afa-a868-bf5d3038c8d7"
+      JWT__Issuer: "ecommerce.identity"
+      JWT__Audience: "ecommerce.clients"
+      JWT__AccessTokenLifetimeInMinutes: 60    # 1 Hour 
+      JWT__RefreshTokenLifetimeInMinutes: 1440 # 24 hours
     ports:
        - "8001:80" 
 
@@ -21,13 +21,18 @@ services:
   catalog.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      MongoDbSettings__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
-      MongoDbSettings__DatabaseName: Catalog
-      SQLServerSettings__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
-      PostgreSQLSettings__ConnectionString: Host=postgres;Port=5432;Database=CatalogDb;User Id=admin;Password=pass_123456789;
+      DbSettings__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+      #DbSettings__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
+      #DbSettings__DatabaseName: CatalogDb
+      #DbSettings__ConnectionString: Host=postgres;Port=5432;Database=CatalogDb;User Id=admin;Password=pass_123456789;
       RedisSettings__ConnectionString: redis:6379
       GrpcSettings__DiscountUrl: http://discount.api:81
       EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
+      JWT__SecretKey: "879b274c-9cab-4afa-a868-bf5d3038c8d7"
+      JWT__Issuer: "ecommerce.identity"
+      JWT__Audience: "ecommerce.clients"
+      JWT__AccessTokenLifetimeInMinutes: 60    # 1 Hour 
+      JWT__RefreshTokenLifetimeInMinutes: 1440 # 24 hours
     depends_on:
       mongodb:
         condition: service_healthy

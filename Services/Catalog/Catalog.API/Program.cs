@@ -4,11 +4,7 @@ using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Core.Persistence.Repositories;
-using Platform.Lib.Core.Services;
-using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Services.Discount.HttpClients;
-using Platform.Lib.Infrastructure.Services.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,28 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddPlatform<Program, Application>();
 
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
-//builder.AddMongoDB();
-//MongoDbConfiguration.Configure();
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+//builder.AddMongoDB(new MongoDbConfiguration());
 
 // Add PostgreSQL Database Service & PostgreSQL Repository Services
 //builder.AddPostgreSQL<CatalogPostgresDbContext>();
-//builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogPostgresDbContext>());
-//builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<CatalogDbContext>();
-builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
-builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(EFTransactionRepository<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork<CatalogDbContext>>();
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
-builder.Services.AddScoped(typeof(ICacheRepository<>), typeof(RedisRepository<>));
 
-// Add Localization Service
-builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
 // Add Discount gRPC Service or Add Discount HTTP Client Service
 //builder.AddDiscountGrpcService();
@@ -61,7 +46,7 @@ builder.Services.AddMassTransit(config =>
 
 var app = builder.Build();
 
-//Seed Mongo db on startup 
+//Seed db on startup 
 if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 {
     using (var scope = app.Services.CreateScope())
@@ -72,7 +57,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 
 // Configure the HTTP request pipeline.
 app.UsePlatform<Program>();
-
 
 app.Run();
 
