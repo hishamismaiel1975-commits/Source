@@ -8,6 +8,7 @@ namespace Identity.Infrastructure.Persistence.Seed
 {
     public class DatabaseSeeder
     {
+        // Add Built-in Roles, Users, and Permissions to the database
         public static async Task SeedAsync(IServiceProvider services)
         {
             var roleRepository = services.GetRequiredService<IRepository<Role>>();
@@ -55,17 +56,6 @@ namespace Identity.Infrastructure.Persistence.Seed
                             IsActive=true,
                             RoleId= existingRoles.First(r => r.Name == "Admin").Id
 
-                        },
-                            new User
-                        {
-                            UserName = "Customer1",
-                            PasswordHash = "123",
-                            NameEn = "Customer1",
-                            NameAr = "عميل 1",
-                            UserType    = UserType.Customer,
-                            IsBuiltIn= false,
-                            IsActive=true,
-                            RoleId=null
                         }
                     };
 
@@ -103,10 +93,9 @@ namespace Identity.Infrastructure.Persistence.Seed
             // --------------------------------------------------
             var adminRole = existingRoles.First(r => r.Name == "Admin");
 
-            var rolePermissions = await rolePermissionRepository.GetAllAsync();
+            var rolePermissions = await rolePermissionRepository.GetAllAsync(x => x.RoleId == adminRole.Id);
 
             var existingAdminPermissionIds = rolePermissions
-                .Where(x => x.RoleId == adminRole.Id)
                 .Select(x => x.PermissionId)
                 .ToHashSet();
 

@@ -10,6 +10,6 @@ namespace Identity.Core.Persistence.Entities
         public required bool IsBuiltIn { get; set; }
 
         public ICollection<User> Users { get; set; } = new List<User>();
-
+        public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }
 }

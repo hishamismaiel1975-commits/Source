@@ -10,8 +10,6 @@ namespace Identity.Core.Persistence.Entities
 
         public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
 
-
-
     }
 
 }
