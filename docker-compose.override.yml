@@ -3,7 +3,7 @@ services:
   identity.api:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      IdentitySettings__ConnectionString: "Server=sqlserver,1433;Database=Identity;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
+      IdentitySettings__ConnectionString: "Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;"
       IdentitySettings__SecretKey: "879b274c-9cab-4afa-a868-bf5d3038c8d7"
       IdentitySettings__Issuer: "ecommerce.identity"
       IdentitySettings__Audience: "ecommerce.clients"
@@ -23,8 +23,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       MongoDbSettings__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
       MongoDbSettings__DatabaseName: Catalog
-      SQLServerSettings__ConnectionString: Server=sqlserver,1433;Database=Catalog;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
-      PostgreSQLSettings__ConnectionString: Host=postgres;Port=5432;Database=Catalog;User Id=admin;Password=pass_123456789;
+      SQLServerSettings__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+      PostgreSQLSettings__ConnectionString: Host=postgres;Port=5432;Database=CatalogDb;User Id=admin;Password=pass_123456789;
       RedisSettings__ConnectionString: redis:6379
       GrpcSettings__DiscountUrl: http://discount.api:81
       EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672

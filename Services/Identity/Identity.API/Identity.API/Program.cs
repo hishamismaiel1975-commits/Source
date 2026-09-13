@@ -1,10 +1,7 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
-using Identity.API.Configuration;
 using Identity.API.Data;
-using Identity.API.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -14,7 +11,9 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
 using Platform.Lib.API.Extensions;
+using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -96,18 +95,12 @@ builder.Services.AddOpenTelemetry()
 // Add Localization Service
 builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
 
-var identitySettings = builder.Configuration.GetSection("IdentitySettings").Get<IdentitySettings>();
-
-// Add DbContext for Identity
-builder.Services.AddDbContext<AppIdentityContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString(identitySettings.ConnectionString));
-});
-
-// Add Identity services
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<AppIdentityContext>()
-    .AddDefaultTokenProviders();
+// Add SQL Server Database Service & SQL Server Repository Services
+builder.AddSqlServer<IdentityContext>();
+builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<IdentityContext>());
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(EFTransactionRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork<IdentityContext>>();
 
 // Add JWT Authentication
 builder.Services.AddAuthentication(options =>
@@ -124,9 +117,9 @@ builder.Services.AddAuthentication(options =>
           ValidateAudience = true,
           ValidateLifetime = true,
 
-          ValidIssuer = identitySettings.Issuer,
-          ValidAudience = identitySettings.Audience,
-          IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(identitySettings.SecretKey))
+          ValidIssuer = builder.Configuration["IdentitySettings:Issuer"],
+          ValidAudience = builder.Configuration["IdentitySettings:Audience"],
+          IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["IdentitySettings:SecretKey"]))
       };
   });
 

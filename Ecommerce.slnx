@@ -13,6 +13,8 @@
   </Folder>
   <Folder Name="/Services/Identity/">
     <Project Path="Services/Identity/Identity.API/Identity.API/Identity.API.csproj" Id="b5ac3fd2-2663-4eeb-a409-bc7dc5433799" />
+    <Project Path="Services/Identity/Identity.Core/Identity.Core.csproj" Id="c2c9a5ec-d967-466d-b3ec-1291a5eaf8b7" />
+    <Project Path="Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" Id="b7c4adf5-9a1f-46c2-8ea3-5e6cfd95619b" />
   </Folder>
   <Folder Name="/Shared/">
     <Project Path="Shared/Platform/Platform.Lib.csproj" />
