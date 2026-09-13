@@ -1,6 +1,8 @@
-﻿namespace Identity.Core.Persistence.Entities
+﻿using Platform.Lib.Core.Persistence.Entities;
+
+namespace Identity.Core.Persistence.Entities
 {
-    public class RolePermission
+    public class RolePermission : Entity
     {
         public Guid RoleId { get; set; }
         public Guid PermissionId { get; set; }

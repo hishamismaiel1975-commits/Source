@@ -8,7 +8,7 @@ namespace Identity.Core.Persistence.Entities
         public required string NameEn { get; set; }
         public required string NameAr { get; set; }
         public required string Password { get; set; }
-
+        public required bool IsBuiltIn { get; set; } = false;
     }
 
 }
