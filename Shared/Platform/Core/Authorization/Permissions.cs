@@ -2,26 +2,50 @@
 {
     public static class Permissions
     {
-        public static class Users
+        public static class Brand
         {
-            public const string Read = "Users.Read";
-            public const string Create = "Users.Create";
-            public const string Update = "Users.Update";
-            public const string Delete = "Users.Delete";
+            public const string Read = "Brand.Read";
+            public const string Create = "Brand.Create";
+            public const string Update = "Brand.Update";
+            public const string Delete = "Brand.Delete";
         }
 
-        public static class Roles
+        public static class Type
         {
-            public const string Read = "Roles.Read";
-            public const string Create = "Roles.Create";
-            public const string Update = "Roles.Update";
-            public const string Delete = "Roles.Delete";
+            public const string Read = "Type.Read";
+            public const string Create = "Type.Create";
+            public const string Update = "Type.Update";
+            public const string Delete = "Type.Delete";
         }
 
-        public static class PermissionsManagement
+        public static class Product
         {
-            public const string Read = "Permissions.Read";
-            public const string Assign = "Permissions.Assign";
+            public const string Read = "Product.Read";
+            public const string Create = "Product.Create";
+            public const string Update = "Product.Update";
+            public const string Delete = "Product.Delete";
+        }
+
+        public static class User
+        {
+            public const string Read = "User.Read";
+            public const string Create = "User.Create";
+            public const string Update = "User.Update";
+            public const string Delete = "User.Delete";
+        }
+
+        public static class Role
+        {
+            public const string Read = "Role.Read";
+            public const string Create = "Role.Create";
+            public const string Update = "Role.Update";
+            public const string Delete = "Role.Delete";
+        }
+
+        public static class Permission
+        {
+            public const string Read = "Permission.Read";
+            public const string Assign = "Permission.Assign";
         }
 
     }
