@@ -1,4 +1,5 @@
-﻿using Platform.Lib.Core.Persistence.Entities;
+﻿using Identity.Core.Enums;
+using Platform.Lib.Core.Persistence.Entities;
 
 namespace Identity.Core.Persistence.Entities
 {
@@ -7,8 +8,16 @@ namespace Identity.Core.Persistence.Entities
         public required string UserName { get; set; }
         public required string NameEn { get; set; }
         public required string NameAr { get; set; }
-        public required string Password { get; set; }
-        public required bool IsBuiltIn { get; set; } = false;
+        public required string PasswordHash { get; set; }
+        public UserType UserType { get; set; }
+        public int? RoleId { get; set; }
+        public bool IsActive { get; set; }
+        public required bool IsBuiltIn { get; set; }
+
+        public Role? Role { get; set; }
+
+
+
     }
 
 }

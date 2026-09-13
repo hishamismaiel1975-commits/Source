@@ -1,4 +1,5 @@
-﻿using Identity.Core.Persistence.Entities;
+﻿using Identity.Core.Enums;
+using Identity.Core.Persistence.Entities;
 using Identity.Infrastructure.Persistence.Seed.Permissions;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Lib.Core.Persistence.Repositories;
@@ -46,12 +47,23 @@ namespace Identity.Infrastructure.Persistence.Seed
                         new User
                         {
                             UserName = "admin",
-                            Password = "123",
+                            PasswordHash = "123",
                             NameEn = "Admin",
                             NameAr = "مدير",
-                            IsBuiltIn= true
+                            UserType    = UserType.Employee,
+                            IsBuiltIn= true,
+                            IsActive=true
+                        },
+                            new User
+                        {
+                            UserName = "Customer1",
+                            PasswordHash = "123",
+                            NameEn = "Customer1",
+                            NameAr = "عميل 1",
+                            UserType    = UserType.Customer,
+                            IsBuiltIn= false,
+                            IsActive=true
                         }
-
                     };
 
                 await userRepository.CreateManyAsync(existingUsers);

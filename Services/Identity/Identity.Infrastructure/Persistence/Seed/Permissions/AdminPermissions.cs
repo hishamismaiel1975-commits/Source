@@ -8,19 +8,16 @@ namespace Identity.Infrastructure.Persistence.Seed.Permissions
         public static IEnumerable<Permission> GetPermissions => new List<Permission>
             {
                 // Brand
-                new Permission { Name = AllPermissions.Brand.Read, NameEn = "Read Brands", NameAr = "عرض العلامات التجارية" },
                 new Permission { Name = AllPermissions.Brand.Create, NameEn = "Create Brand", NameAr = "إضافة علامة تجارية" },
                 new Permission { Name = AllPermissions.Brand.Update, NameEn = "Update Brand", NameAr = "تعديل علامة تجارية" },
                 new Permission { Name = AllPermissions.Brand.Delete, NameEn = "Delete Brand", NameAr = "حذف علامة تجارية" },
 
                 // Type
-                new Permission { Name = AllPermissions.Type.Read, NameEn = "Read Types", NameAr = "عرض الأنواع" },
                 new Permission { Name = AllPermissions.Type.Create, NameEn = "Create Type", NameAr = "إضافة نوع" },
                 new Permission { Name = AllPermissions.Type.Update, NameEn = "Update Type", NameAr = "تعديل نوع" },
                 new Permission { Name = AllPermissions.Type.Delete, NameEn = "Delete Type", NameAr = "حذف نوع" },
 
                 // Product
-                new Permission { Name = AllPermissions.Product.Read, NameEn = "Read Products", NameAr = "عرض المنتجات" },
                 new Permission { Name = AllPermissions.Product.Create, NameEn = "Create Product", NameAr = "إضافة منتج" },
                 new Permission { Name = AllPermissions.Product.Update, NameEn = "Update Product", NameAr = "تعديل منتج" },
                 new Permission { Name = AllPermissions.Product.Delete, NameEn = "Delete Product", NameAr = "حذف منتج" },

@@ -14,11 +14,18 @@ namespace Identity.API.Controllers.V1
         {
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterDto registerDto)
+        [HttpPost("register/customer")]
+        public async Task<IActionResult> RegisterCustomer(RegisterDto registerDto)
         {
             return null;
         }
+
+        [HttpPost("register/employee")]
+        public async Task<IActionResult> RegisterEmployee(RegisterDto registerDto)
+        {
+            return null;
+        }
+
 
     }
 

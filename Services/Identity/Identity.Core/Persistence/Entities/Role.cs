@@ -7,9 +7,9 @@ namespace Identity.Core.Persistence.Entities
         public required string Name { get; set; }
         public required string NameEn { get; set; }
         public required string NameAr { get; set; }
-        public required bool IsBuiltIn { get; set; } = false;
+        public required bool IsBuiltIn { get; set; }
 
-        public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
+        public ICollection<User> Users { get; set; } = new List<User>();
 
     }
 }

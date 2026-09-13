@@ -15,27 +15,15 @@ namespace Identity.Infrastructure.Persistence.SQLServer
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<RolePermission>(entity =>
-            {
-                entity.HasKey(x => new
-                {
-                    x.RoleId,
-                    x.PermissionId
-                });
-
-                entity.HasOne(x => x.Role)
-                    .WithMany(x => x.RolePermissions)
-                    .HasForeignKey(x => x.RoleId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(x => x.Permission)
-                    .WithMany(x => x.RolePermissions)
-                    .HasForeignKey(x => x.PermissionId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            });
+            modelBuilder.Entity<User>()
+                        .HasOne(u => u.Role)
+                        .WithMany(r => r.Users)
+                        .HasForeignKey(u => u.RoleId)
+                        .OnDelete(DeleteBehavior.Restrict);
         }
     }
 
 }
+
 
 
