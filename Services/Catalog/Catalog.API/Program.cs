@@ -4,7 +4,7 @@ using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Infrastructure.Services.Discount.HttpClients;
+using Platform.Lib.Infrastructure.Services.Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +25,8 @@ builder.AddRedis();
 
 
 // Add Discount gRPC Service or Add Discount HTTP Client Service
-//builder.AddDiscountGrpcService();
-builder.AddDiscountHttpClientService();
+builder.AddDiscountGrpcService();
+//builder.AddDiscountHttpClientService();
 
 
 // Add MassTransit with RabbitMQ and Entity Framework Outbox

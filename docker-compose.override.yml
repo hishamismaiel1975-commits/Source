@@ -1,8 +1,14 @@
 services:
   
   identity.api:
-    env_file:
-       - ./secrets/.env.shared
+    environment:
+     ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+     IdentityDb__ConnectionString: ${IdentityDb__ConnectionString}
+     Security__SecretKey: ${Security__SecretKey}
+     Security__Issuer: "${Security__Issuer}"
+     Security__Audience: "${Security__Audience}"
+     Security__AccessTokenLifetimeInMinutes: ${Security__AccessTokenLifetimeInMinutes}    # 1 Hour
+     Security__RefreshTokenLifetimeInMinutes: ${Security__RefreshTokenLifetimeInMinutes} # 24 hours
     ports:
        - "8001:80" 
 
@@ -13,8 +19,15 @@ services:
   #      - "8002:80" 
 
   catalog.api:
-    env_file:
-       - ./secrets/.env.shared
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      CatalogDb__ConnectionString: ${CatalogDb__ConnectionString}
+      RedisSettings__ConnectionString: ${RedisSettings__ConnectionString}
+      GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}}
+      EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
+      Security__SecretKey: ${Security__SecretKey}
+      Security__Issuer: "${Security__Issuer}"
+      Security__Audience: "${Security__Audience}"
     depends_on:
       mongodb:
         condition: service_healthy
@@ -30,8 +43,9 @@ services:
       - "8003:80" 
 
   discount.api:
-    env_file:
-       - ./secrets/.env.shared
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
     ports:
       - "8004:80"  
       - "8104:81"  # gRPC uses HTTP/2; do not expose by gatway. 
