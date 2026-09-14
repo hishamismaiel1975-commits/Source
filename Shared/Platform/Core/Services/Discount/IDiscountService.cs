@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Core.Services;
+﻿namespace Platform.Lib.Core.Services.Discount;
 
 public interface IDiscountService
 {

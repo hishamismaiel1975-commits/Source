@@ -22,7 +22,8 @@ using Platform.Lib.Application.Behaviors;
 using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.Persistence.MongoDB;
 using Platform.Lib.Core.Persistence.Repositories;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Localization;
+using Platform.Lib.Core.Services.Security;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
@@ -145,9 +146,9 @@ namespace Platform.Lib.API.Extensions
                       ValidateAudience = true,
                       ValidateLifetime = true,
 
-                      ValidIssuer = builder.Configuration["JWT:Issuer"],
-                      ValidAudience = builder.Configuration["JWT:Audience"],
-                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
+                      ValidIssuer = builder.Configuration["Security:Issuer"],
+                      ValidAudience = builder.Configuration["Security:Audience"],
+                      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Security:SecretKey"]))
                   };
               });
 
@@ -176,6 +177,10 @@ namespace Platform.Lib.API.Extensions
                     }
                 }
             });
+
+            // Add EncryptService & HashService
+            builder.Services.AddSingleton<IEncryptService, EncryptService>();
+            builder.Services.AddSingleton<IHashService, HashService>();
 
             builder.Services.AddControllers();
 

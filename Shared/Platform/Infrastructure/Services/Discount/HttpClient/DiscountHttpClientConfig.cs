@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Discount;
 
 namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients;
 

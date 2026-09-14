@@ -8,7 +8,7 @@ using Platform.Lib.API.Responses;
 using Platform.Lib.Core;
 using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Discount;
 using ProductsApp = Catalog.Application.Products;
 
 

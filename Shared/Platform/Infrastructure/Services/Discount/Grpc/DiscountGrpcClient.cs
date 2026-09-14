@@ -1,7 +1,7 @@
 ﻿using Discount.GRPC;
 using Infrastructure.Grpc.Discount;
 using Platform.Lib.Core;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Discount;
 
 namespace Platform.Lib.Infrastructure.Services.Discount.Grpc
 {

@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Core.Services
+﻿namespace Platform.Lib.Core.Services.Security
 {
     public interface ICurrentUserService
     {

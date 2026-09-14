@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Security;
 using System.Security.Claims;
 
 namespace Platform.Lib.Infrastructure.Services.Security;

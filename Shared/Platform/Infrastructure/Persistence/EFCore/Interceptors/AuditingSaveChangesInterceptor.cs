@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Platform.Lib.Core.Persistence.Entities;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Security;
 
 namespace Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 

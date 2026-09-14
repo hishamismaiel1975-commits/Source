@@ -24,7 +24,7 @@ namespace Identity.API.Controllers.V1
         }
 
         [AllowAnonymous]
-        [HttpPut("register-customer")]
+        [HttpPut("update-customer/{id}")]
         public async Task<IActionResult> UpdateCustomer(RegisterDto registerDto)
         {
             //only he can update his own profile
@@ -46,9 +46,9 @@ namespace Identity.API.Controllers.V1
         }
 
 
-        [Authorize(Policy = PermissionConstants.User.Delete)]
-        [HttpDelete("delete-employee/{id}")]
-        public async Task<IActionResult> DeleteEmployee(Guid id)
+        [Authorize(Policy = PermissionConstants.User.Update)]
+        [HttpPut("active-employee/{id}")]
+        public async Task<IActionResult> ActiveEmployee(Guid id)
         {
             return null;
         }
@@ -60,12 +60,6 @@ namespace Identity.API.Controllers.V1
             return null;
         }
 
-        [Authorize(Policy = PermissionConstants.User.Update)]
-        [HttpPut("active-employee/{id}")]
-        public async Task<IActionResult> ActiveEmployee(Guid id)
-        {
-            return null;
-        }
 
     }
 

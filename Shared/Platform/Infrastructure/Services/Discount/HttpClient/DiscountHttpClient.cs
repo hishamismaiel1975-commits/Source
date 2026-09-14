@@ -1,5 +1,5 @@
 ﻿using Platform.Lib.Core;
-using Platform.Lib.Core.Services;
+using Platform.Lib.Core.Services.Discount;
 using System.Net.Http.Json;
 
 namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients
