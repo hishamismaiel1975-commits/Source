@@ -15,7 +15,7 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
 
     public MongoRepository(IMongoClient client, IConfiguration configuration)
     {
-        var database = client.GetDatabase(configuration["DbSettings:DatabaseName"]);
+        var database = client.GetDatabase(configuration["SqlServerDB:DatabaseName"]);
         _collection = database.GetCollection<T>($"{typeof(T).Name}s");
     }
 

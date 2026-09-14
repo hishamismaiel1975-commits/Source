@@ -220,7 +220,7 @@ namespace Platform.Lib.API.Extensions
         }
         public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder, IMongoDbConfiguration mongoDbConfiguration)
         {
-            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
+            var connectionString = builder.Configuration["MongoDB:ConnectionString"];
             // Register MongoClient as singleton
             builder.Services.AddSingleton<IMongoClient>(options =>
             {
@@ -248,7 +248,7 @@ namespace Platform.Lib.API.Extensions
         public static WebApplicationBuilder AddSqlServer<TDbContext>(this WebApplicationBuilder builder)
         where TDbContext : DbContext
         {
-            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
+            var connectionString = builder.Configuration["SqlServerDB:ConnectionString"];
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString);
@@ -266,7 +266,7 @@ namespace Platform.Lib.API.Extensions
         public static WebApplicationBuilder AddPostgreSQL<TDbContext>(this WebApplicationBuilder builder)
             where TDbContext : DbContext
         {
-            var connectionString = builder.Configuration["DbSettings:ConnectionString"];
+            var connectionString = builder.Configuration["PostgresDB:ConnectionString"];
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
                 options.UseNpgsql(connectionString);
@@ -280,6 +280,5 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork<TDbContext>>();
             return builder;
         }
-
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Asp.Versioning;
 using Identity.API.DTOs;
+using Identity.Core.Persistence.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.Core.Authorization;
+using Platform.Lib.Core.Exceptions;
+using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Security;
 
 namespace Identity.API.Controllers.V1
@@ -12,60 +14,65 @@ namespace Identity.API.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthController : ControllerBase
     {
+        public IRepository<User> _userRepository { get; set; }
         public IHashService _hashService { get; set; }
-        public IEncryptService _encryptService { get; set; }
 
-        public AuthController(IHashService hashService, IEncryptService encryptService)
+        public AuthController(IHashService hashService, IRepository<User> userRepository)
         {
             _hashService = hashService;
-            _encryptService = encryptService;
+            _userRepository = userRepository;
         }
 
         [AllowAnonymous]
-        [HttpPost("register-customer")]
+        [HttpPost("customer/register")]
         public async Task<IActionResult> RegisterCustomer(RegisterDto registerDto)
         {
 
             return null;
         }
 
-        [AllowAnonymous]
-        [HttpPut("update-customer/{id}")]
+        [Authorize]
+        [HttpPut("customer/update/{id}")]
         public async Task<IActionResult> UpdateCustomer(RegisterDto registerDto)
         {
             //only he can update his own profile
             return null;
         }
 
-        [Authorize(Policy = PermissionConstants.User.Create)]
-        [HttpPost("create-employee/{id}")]
-        public async Task<IActionResult> CreateEmployee(RegisterDto registerDto)
+
+        [AllowAnonymous]
+        [HttpPost("customer/login")]
+        public async Task<IActionResult> LoginCustomer(LoginDto loginDto)
         {
+            //only he can update his own profile
             return null;
         }
 
-        [Authorize(Policy = PermissionConstants.User.Update)]
-        [HttpPut("update-employee/{id}")]
-        public async Task<IActionResult> UpdateEmployee(RegisterDto registerDto)
+        [AllowAnonymous]
+        [HttpPost("employee/login")]
+        public async Task<string> LoginEmployee(LoginDto loginDto)
         {
+            var x = _hashService.Hash("123");
+
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            if (user == null)
+            {
+                AppException.Throw("UsernameNotFound");
+                return "";
+            }
+
+            if (!_hashService.Verify(loginDto.Password, user.PasswordHash))
+            {
+                AppException.Throw("InvalidUsernameOrPassword");
+                return "";
+            }
+
+
+
+
+
             return null;
         }
-
-
-        [Authorize(Policy = PermissionConstants.User.Update)]
-        [HttpPut("active-employee/{id}")]
-        public async Task<IActionResult> ActiveEmployee(Guid id)
-        {
-            return null;
-        }
-
-        [Authorize(Policy = PermissionConstants.User.Update)]
-        [HttpPut("disactive-employee/{id}")]
-        public async Task<IActionResult> DisactiveEmployee(Guid id)
-        {
-            return null;
-        }
-
 
     }
 

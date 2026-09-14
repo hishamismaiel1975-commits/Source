@@ -15,29 +15,38 @@ namespace Identity.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
-                        .HasOne(u => u.Role)
-                        .WithMany(r => r.Users)
-                        .HasForeignKey(u => u.RoleId)
-                        .OnDelete(DeleteBehavior.Restrict);
 
-
-            modelBuilder.Entity<RolePermission>(entity =>
+            modelBuilder.Entity<User>(builder =>
             {
-                entity.HasKey(x => x.Id);
+                // UserName unique index
+                builder.HasIndex(u => u.UserName)
+                       .IsUnique()
+                       .HasDatabaseName("IX_Users_UserName");
 
-                entity.HasOne(x => x.Role)
+                // User → Role
+                builder.HasOne(u => u.Role)
+                       .WithMany(r => r.Users)
+                       .HasForeignKey(u => u.RoleId)
+                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+
+            modelBuilder.Entity<RolePermission>(builder =>
+            {
+                builder.HasKey(x => x.Id);
+
+                builder.HasOne(x => x.Role)
                     .WithMany(x => x.RolePermissions)
                     .HasForeignKey(x => x.RoleId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(x => x.Permission)
+                builder.HasOne(x => x.Permission)
                     .WithMany(x => x.RolePermissions)
                     .HasForeignKey(x => x.PermissionId)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 // Prevent duplicate Role + Permission assignments
-                entity.HasIndex(x => new { x.RoleId, x.PermissionId })
+                builder.HasIndex(x => new { x.RoleId, x.PermissionId })
                     .IsUnique();
             });
         }

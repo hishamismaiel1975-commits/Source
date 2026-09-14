@@ -3,6 +3,6 @@
     public interface IHashService
     {
         string Hash(string value);
-        bool HashVerify(string value, string valueHash);
+        bool Verify(string value, string valueHash);
     }
 }

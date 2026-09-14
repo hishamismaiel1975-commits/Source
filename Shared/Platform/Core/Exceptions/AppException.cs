@@ -6,5 +6,10 @@
         {
             throw new ApplicationException(exceptionMessage, new Exception(innerException));
         }
+
+        public static ApplicationException Throw(string exceptionMessage)
+        {
+            throw new ApplicationException(exceptionMessage);
+        }
     }
 }

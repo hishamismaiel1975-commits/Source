@@ -15,9 +15,6 @@ namespace Identity.Core.Persistence.Entities
         public required bool IsBuiltIn { get; set; }
 
         public Role? Role { get; set; }
-
-
-
     }
 
 }

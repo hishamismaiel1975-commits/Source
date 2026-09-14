@@ -8,6 +8,7 @@ namespace Platform.Lib.Infrastructure.Services.Security
     public class EncryptService : IEncryptService
     {
         private readonly byte[] _key;
+        private readonly byte[] _iv;
 
         public EncryptService(IConfiguration configuration)
         {
@@ -15,11 +16,12 @@ namespace Platform.Lib.Infrastructure.Services.Security
                 ?? throw new InvalidOperationException(
                     "Security:SecretKey is not configured.");
 
-            if (!Guid.TryParse(keyString, out var key))
+            if (!Guid.TryParse(keyString, out var guid))
                 throw new InvalidOperationException(
                     "Security:SecretKey must be a valid GUID.");
 
-            _key = SHA256.HashData(key.ToByteArray());
+            _key = SHA256.HashData(guid.ToByteArray());
+            _iv = new byte[16];
         }
 
         public string Encrypt(string plainText)
@@ -27,34 +29,20 @@ namespace Platform.Lib.Infrastructure.Services.Security
             if (string.IsNullOrEmpty(plainText))
                 return plainText;
 
-            byte[] nonce = RandomNumberGenerator.GetBytes(12);
+            using var aes = Aes.Create();
+
+            aes.Key = _key;
+            aes.IV = _iv;
+
+            using var encryptor = aes.CreateEncryptor();
+
             byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-            byte[] cipherBytes = new byte[plainBytes.Length];
-            byte[] tag = new byte[16];
-
-            using var aes = new AesGcm(_key, 16);
-
-            aes.Encrypt(
-                nonce,
+            byte[] cipherBytes = encryptor.TransformFinalBlock(
                 plainBytes,
-                cipherBytes,
-                tag);
-
-            byte[] result = new byte[
-                nonce.Length +
-                tag.Length +
-                cipherBytes.Length];
-
-            Buffer.BlockCopy(nonce, 0, result, 0, nonce.Length);
-            Buffer.BlockCopy(tag, 0, result, nonce.Length, tag.Length);
-            Buffer.BlockCopy(
-                cipherBytes,
                 0,
-                result,
-                nonce.Length + tag.Length,
-                cipherBytes.Length);
+                plainBytes.Length);
 
-            return Convert.ToBase64String(result);
+            return Convert.ToBase64String(cipherBytes);
         }
 
         public string Decrypt(string cipherText)
@@ -62,28 +50,19 @@ namespace Platform.Lib.Infrastructure.Services.Security
             if (string.IsNullOrEmpty(cipherText))
                 return cipherText;
 
-            byte[] data = Convert.FromBase64String(cipherText);
+            using var aes = Aes.Create();
 
-            const int nonceSize = 12;
-            const int tagSize = 16;
+            aes.Key = _key;
+            aes.IV = _iv;
 
-            if (data.Length < nonceSize + tagSize)
-                throw new CryptographicException(
-                    "Invalid encrypted data.");
+            using var decryptor = aes.CreateDecryptor();
 
-            byte[] nonce = data[..nonceSize];
-            byte[] tag = data[nonceSize..(nonceSize + tagSize)];
-            byte[] cipherBytes = data[(nonceSize + tagSize)..];
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
 
-            byte[] plainBytes = new byte[cipherBytes.Length];
-
-            using var aes = new AesGcm(_key, 16);
-
-            aes.Decrypt(
-                nonce,
+            byte[] plainBytes = decryptor.TransformFinalBlock(
                 cipherBytes,
-                tag,
-                plainBytes);
+                0,
+                cipherBytes.Length);
 
             return Encoding.UTF8.GetString(plainBytes);
         }
