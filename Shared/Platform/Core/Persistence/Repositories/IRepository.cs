@@ -19,7 +19,7 @@ public interface IRepository<T> where T : Entity
     Task<TResult?> FirstOrDefaultAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>> filter);
     Task<T?> GetByIdAsync(Guid id);
     Task<bool> ExistsAsync(Guid id);
-    Task<int> CountAsync();
+    Task<int> CountAsync(Expression<Func<T, bool>>? filter = null);
 
     /// <summary>
     /// Paging / Filtering / Sorting / Includes.

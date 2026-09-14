@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platform.Lib.Infrastructure.Persistence.EFCore.Extensions;
 using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Persistence.Entities;
 using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Infrastructure.Persistence.EFCore.Extensions;
 using System.Linq.Expressions;
 
 namespace Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
@@ -91,8 +91,12 @@ public class EFRepository<T> : IRepository<T>
         return await _dbSet
             .AnyAsync(x => x.Id == id);
     }
-    public async Task<int> CountAsync()
+    public async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
     {
+        if (filter is not null)
+        {
+            return await _dbSet.CountAsync(filter);
+        }
         return await _dbSet.CountAsync();
     }
 
