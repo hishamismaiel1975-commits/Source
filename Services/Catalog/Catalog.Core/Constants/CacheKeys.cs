@@ -2,7 +2,7 @@
 {
     public static class CacheKeys
     {
-        public static readonly TimeSpan DefaultExpiration = TimeSpan.FromHours(1);
+        public static readonly TimeSpan DefaultExpiration = TimeSpan.FromHours(24);
         public const string AllBrands = "all-brands";
         public const string AllTypes = "all-types";
     }
