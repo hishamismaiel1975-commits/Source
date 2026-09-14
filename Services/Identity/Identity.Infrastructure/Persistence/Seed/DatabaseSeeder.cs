@@ -1,6 +1,5 @@
 ﻿using Identity.Core.Enums;
 using Identity.Core.Persistence.Entities;
-using Identity.Infrastructure.Persistence.Seed.Permissions;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Lib.Core.Persistence.Repositories;
 
@@ -19,14 +18,13 @@ namespace Identity.Infrastructure.Persistence.Seed
             // --------------------------------------------------
             // Roles
             // --------------------------------------------------
-            var existingRoles = await roleRepository.GetAllAsync();
-            if (!existingRoles.Any())
+            if (await roleRepository.CountAsync() == 0)
             {
-                existingRoles = new List<Role>
+                var existingRoles = new List<Role>
                     {
                         new Role
                         {
-                            Name = "Admin",
+                            Name = "admin",
                             NameEn = "System Administrator",
                             NameAr = "مدير النظام",
                             IsBuiltIn= true
@@ -40,22 +38,22 @@ namespace Identity.Infrastructure.Persistence.Seed
             // --------------------------------------------------
             // Users
             // --------------------------------------------------
-            var existingUsers = await userRepository.GetAllAsync();
-            if (!existingUsers.Any())
+            var adminRole = await roleRepository.FirstOrDefaultAsync(r => r.Name == "Admin");
+            if (await userRepository.CountAsync() == 0)
             {
-                existingUsers = new List<User>
+
+                var existingUsers = new List<User>
                     {
                         new User
                         {
                             UserName = "admin",
-                            PasswordHash = "123",
+                            PasswordHash = "XXQGU2+HXrQO1eYDsSoZ02UhtxmCHPki4B/ybqbpUYM=",
                             NameEn = "Admin",
                             NameAr = "مدير",
                             UserType    = UserType.Employee,
                             IsBuiltIn= true,
                             IsActive=true,
-                            RoleId= existingRoles.First(r => r.Name == "Admin").Id
-
+                            RoleId= adminRole.Id
                         }
                     };
 
@@ -65,7 +63,7 @@ namespace Identity.Infrastructure.Persistence.Seed
             // --------------------------------------------------
             // Permissions
             // --------------------------------------------------
-            var permissions = AdminPermissions.GetPermissions;
+            var permissions = AllPermissions.GetPermissions;
 
             // Get existing permissions
             var existingPermissions = await permissionRepository.GetAllAsync();
@@ -91,8 +89,6 @@ namespace Identity.Infrastructure.Persistence.Seed
             // --------------------------------------------------
             // Admin Role Permissions
             // --------------------------------------------------
-            var adminRole = existingRoles.First(r => r.Name == "Admin");
-
             var rolePermissions = await rolePermissionRepository.GetAllAsync(x => x.RoleId == adminRole.Id);
 
             var existingAdminPermissionIds = rolePermissions

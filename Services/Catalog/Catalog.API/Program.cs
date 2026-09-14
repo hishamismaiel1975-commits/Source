@@ -18,7 +18,7 @@ builder.AddPlatform<Program, Application>();
 //builder.AddPostgreSQL<CatalogPostgresDbContext>();
 
 // Add SQL Server Database Service & SQL Server Repository Services
-builder.AddSqlServer<CatalogDbContext>();
+builder.AddSqlServer<CatalogDbContext>(builder.Configuration["CatalogDb:ConnectionString"]);
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();

@@ -1,9 +1,9 @@
 ﻿using Identity.Core.Persistence.Entities;
 using Platform.Lib.Core.Authorization;
 
-namespace Identity.Infrastructure.Persistence.Seed.Permissions
+namespace Identity.Infrastructure.Persistence.Seed
 {
-    public static class AdminPermissions
+    public static class AllPermissions
     {
         public static IEnumerable<Permission> GetPermissions => new List<Permission>
             {

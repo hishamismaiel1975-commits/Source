@@ -4,7 +4,6 @@
   "FailedToDelete": "حدث خطأ أثناء حذف العنصر.",
   "InvalidBrandOrType": "العلامة التجارية أو النوع غير صالح.",
   "UnexpectedError": "حدث خطأ غير متوقع.",
-  "UsernameNotFound": "اسم المستخدم غير موجود.",
   "InvalidUsernameOrPassword": "اسم المستخدم أو كلمة المرور غير صحيحة."
 
 }

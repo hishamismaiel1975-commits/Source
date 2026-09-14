@@ -11,6 +11,8 @@ namespace Identity.Infrastructure.Persistence
         public DbSet<Permission> Permissions => Set<Permission>();
         public DbSet<Role> Roles => Set<Role>();
 
+        public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -30,6 +32,14 @@ namespace Identity.Infrastructure.Persistence
                        .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<Role>(builder =>
+            {
+                // Role Name unique index
+                builder.HasIndex(r => r.Name)
+                       .IsUnique()
+                       .HasDatabaseName("IX_Roles_Name");
+
+            });
 
             modelBuilder.Entity<RolePermission>(builder =>
             {

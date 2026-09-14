@@ -18,6 +18,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
+using Platform.Lib.API.Swagger;
 using Platform.Lib.Application.Behaviors;
 using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.Persistence.MongoDB;
@@ -92,9 +93,12 @@ namespace Platform.Lib.API.Extensions
                });
 
             //Add Swagger services with API versioning support
-            builder.Services.AddTransient<
-             IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions<TProgram>>();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions<TProgram>>();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.OperationFilter<AcceptLanguageHeaderOperationFilter>();
+            });
+
 
             //Add OpenTelemetry services
             builder.Services.AddOpenTelemetry()
@@ -245,10 +249,9 @@ namespace Platform.Lib.API.Extensions
 
             return builder;
         }
-        public static WebApplicationBuilder AddSqlServer<TDbContext>(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddSqlServer<TDbContext>(this WebApplicationBuilder builder, string connectionString)
         where TDbContext : DbContext
         {
-            var connectionString = builder.Configuration["SqlServerDB:ConnectionString"];
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
                 options.UseSqlServer(connectionString);

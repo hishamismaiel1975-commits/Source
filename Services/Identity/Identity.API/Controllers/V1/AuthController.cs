@@ -3,6 +3,7 @@ using Identity.API.DTOs;
 using Identity.Core.Persistence.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Lib.API.Responses;
 using Platform.Lib.Core.Exceptions;
 using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Security;
@@ -50,28 +51,15 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("employee/login")]
-        public async Task<string> LoginEmployee(LoginDto loginDto)
+        public async Task<Result<string>> LoginEmployee(LoginDto loginDto)
         {
-            var x = _hashService.Hash("123");
 
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
-            if (user == null)
-            {
-                AppException.Throw("UsernameNotFound");
-                return "";
-            }
-
-            if (!_hashService.Verify(loginDto.Password, user.PasswordHash))
-            {
-                AppException.Throw("InvalidUsernameOrPassword");
-                return "";
-            }
+            if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
+            if (!_hashService.Verify(loginDto.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
 
-
-
-
-            return null;
+            return Result<string>.Success("Login successful");
         }
 
     }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20260914125257_Indexing")]
-    partial class Indexing
+    [Migration("20260914133106_AddRoleIndex")]
+    partial class AddRoleIndex
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,7 +77,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NameAr")
                         .IsRequired()
@@ -94,6 +94,10 @@ namespace Identity.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Roles_Name");
 
                     b.ToTable("Roles");
                 });
@@ -129,7 +133,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
                     b.HasIndex("RoleId", "PermissionId")
                         .IsUnique();
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Identity.Core.Persistence.Entities.User", b =>

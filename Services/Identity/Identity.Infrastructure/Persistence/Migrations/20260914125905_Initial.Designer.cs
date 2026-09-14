@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20260913183658_Initial")]
+    [Migration("20260914125905_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -129,7 +129,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
                     b.HasIndex("RoleId", "PermissionId")
                         .IsUnique();
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Identity.Core.Persistence.Entities.User", b =>
@@ -173,7 +173,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("UserType")
                         .HasColumnType("int");
@@ -181,6 +181,10 @@ namespace Identity.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Users_UserName");
 
                     b.ToTable("Users");
                 });

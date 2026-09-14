@@ -49,7 +49,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RolePermission",
+                name: "RolePermissions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -62,15 +62,15 @@ namespace Identity.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolePermission", x => x.Id);
+                    table.PrimaryKey("PK_RolePermissions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RolePermission_Permissions_PermissionId",
+                        name: "FK_RolePermissions_Permissions_PermissionId",
                         column: x => x.PermissionId,
                         principalTable: "Permissions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RolePermission_Roles_RoleId",
+                        name: "FK_RolePermissions_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
@@ -82,7 +82,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NameEn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NameAr = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -107,13 +107,13 @@ namespace Identity.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RolePermission_PermissionId",
-                table: "RolePermission",
+                name: "IX_RolePermissions_PermissionId",
+                table: "RolePermissions",
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RolePermission_RoleId_PermissionId",
-                table: "RolePermission",
+                name: "IX_RolePermissions_RoleId_PermissionId",
+                table: "RolePermissions",
                 columns: new[] { "RoleId", "PermissionId" },
                 unique: true);
 
@@ -121,13 +121,19 @@ namespace Identity.Infrastructure.Persistence.Migrations
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserName",
+                table: "Users",
+                column: "UserName",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RolePermission");
+                name: "RolePermissions");
 
             migrationBuilder.DropTable(
                 name: "Users");

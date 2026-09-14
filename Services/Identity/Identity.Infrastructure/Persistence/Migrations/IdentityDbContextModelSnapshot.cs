@@ -74,7 +74,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("NameAr")
                         .IsRequired()
@@ -91,6 +91,10 @@ namespace Identity.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Roles_Name");
 
                     b.ToTable("Roles");
                 });
@@ -126,7 +130,7 @@ namespace Identity.Infrastructure.Persistence.Migrations
                     b.HasIndex("RoleId", "PermissionId")
                         .IsUnique();
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Identity.Core.Persistence.Entities.User", b =>

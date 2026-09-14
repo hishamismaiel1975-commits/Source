@@ -5,23 +5,23 @@
 namespace Identity.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Indexing : Migration
+    public partial class AddRoleIndex : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "Users",
+                name: "Name",
+                table: "Roles",
                 type: "nvarchar(450)",
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
-                table: "Users",
-                column: "UserName",
+                name: "IX_Roles_Name",
+                table: "Roles",
+                column: "Name",
                 unique: true);
         }
 
@@ -29,12 +29,12 @@ namespace Identity.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "IX_Users_UserName",
-                table: "Users");
+                name: "IX_Roles_Name",
+                table: "Roles");
 
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "Users",
+                name: "Name",
+                table: "Roles",
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
