@@ -3,6 +3,7 @@ using Identity.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.Core.Authorization;
+using Platform.Lib.Core.Services.Security;
 
 namespace Identity.API.Controllers.V1
 {
@@ -11,15 +12,29 @@ namespace Identity.API.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthController : ControllerBase
     {
+        public IHashService _hashService { get; set; }
+        public IEncryptService _encryptService { get; set; }
 
-        public AuthController()
+        public AuthController(IHashService hashService, IEncryptService encryptService)
         {
+            _hashService = hashService;
+            _encryptService = encryptService;
         }
 
         [AllowAnonymous]
         [HttpPost("register-customer")]
         public async Task<IActionResult> RegisterCustomer(RegisterDto registerDto)
         {
+            var pass = "123";
+            var hash = _hashService.Hash(pass);
+            var result = _hashService.HashVerify(pass, hash);
+
+
+            var encpt = _encryptService.Encrypt(pass);
+            var result2 = _encryptService.Decrypt(encpt);
+
+
+
             return null;
         }
 

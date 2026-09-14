@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Platform.Lib.Core.Services.Security;
+﻿using Platform.Lib.Core.Services.Security;
 using System.Security.Cryptography;
 
 namespace Platform.Lib.Infrastructure.Services.Security
@@ -66,4 +65,4 @@ namespace Platform.Lib.Infrastructure.Services.Security
         }
     }
 }
-}
+
