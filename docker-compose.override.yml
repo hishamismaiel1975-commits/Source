@@ -23,7 +23,8 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       CatalogDb__ConnectionString: ${CatalogDb__ConnectionString}
       RedisSettings__ConnectionString: ${RedisSettings__ConnectionString}
-      GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}}
+      GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}
+      HttpClient__DiscountUrl: ${HttpClient__DiscountUrl}
       EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"
@@ -52,8 +53,8 @@ services:
 
   mongodb:
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: pass_123456789
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL","mongosh --host localhost --port 27017 -u admin -p pass_123456789 --authenticationDatabase admin --eval \"db.adminCommand('ping').ok\" --quiet"]
       interval: 10s
@@ -66,7 +67,7 @@ services:
   sqlserver:
     environment:
       ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: pass_123456789
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL","/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'pass_123456789' -C -Q 'SELECT 1'"]
       interval: 10s
@@ -78,9 +79,8 @@ services:
 
   postgres:
     environment:
-      POSTGRES_DB: Catalog
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: pass_123456789
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d Catalog"]
       interval: 10s
@@ -100,8 +100,8 @@ services:
 
   rabbitmq:
     environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: pass_123456789
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 10s
