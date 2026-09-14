@@ -25,15 +25,6 @@ namespace Identity.API.Controllers.V1
         [HttpPost("register-customer")]
         public async Task<IActionResult> RegisterCustomer(RegisterDto registerDto)
         {
-            var pass = "123";
-            var hash = _hashService.Hash(pass);
-            var result = _hashService.HashVerify(pass, hash);
-
-
-            var encpt = _encryptService.Encrypt(pass);
-            var result2 = _encryptService.Decrypt(encpt);
-
-
 
             return null;
         }
