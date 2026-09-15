@@ -113,11 +113,10 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
             .Limit(1)
             .AnyAsync();
     }
-    public async Task<int> CountAsync()
+    public async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
     {
-        var count = await _collection.CountDocumentsAsync(
-            Builders<T>.Filter.Empty);
-
+        var filterDef = filter is null ? Builders<T>.Filter.Empty : FilterBuilder.Build(filter);
+        var count = await _collection.CountDocumentsAsync(filterDef);
         return (int)count;
     }
 

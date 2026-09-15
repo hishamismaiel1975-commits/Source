@@ -30,9 +30,12 @@ public class RedisRepository<T> : ICacheRepository<T>
     }
     public async Task SetAsync(string id, T entity, TimeSpan? expiration = null)
     {
-        var options = CreateOptions(expiration);
-
         var json = JsonSerializer.Serialize(entity);
+        var options = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = expiration ?? TimeSpan.FromMinutes(30)
+
+        };
 
         await _cache.SetStringAsync(
             BuildKey(id),
@@ -41,12 +44,13 @@ public class RedisRepository<T> : ICacheRepository<T>
     }
     public async Task SetAllAsync(string key, IEnumerable<T> entities, TimeSpan? expiration = null)
     {
-        var options = CreateOptions(expiration);
         var json = JsonSerializer.Serialize(entities);
-        await _cache.SetStringAsync(
-            BuildKey(key),
-            json,
-            options);
+        var options = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = expiration ?? TimeSpan.FromMinutes(30),
+        };
+
+        await _cache.SetStringAsync(BuildKey(key), json, options);
     }
     public Task DeleteAsync(string id)
     {
@@ -56,12 +60,5 @@ public class RedisRepository<T> : ICacheRepository<T>
     {
         return $"{typeof(T).Name}:{id}";
     }
-    private static DistributedCacheEntryOptions CreateOptions(TimeSpan? expiration)
-    {
-        return new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow =
-                expiration ?? TimeSpan.FromHours(1)
-        };
-    }
+
 }
