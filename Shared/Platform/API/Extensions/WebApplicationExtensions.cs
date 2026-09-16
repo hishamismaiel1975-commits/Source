@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using MongoDB.Driver;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -32,6 +33,7 @@ using Platform.Lib.Infrastructure.Services.Security;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+
 
 namespace Platform.Lib.API.Extensions
 {
@@ -96,6 +98,21 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<AcceptLanguageHeaderOperationFilter>();
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter your JWT token. Example: Bearer {token}"
+                });
+
+                options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+                {
+                    [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+                });
             });
 
 
@@ -148,9 +165,11 @@ namespace Platform.Lib.API.Extensions
                       ValidateIssuer = true,
                       ValidateAudience = true,
                       ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
 
                       ValidIssuer = builder.Configuration["Security:Issuer"],
                       ValidAudience = builder.Configuration["Security:Audience"],
+
                       IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Security:SecretKey"]))
                   };
               });

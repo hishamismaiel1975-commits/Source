@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Shared\Application\Infrastructure\Services\Discount\Grpc\discount.proto" GrpcServices="Server" />
+		<Protobuf Include="..\..\..\Shared\Application\Infrastructure\Services\Discount\Proto\discount.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 

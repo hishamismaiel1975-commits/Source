@@ -1,5 +1,5 @@
 using Application.Lib.Core.Constants;
-using Application.Lib.Infrastructure.Services.Discount.Grpc;
+using Application.Lib.Infrastructure.Services.Discount.GrpcClients;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;

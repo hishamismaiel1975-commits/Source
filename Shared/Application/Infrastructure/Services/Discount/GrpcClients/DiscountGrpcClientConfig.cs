@@ -3,15 +3,15 @@ using Discount.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Lib.Infrastructure.Services.Discount.Grpc;
+namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients;
 
-public static class DiscountGrpcConfig
+public static class DiscountGrpcClientConfig
 {
     public static WebApplicationBuilder AddDiscountGrpcService(this WebApplicationBuilder builder)
     {
         builder.Services.AddGrpcClient<DiscountService.DiscountServiceClient>(options =>
         {
-            options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+            options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountServiceUrl"]!);
         });
 
         builder.Services.AddScoped<IDiscountService, DiscountGrpcClient>();

@@ -1,4 +1,4 @@
-﻿namespace Application.Lib.Core.DTOs.Discount
+﻿namespace Application.Lib.Core.Services.Discount.DTOs
 {
     public record DiscountResponse
     (

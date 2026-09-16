@@ -1,6 +1,6 @@
 
 using Discount.API.EventBus.Consumer;
-using Discount.API.Grpc.Services;
+using Discount.API.GrpcServices;
 using MassTransit;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 

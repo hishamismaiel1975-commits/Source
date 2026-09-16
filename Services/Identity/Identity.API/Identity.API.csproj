@@ -57,5 +57,9 @@
     <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="..\..\..\Shared\Application\Infrastructure\Services\Identity\Proto\Identity.proto" GrpcServices="Server" />
+	</ItemGroup>
+	
 </Project>
 

@@ -21,7 +21,13 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<Protobuf Include="Infrastructure\Services\Discount\Grpc\discount.proto" GrpcServices="Client" />
+		<Protobuf Include="Infrastructure\Services\Identity\Proto\Identity.proto" GrpcServices="Client" />
+		<Protobuf Include="Infrastructure\Services\Discount\Proto\discount.proto" GrpcServices="Client" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Core\DTOs\Discount\" />
+	  <Folder Include="Core\DTOs\Identity\" />
 	</ItemGroup>
 
 </Project>

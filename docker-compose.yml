@@ -9,6 +9,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       IdentityDb__ConnectionString: ${IdentityDb__ConnectionString}
+      GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"
       Security__Audience: "${Security__Audience}"
@@ -35,6 +36,7 @@ services:
       RedisSettings__ConnectionString: ${RedisSettings__ConnectionString}
       GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}
       HttpClient__DiscountUrl: ${HttpClient__DiscountUrl}
+      GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
       EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"

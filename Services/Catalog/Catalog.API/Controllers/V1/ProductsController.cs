@@ -1,6 +1,6 @@
 ﻿using Application.Lib.Core.Constants;
-using Application.Lib.Core.DTOs.Discount;
 using Application.Lib.Core.Services.Discount;
+using Application.Lib.Core.Services.Identity.DTOs;
 using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
@@ -20,9 +20,9 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IDiscountService _discountService;
+        private readonly IIdentityService _discountService;
 
-        public ProductsController(IMediator mediator, IDiscountService discountService)
+        public ProductsController(IMediator mediator, IIdentityService discountService)
         {
             _mediator = mediator;
             _discountService = discountService;
@@ -79,10 +79,10 @@ namespace Catalog.API.Controllers.V1
         }
 
         [HttpGet("discount/{id:guid}")]
-        public async Task<Result<DiscountResponse>> GetProductDiscount(Guid id)
+        public async Task<Result<UserPermissionsResponse>> GetProductDiscount(Guid id)
         {
             var response = await _discountService.GetDiscountAsync(id);
-            return Result<DiscountResponse>.Success(response);
+            return Result<UserPermissionsResponse>.Success(response);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using Application.Lib.Core.DTOs.Discount;
+﻿using Application.Lib.Core.Services.Discount.DTOs;
 
 namespace Application.Lib.Core.Services.Discount;
 
