@@ -41,7 +41,7 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("customer/register")]
-        public async Task<IActionResult> RegisterCustomer(RegisterDto registerDto)
+        public async Task<IActionResult> RegisterCustomer(RegisterRequest registerDto)
         {
 
             return null;
@@ -49,7 +49,7 @@ namespace Identity.API.Controllers.V1
 
         [Authorize]
         [HttpPut("customer/update/{id}")]
-        public async Task<IActionResult> UpdateCustomer(RegisterDto registerDto)
+        public async Task<IActionResult> UpdateCustomer(RegisterRequest registerDto)
         {
             //only he can update his own profile
             return null;
@@ -58,9 +58,9 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("customer/login")]
-        public async Task<Result<string>> LoginCustomer(LoginDto loginDto)
+        public async Task<Result<LoginResponse>> LoginCustomer(LoginRequest loginRequest)
         {
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
 
             // Check if the user exists
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
@@ -69,62 +69,53 @@ namespace Identity.API.Controllers.V1
             if (user.UserType != UserTypes.Customer) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             // Verify the password
-            if (!_hashService.Verify(loginDto.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
+            if (!_hashService.Verify(loginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim("UserType", user.UserType.ToString()),
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            // Generate JWT Access Token
+            var accessToken = GenerateJwtToken(user, "accesstoken");
+            var refreshToken = GenerateJwtToken(user, "refreshtoken");
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Security:Issuer"],
-                audience: _configuration["Security:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
-                signingCredentials: creds);
-
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return Result<string>.Success(tokenString);
+            return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
         }
 
         [AllowAnonymous]
         [HttpPost("employee/login")]
-        public async Task<Result<string>> LoginEmployee(LoginDto loginDto)
+        public async Task<Result<LoginResponse>> LoginEmployee(LoginRequest loginRequest)
         {
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             // Check if the user is an employee
             if (user.UserType != UserTypes.Employee) { AppException.Throw("InvalidUsernameOrPassword"); }
 
-
             // Verify the password
-            if (!_hashService.Verify(loginDto.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
+            if (!_hashService.Verify(loginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
+            // Generate JWT Access Token
+            var accessToken = GenerateJwtToken(user, "access_token");
+            var refreshToken = GenerateJwtToken(user, "refresh_token");
+
+            return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
+        }
+
+
+        private string GenerateJwtToken(User user, string tokenType)
+        {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim("UserType", user.UserType.ToString()),
+                new Claim("token_type", tokenType),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
             var token = new JwtSecurityToken(
                 issuer: _configuration["Security:Issuer"],
                 audience: _configuration["Security:Audience"],
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
                 signingCredentials: creds);
-
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return Result<string>.Success(tokenString);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 
 }

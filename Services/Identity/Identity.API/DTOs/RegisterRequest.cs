@@ -1,6 +1,6 @@
 ﻿namespace Identity.API.DTOs
 {
-    public record RegisterDto
+    public record RegisterRequest
     (
         string UserName,
         string FullNameEn,

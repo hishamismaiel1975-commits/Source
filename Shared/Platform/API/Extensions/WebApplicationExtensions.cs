@@ -203,6 +203,15 @@ namespace Platform.Lib.API.Extensions
                   {
                       OnTokenValidated = async context =>
                       {
+                          // Check if the token type is "access_token"
+                          //var tokenType = context.Principal?.FindFirst("token_type")?.Value;
+                          //if (!string.Equals(
+                          //        tokenType,
+                          //        "access_token",
+                          //        StringComparison.OrdinalIgnoreCase))
+                          //{
+                          //    context.Fail("Invalid token type.");
+                          //}
 
                           var userId = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
@@ -323,7 +332,15 @@ namespace Platform.Lib.API.Extensions
         {
             builder.Services.AddDbContext<TDbContext>((sp, options) =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString,
+                sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null);
+                });
+
 
                 // Register the Auditing Interceptor with the DbContext
                 options.AddInterceptors(sp.GetRequiredService<AuditingSaveChangesInterceptor>());

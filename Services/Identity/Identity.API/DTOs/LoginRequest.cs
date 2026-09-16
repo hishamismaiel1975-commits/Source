@@ -1,6 +1,6 @@
 ﻿namespace Identity.API.DTOs
 {
-    public record LoginDto
+    public record LoginRequest
     (
         string UserName,
         string Password
