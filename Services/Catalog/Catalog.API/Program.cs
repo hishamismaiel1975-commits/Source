@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddIdentityGrpcService();
 
 // Add Platform Services
-builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
+builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
 //builder.AddMongoDB(new MongoDbConfiguration());

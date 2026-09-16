@@ -5,6 +5,7 @@
   "InvalidBrandOrType": "العلامة التجارية أو النوع غير صالح.",
   "UnexpectedError": "حدث خطأ غير متوقع.",
   "InvalidUsernameOrPassword": "اسم المستخدم أو كلمة المرور غير صحيحة.",
-  "InvalidUserID": "معرف المستخدم غير صالح."
+  "InvalidUserID": "معرف المستخدم غير صالح.",
+  "UserNotFound": "المستخدم غير موجود"
 
 }

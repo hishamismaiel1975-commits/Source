@@ -14,5 +14,7 @@
   "ProductBrandIdRequired": "معرف العلامة التجارية مطلوب.",
   "ProductTypeIdRequired": "معرف نوع المنتج مطلوب.",
   "ProductPriceRequired": "سعر المنتج مطلوب.",
-  "ProductPricePositive": "سعر المنتج يجب أن يكون أكبر من صفر."
+  "ProductPricePositive": "سعر المنتج يجب أن يكون أكبر من صفر.",
+  "RefreshTokenIsRequired": "رمز التحديث مطلوب",
+  "RefreshTokenIsInvalid": "رمز التحديث غير صحيح"
 }

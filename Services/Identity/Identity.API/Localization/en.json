@@ -5,5 +5,6 @@
   "InvalidBrandOrType": "Invalid Brand Or Type.",
   "UnexpectedError": "An unexpected error occurred.",
   "InvalidUsernameOrPassword": "Invalid username or password.",
-  "InvalidUserID": "Invalid user ID."
+  "InvalidUserID": "Invalid user ID.",
+  "UserNotFound": "User Not Found"
 }

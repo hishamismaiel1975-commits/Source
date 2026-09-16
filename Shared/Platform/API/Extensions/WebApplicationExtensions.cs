@@ -204,14 +204,14 @@ namespace Platform.Lib.API.Extensions
                       OnTokenValidated = async context =>
                       {
                           // Check if the token type is "access_token"
-                          //var tokenType = context.Principal?.FindFirst("token_type")?.Value;
-                          //if (!string.Equals(
-                          //        tokenType,
-                          //        "access_token",
-                          //        StringComparison.OrdinalIgnoreCase))
-                          //{
-                          //    context.Fail("Invalid token type.");
-                          //}
+                          var tokenType = context.Principal?.FindFirst("token_type")?.Value;
+                          if (!string.Equals(
+                                  tokenType,
+                                  "access_token",
+                                  StringComparison.OrdinalIgnoreCase))
+                          {
+                              context.Fail("Invalid token type.");
+                          }
 
                           var userId = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub);
 

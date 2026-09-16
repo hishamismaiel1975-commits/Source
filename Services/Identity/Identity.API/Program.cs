@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddIdentityGrpcService();
 
 // Add Platform Services
-builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
+builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:ConnectionString"]);

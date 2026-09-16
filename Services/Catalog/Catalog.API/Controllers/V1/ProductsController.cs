@@ -51,7 +51,7 @@ namespace Catalog.API.Controllers.V1
         }
 
 
-        [Authorize(Policy = PermissionConstants.Product.Create)]
+        [Authorize(Policy = PermissionConstants.Products.Create)]
         //[UserTypeAuthorize(UserTypes.Employee, UserTypes.Customer)]
         [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost]
@@ -61,7 +61,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success(result);
         }
 
-        [Authorize(Policy = PermissionConstants.Product.Update)]
+        [Authorize(Policy = PermissionConstants.Products.Update)]
         [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPut("{id:guid}")]
         public async Task<Result<ProductResponse>> UpdateProduct(Guid id, UpdateProductCommand command)
@@ -70,7 +70,7 @@ namespace Catalog.API.Controllers.V1
             return Result<ProductResponse>.Success();
         }
 
-        [Authorize(Policy = PermissionConstants.Product.Delete)]
+        [Authorize(Policy = PermissionConstants.Products.Delete)]
         [UserTypeAuthorize(UserTypes.Employee)]
         [HttpDelete("{id:guid}")]
         public async Task<Result<ProductResponse>> DeleteProduct(Guid id)

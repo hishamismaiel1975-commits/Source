@@ -40,25 +40,32 @@ namespace Identity.API.Controllers.V1
         }
 
         [AllowAnonymous]
-        [HttpPost("customer/register")]
-        public async Task<IActionResult> RegisterCustomer(RegisterRequest registerDto)
+        [HttpGet("token/refresh/{refreshToken}")]
+        public async Task<Result<string>> TokenRefresh(string refreshToken)
         {
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                throw AppException.Throw("RefreshTokenIsRequired");
 
-            return null;
-        }
+            ClaimsPrincipal principal;
+            if (!ValidateRefreshToken(refreshToken, out principal)) throw AppException.Throw("RefreshTokenIsInvalid");
 
-        [Authorize]
-        [HttpPut("customer/update/{id}")]
-        public async Task<IActionResult> UpdateCustomer(RegisterRequest registerDto)
-        {
-            //only he can update his own profile
-            return null;
+            var userId = principal.FindFirstValue(JwtRegisteredClaimNames.Sub);
+
+            var user = await _userRepository.GetByIdAsync(Guid.Parse(userId));
+            if (user == null) { AppException.Throw("UserNotFound"); }
+
+            if (!user.IsActive) { AppException.Throw("UserNotFound"); }
+
+            // Generate JWT Access Token
+            var accessToken = GenerateJwtToken(user, "access_token");
+
+            return Result<string>.Success(accessToken);
         }
 
 
         [AllowAnonymous]
         [HttpPost("customer/login")]
-        public async Task<Result<LoginResponse>> LoginCustomer(LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginCustomer(DTOs.LoginRequest loginRequest)
         {
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
 
@@ -80,7 +87,7 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("employee/login")]
-        public async Task<Result<LoginResponse>> LoginEmployee(LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginEmployee(DTOs.LoginRequest loginRequest)
         {
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
@@ -98,7 +105,6 @@ namespace Identity.API.Controllers.V1
             return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
         }
 
-
         private string GenerateJwtToken(User user, string tokenType)
         {
             var claims = new[]
@@ -115,6 +121,53 @@ namespace Identity.API.Controllers.V1
                 expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
                 signingCredentials: creds);
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public bool ValidateRefreshToken(string refreshToken, out ClaimsPrincipal claimsPrincipal)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"])),
+
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Security:Issuer"],
+
+                ValidateAudience = true,
+                ValidAudience = _configuration["Security:Audience"],
+
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            try
+            {
+                var principal = tokenHandler.ValidateToken(
+                    refreshToken,
+                    validationParameters,
+                    out var validatedToken);
+
+                claimsPrincipal = principal;
+
+                if (validatedToken is not JwtSecurityToken jwtToken)
+                    return false;
+
+                // Check token type
+                var tokenType = principal.FindFirst("token_type")?.Value;
+
+                if (tokenType != "refresh_token")
+                    return false;
+
+                return true;
+            }
+            catch (SecurityTokenException)
+            {
+                claimsPrincipal = null;
+                return false;
+            }
         }
     }
 
