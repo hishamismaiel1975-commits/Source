@@ -8,13 +8,12 @@
       "composeLaunchUrl": "http://localhost:8001/swagger/index.html",
       "serviceActions": {
         "identity-api": "StartDebugging",
-        "discount-api": "StartDebugging",
+        "catalog-api": "StartDebugging",
         "mongodb": "StartWithoutDebugging",
         "postgres": "StartWithoutDebugging",
         "rabbitmq": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
         "sqlserver": "StartWithoutDebugging",
-        "catalog-api": "StartDebugging",
         "portainer": "StartWithoutDebugging",
         "redisinsight": "StartWithoutDebugging"
       }
