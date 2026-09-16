@@ -10,6 +10,7 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       IdentityDb__ConnectionString: ${IdentityDb__ConnectionString}
       GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
+      EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"
       Security__Audience: "${Security__Audience}"
@@ -54,19 +55,6 @@ services:
         condition: service_healthy
     ports:
       - "8003:80" 
- 
- discount-api:
-    image: ${DOCKER_REGISTRY-}discount-api
-    restart: always
-    build:
-      context: .
-      dockerfile: Services/Discount/Discount.api/Dockerfile
-    environment:
-      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
-      EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
-    ports:
-      - "8004:80"  
-      - "8104:81"  # gRPC uses HTTP/2; do not expose by gatway. 
 
  mongodb:
    image: mongo:8.3.8

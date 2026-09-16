@@ -1,5 +1,4 @@
 using Application.Lib.Core.Constants;
-using Application.Lib.Infrastructure.Services.Discount.GrpcClients;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
@@ -23,11 +22,6 @@ builder.AddSqlServer<CatalogDbContext>(builder.Configuration["CatalogDb:Connecti
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
-
-
-// Add Discount gRPC Service or Add Discount HTTP Client Service
-builder.AddDiscountGrpcService();
-//builder.AddDiscountHttpClientService();
 
 
 // Add MassTransit with RabbitMQ and Entity Framework Outbox

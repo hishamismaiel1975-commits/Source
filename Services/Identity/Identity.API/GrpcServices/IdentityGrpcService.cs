@@ -1,20 +1,31 @@
-﻿//using Discount.GRPC;
-//using Grpc.Core;
+﻿using Grpc.Core;
+using Identity.Core.Persistence.Entities;
+using Identity.GRPC;
+using Platform.Lib.Core.Persistence.Repositories;
+using System.Linq.Expressions;
 
-//namespace Discount.API.GrpcServices;
+namespace Identity.API.GrpcServices;
 
-//public class IdentityGrpcService : DiscountService.DiscountServiceBase
-//{
-//    public override Task<GetDiscountResponse> GetDiscount(GetDiscountRequest request, ServerCallContext context)
-//    {
-//        var response = new GetDiscountResponse
-//        {
-//            ProductId = request.ProductId,
-//            Amount = 10
-//        };
+public class IdentityGrpcService : IdentityService.IdentityServiceBase
+{
+    public IRepository<User> _userRepository { get; set; }
 
-//        return Task.FromResult(response);
-//    }
+    public IdentityGrpcService(IRepository<User> userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
+    public override async Task<GetUserPermissionsResponse> GetUserPermissions(GetUserPermissionsRequest request, ServerCallContext context)
+    {
+        var user = await _userRepository.FirstOrDefaultAsync(x => x.Id == Guid.Parse(request.UserId),
+            new List<Expression<Func<User, object>>>
+               {
+                   x => x.Role
+               }
+            );
+
+        return null;
+    }
 
 
-//}
+}

@@ -3,7 +3,7 @@ using Identity.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients;
+namespace Application.Lib.Infrastructure.Services.Identity.GrpcClients;
 
 public static class IdentityGrpcClientConfig
 {

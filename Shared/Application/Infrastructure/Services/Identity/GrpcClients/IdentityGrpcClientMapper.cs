@@ -2,7 +2,7 @@
 using Identity.GRPC;
 using Riok.Mapperly.Abstractions;
 
-namespace Application.Lib.Infrastructure.Services.Discount.Grpc
+namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients
 {
     [Mapper]
     public static partial class IdentityGrpcClientMapper
