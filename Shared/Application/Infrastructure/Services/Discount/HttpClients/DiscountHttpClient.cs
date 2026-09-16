@@ -1,8 +1,8 @@
-﻿using Platform.Lib.Core;
-using Platform.Lib.Core.Services.Discount;
+﻿using Application.Lib.Core.DTOs.Discount;
+using Application.Lib.Core.Services.Discount;
 using System.Net.Http.Json;
 
-namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients
+namespace Application.Lib.Infrastructure.Services.Discount.HttpClients
 {
     public class DiscountHttpClient : IDiscountService
     {
@@ -15,6 +15,8 @@ namespace Platform.Lib.Infrastructure.Services.Discount.HttpClients
         {
             return await _httpClient.GetFromJsonAsync<DiscountResponse>($"api/discount/{productId}");
         }
+
+
     }
 
 

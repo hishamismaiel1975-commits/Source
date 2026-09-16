@@ -1,4 +1,6 @@
-﻿namespace Platform.Lib.Core.Services.Discount;
+﻿using Application.Lib.Core.DTOs.Discount;
+
+namespace Application.Lib.Core.Services.Discount;
 
 public interface IDiscountService
 {

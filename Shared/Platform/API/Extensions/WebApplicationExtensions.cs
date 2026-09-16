@@ -20,7 +20,6 @@ using OpenTelemetry.Trace;
 using Platform.Lib.API.Exceptions;
 using Platform.Lib.API.Swagger;
 using Platform.Lib.Application.Behaviors;
-using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.Persistence.MongoDB;
 using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Localization;
@@ -38,7 +37,7 @@ namespace Platform.Lib.API.Extensions
 {
     public static class WebApplicationExtensions
     {
-        public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder, IEnumerable<string?> permissions)
         {
             // Configure Kestrel to listen on port 80 for HTTP requests
             builder.WebHost.ConfigureKestrel(options =>
@@ -159,26 +158,12 @@ namespace Platform.Lib.API.Extensions
             // Add Authorization Policies for Permissions Dynamical From AllPermissions Class
             builder.Services.AddAuthorization(options =>
             {
-                var permissionTypes = typeof(PermissionConstants)
-                    .GetNestedTypes();
-
-                foreach (var type in permissionTypes)
+                foreach (var permission in permissions)
                 {
-                    var permissions = type
-                        .GetFields(BindingFlags.Public |
-                                   BindingFlags.Static |
-                                   BindingFlags.FlattenHierarchy)
-                        .Where(x => x.FieldType == typeof(string))
-                        .Select(x => x.GetValue(null)?.ToString())
-                        .Where(x => !string.IsNullOrEmpty(x));
-
-                    foreach (var permission in permissions)
+                    options.AddPolicy(permission!, policy =>
                     {
-                        options.AddPolicy(permission!, policy =>
-                        {
-                            policy.RequireClaim("permission", permission!);
-                        });
-                    }
+                        policy.RequireClaim("permission", permission!);
+                    });
                 }
             });
 

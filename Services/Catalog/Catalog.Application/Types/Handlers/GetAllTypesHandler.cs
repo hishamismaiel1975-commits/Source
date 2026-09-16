@@ -20,14 +20,14 @@ namespace Catalog.Application.Types.Handlers
         }
         public async Task<IList<TypesResponse>> Handle(GetAllTypesQuery request, CancellationToken cancellationToken)
         {
-            var cachedTypes = await _cacheRepository.GetAllAsync(CacheKeys.AllTypes);
+            var cachedTypes = await _cacheRepository.GetAllAsync(CacheKeysConstants.AllTypes);
 
             if (cachedTypes is not null) { return TypeMapper.ToResponseList(cachedTypes); }
 
             var typesList = await _typeRepository.GetAllAsync();
 
             // Cache the types list
-            await _cacheRepository.SetAllAsync(CacheKeys.AllTypes, typesList, CacheKeys.DefaultExpiration);
+            await _cacheRepository.SetAllAsync(CacheKeysConstants.AllTypes, typesList, CacheKeysConstants.DefaultExpiration);
             return TypeMapper.ToResponseList(typesList);
         }
     }

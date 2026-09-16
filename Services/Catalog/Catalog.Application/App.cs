@@ -1,6 +1,6 @@
 ﻿namespace Catalog.Application
 {
-    public sealed class Application
+    public sealed class App
     {
     }
 }

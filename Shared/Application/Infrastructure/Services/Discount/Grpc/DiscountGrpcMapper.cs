@@ -1,8 +1,8 @@
-﻿using Discount.GRPC;
-using Platform.Lib.Core;
+﻿using Application.Lib.Core.DTOs.Discount;
+using Discount.GRPC;
 using Riok.Mapperly.Abstractions;
 
-namespace Infrastructure.Grpc.Discount
+namespace Application.Lib.Infrastructure.Services.Discount.Grpc
 {
     [Mapper]
     public static partial class DiscountGrpcMapper

@@ -20,13 +20,13 @@ namespace Catalog.Application.Brands.Handlers
         }
         public async Task<IList<BrandResponse>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
         {
-            var cachedBrands = await _cacheRepository.GetAllAsync(CacheKeys.AllBrands);
+            var cachedBrands = await _cacheRepository.GetAllAsync(CacheKeysConstants.AllBrands);
             if (cachedBrands is not null) { return BrandMapper.ToResponseList(cachedBrands); }
 
             var brandList = await _brandRepository.GetAllAsync();
 
             // Cache the brand list
-            await _cacheRepository.SetAllAsync(CacheKeys.AllBrands, brandList, CacheKeys.DefaultExpiration);
+            await _cacheRepository.SetAllAsync(CacheKeysConstants.AllBrands, brandList, CacheKeysConstants.DefaultExpiration);
             return BrandMapper.ToResponseList(brandList);
         }
     }

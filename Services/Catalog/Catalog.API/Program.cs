@@ -1,15 +1,16 @@
+using Application.Lib.Core.Constants;
+using Application.Lib.Infrastructure.Services.Discount.Grpc;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Infrastructure.Services.Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Platform Services
-builder.AddPlatform<Program, Application>();
+builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
 
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
 //builder.AddMongoDB(new MongoDbConfiguration());

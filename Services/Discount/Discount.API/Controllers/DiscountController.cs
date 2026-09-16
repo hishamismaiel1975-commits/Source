@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.Core;
+﻿using Discount.API.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Discount.API.Controllers
 {

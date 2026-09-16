@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Core.EventBus.Events
+﻿namespace Platform.Lib.Core.EventBus
 {
     public class IntegrationEvent
     {

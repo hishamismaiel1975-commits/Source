@@ -1,9 +1,8 @@
-﻿using Discount.GRPC;
-using Infrastructure.Grpc.Discount;
-using Platform.Lib.Core;
-using Platform.Lib.Core.Services.Discount;
+﻿using Application.Lib.Core.DTOs.Discount;
+using Application.Lib.Core.Services.Discount;
+using Discount.GRPC;
 
-namespace Platform.Lib.Infrastructure.Services.Discount.Grpc
+namespace Application.Lib.Infrastructure.Services.Discount.Grpc
 {
     public class DiscountGrpcClient : IDiscountService
     {

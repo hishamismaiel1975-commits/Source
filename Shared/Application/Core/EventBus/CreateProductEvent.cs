@@ -1,4 +1,6 @@
-﻿namespace Platform.Lib.Core.EventBus.Events
+﻿using Platform.Lib.Core.EventBus;
+
+namespace Application.Lib.Core.EventBus
 {
     public class CreateProductEvent : IntegrationEvent
     {

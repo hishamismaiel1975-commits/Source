@@ -1,14 +1,14 @@
-﻿using Asp.Versioning;
+﻿using Application.Lib.Core.Constants;
+using Application.Lib.Core.DTOs.Discount;
+using Application.Lib.Core.Services.Discount;
+using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
-using Platform.Lib.Core;
-using Platform.Lib.Core.Authorization;
 using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Services.Discount;
 using ProductsApp = Catalog.Application.Products;
 
 

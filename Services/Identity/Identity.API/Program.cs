@@ -1,3 +1,4 @@
+using Application.Lib.Core.Constants;
 using Identity.Application;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence.Seed;
@@ -6,7 +7,7 @@ using Platform.Lib.API.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Platform Services
-builder.AddPlatform<Program, Application>();
+builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
 
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:ConnectionString"]);

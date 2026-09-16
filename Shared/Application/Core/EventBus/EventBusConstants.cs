@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Core.EventBus.Constants
+﻿namespace Application.Lib.Core.EventBus
 {
     public class EventBusConstants
     {
