@@ -1,4 +1,6 @@
 using Application.Lib.Core.Constants;
+using Application.Lib.Infrastructure.Services.Identity.GrpcClients;
+using Catalog.API.EventBus.Consumer;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
@@ -27,17 +29,31 @@ builder.AddRedis();
 // Add MassTransit with RabbitMQ and Entity Framework Outbox
 builder.Services.AddMassTransit(config =>
 {
+    // PUBLISHER / OUTBOX
     config.AddEntityFrameworkOutbox<CatalogDbContext>(o =>
     {
         o.UseBusOutbox();
         o.UseSqlServer();
     });
+
+    // Consumer
+    config.AddConsumer<CreateProductConsumer>();
+
+    // RabbitMQ
     config.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+
+        // Consumer retry
+        cfg.UseMessageRetry(r =>
+            r.Interval(3, TimeSpan.FromSeconds(5)));
+
         cfg.ConfigureEndpoints(context);
     });
 });
+
+// Add Identity gRPC Client to get user permissions from Identity Service
+builder.AddIdentityGrpcService();
 
 var app = builder.Build();
 

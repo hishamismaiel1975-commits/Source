@@ -4,5 +4,6 @@
   "FailedToDelete": "An error occurred while deleting the item.",
   "InvalidBrandOrType": "Invalid Brand Or Type.",
   "UnexpectedError": "An unexpected error occurred.",
-  "InvalidUsernameOrPassword": "Invalid username or password."
+  "InvalidUsernameOrPassword": "Invalid username or password.",
+  "InvalidUserID": "Invalid user ID."
 }

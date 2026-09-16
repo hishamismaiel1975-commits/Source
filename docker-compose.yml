@@ -17,7 +17,8 @@ services:
       Security__AccessTokenLifetimeInMinutes: ${Security__AccessTokenLifetimeInMinutes}    # 1 Hour
       Security__RefreshTokenLifetimeInMinutes: ${Security__RefreshTokenLifetimeInMinutes} # 24 hours
     ports:
-       - "8001:80" 
+       -  "8001:80" 
+       -  "8101:81"
 
  # report.api:
  #  image: ${DOCKER_REGISTRY-}report-api
@@ -55,6 +56,7 @@ services:
         condition: service_healthy
     ports:
       - "8003:80" 
+      - "8103:81"
 
  mongodb:
    image: mongo:8.3.8
