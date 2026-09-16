@@ -7,11 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using Platform.Lib.API.Responses;
 using Platform.Lib.Core.Exceptions;
 using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Core.Services.Identity.Enums;
 using Platform.Lib.Core.Services.Security;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 namespace Identity.API.Controllers.V1
 {
     [ApiController]
@@ -23,7 +23,6 @@ namespace Identity.API.Controllers.V1
         public IHashService _hashService { get; set; }
         public IConfiguration _configuration { get; set; }
         private readonly ICurrentUserService _currentUserService;
-
 
         public AuthController(IHashService hashService, IRepository<User> userRepository, IConfiguration configuration, ICurrentUserService currentUserService)
         {
@@ -59,10 +58,37 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("customer/login")]
-        public async Task<IActionResult> LoginCustomer(LoginDto loginDto)
+        public async Task<Result<string>> LoginCustomer(LoginDto loginDto)
         {
-            //only he can update his own profile
-            return null;
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
+
+            // Check if the user exists
+            if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
+
+            // Check if the user is an Customer
+            if (user.UserType != UserTypes.Customer) { AppException.Throw("InvalidUsernameOrPassword"); }
+
+            // Verify the password
+            if (!_hashService.Verify(loginDto.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim("UserType", user.UserType.ToString()),
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Security:Issuer"],
+                audience: _configuration["Security:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
+                signingCredentials: creds);
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return Result<string>.Success(tokenString);
         }
 
         [AllowAnonymous]
@@ -71,6 +97,12 @@ namespace Identity.API.Controllers.V1
         {
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName);
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
+
+            // Check if the user is an employee
+            if (user.UserType != UserTypes.Employee) { AppException.Throw("InvalidUsernameOrPassword"); }
+
+
+            // Verify the password
             if (!_hashService.Verify(loginDto.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             var claims = new[]

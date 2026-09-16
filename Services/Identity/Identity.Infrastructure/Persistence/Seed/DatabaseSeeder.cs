@@ -42,7 +42,7 @@ namespace Identity.Infrastructure.Persistence.Seed
             if (await userRepository.CountAsync() == 0)
             {
 
-                var existingUsers = new List<User>
+                var newUsers = new List<User>
                     {
                         new User
                         {
@@ -54,10 +54,22 @@ namespace Identity.Infrastructure.Persistence.Seed
                             IsBuiltIn= true,
                             IsActive=true,
                             RoleId= adminRole.Id
+                        },
+                         new User
+                        {
+                            UserName = "customer",
+                            PasswordHash = "XXQGU2+HXrQO1eYDsSoZ02UhtxmCHPki4B/ybqbpUYM=",
+                            NameEn = "Customer",
+                            NameAr = "عميل",
+                            UserType    = UserTypes.Customer,
+                            IsBuiltIn= false,
+                            IsActive=true,
+                            RoleId= null
                         }
+
                     };
 
-                await userRepository.CreateManyAsync(existingUsers);
+                await userRepository.CreateManyAsync(newUsers);
             }
 
             // --------------------------------------------------

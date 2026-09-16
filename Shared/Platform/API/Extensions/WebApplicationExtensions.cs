@@ -24,6 +24,7 @@ using Platform.Lib.Application.Behaviors;
 using Platform.Lib.Core.Persistence.MongoDB;
 using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Identity;
+using Platform.Lib.Core.Services.Identity.Enums;
 using Platform.Lib.Core.Services.Localization;
 using Platform.Lib.Core.Services.Security;
 using Platform.Lib.Infrastructure.Authorization;
@@ -224,10 +225,15 @@ namespace Platform.Lib.API.Extensions
                           identity!.AddClaim(new Claim("name_en", response.NameEn));
                           identity!.AddClaim(new Claim("name_ar", response.NameAr));
                           identity!.AddClaim(new Claim("usertype", response.UserType.ToString().ToLower()));
-                          foreach (var permission in response.Permissions)
+
+                          // Add permissions as claims if the user is an employee
+                          if (response.UserType == UserTypes.Employee.ToString().ToLower())
                           {
-                              identity!.AddClaim(
-                                  new Claim("permission", permission));
+                              foreach (var permission in response.Permissions)
+                              {
+                                  identity!.AddClaim(
+                                      new Claim("permission", permission));
+                              }
                           }
                       }
                   };
