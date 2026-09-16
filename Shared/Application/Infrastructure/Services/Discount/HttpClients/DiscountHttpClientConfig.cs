@@ -9,7 +9,7 @@ namespace Application.Lib.Infrastructure.Services.Discount.HttpClients
     {
         public static WebApplicationBuilder AddDiscountHttpClientService(this WebApplicationBuilder builder, IConfiguration configuration)
         {
-            builder.Services.AddHttpClient<IIdentityService, DiscountHttpClient>(client =>
+            builder.Services.AddHttpClient<IDiscountService, DiscountHttpClient>(client =>
             {
                 client.BaseAddress = new Uri(builder.Configuration["HttpClient: DiscountUrl"]);
             });
