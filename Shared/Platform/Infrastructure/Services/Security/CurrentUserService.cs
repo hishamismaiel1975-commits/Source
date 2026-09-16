@@ -42,6 +42,17 @@ public sealed class CurrentUserService : ICurrentUserService
                 : null;
         }
     }
+    public string? UserTypeName
+    {
+        get
+        {
+            var value = User?.FindFirstValue("usertype");
+            return Enum.TryParse<UserTypes>(value, true, out var userType)
+                ? userType.ToString().ToLower()
+                : null;
+        }
+    }
+
     public IReadOnlyCollection<string> Permissions =>
         User?
             .FindAll("permission")

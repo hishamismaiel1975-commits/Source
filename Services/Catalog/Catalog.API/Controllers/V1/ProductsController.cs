@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
 using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Services.Identity.Enums;
-using Platform.Lib.Core.Services.Security;
 using Platform.Lib.Infrastructure.Authorization;
 using ProductsApp = Catalog.Application.Products;
 
@@ -21,12 +20,10 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ICurrentUserService _currentUserService;
 
-        public ProductsController(IMediator mediator, ICurrentUserService currentUserService)
+        public ProductsController(IMediator mediator)
         {
             _mediator = mediator;
-            _currentUserService = currentUserService;
         }
 
         [AllowAnonymous]
@@ -60,8 +57,6 @@ namespace Catalog.API.Controllers.V1
         [HttpPost]
         public async Task<Result<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
-            var cuser = _currentUserService;
-            //cuser.UserType == UserTypes.
             var result = await _mediator.Send(command);
             return Result<ProductResponse>.Success(result);
         }

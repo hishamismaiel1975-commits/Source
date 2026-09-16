@@ -8,6 +8,7 @@ namespace Platform.Lib.Core.Services.Security
         string? NameEn { get; }
         string? NameAr { get; }
         UserTypes? UserType { get; }
+        string? UserTypeName { get; }
         IReadOnlyCollection<string> Permissions { get; }
         bool HasPermission(string permission);
         bool IsAuthenticated { get; }

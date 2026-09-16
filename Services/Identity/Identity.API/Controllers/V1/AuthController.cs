@@ -22,12 +22,22 @@ namespace Identity.API.Controllers.V1
         public IRepository<User> _userRepository { get; set; }
         public IHashService _hashService { get; set; }
         public IConfiguration _configuration { get; set; }
+        private readonly ICurrentUserService _currentUserService;
 
-        public AuthController(IHashService hashService, IRepository<User> userRepository, IConfiguration configuration)
+
+        public AuthController(IHashService hashService, IRepository<User> userRepository, IConfiguration configuration, ICurrentUserService currentUserService)
         {
             _hashService = hashService;
             _userRepository = userRepository;
             _configuration = configuration;
+            _currentUserService = currentUserService;
+        }
+
+        [Authorize]
+        [HttpGet("user/info")]
+        public Result<ICurrentUserService> UserInfo()
+        {
+            return Result<ICurrentUserService>.Success(_currentUserService);
         }
 
         [AllowAnonymous]
