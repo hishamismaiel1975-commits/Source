@@ -1,5 +1,5 @@
-﻿using Identity.Core.Enums;
-using Platform.Lib.Core.Persistence.Entities;
+﻿using Platform.Lib.Core.Persistence.Entities;
+using Platform.Lib.Core.Services.Identity.Enums;
 
 namespace Identity.Core.Persistence.Entities
 {
@@ -9,7 +9,7 @@ namespace Identity.Core.Persistence.Entities
         public required string NameEn { get; set; }
         public required string NameAr { get; set; }
         public required string PasswordHash { get; set; }
-        public UserType UserType { get; set; }
+        public UserTypes UserType { get; set; }
         public Guid? RoleId { get; set; }
         public bool IsActive { get; set; }
         public required bool IsBuiltIn { get; set; }

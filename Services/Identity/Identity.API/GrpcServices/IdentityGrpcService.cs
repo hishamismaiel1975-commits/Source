@@ -7,33 +7,39 @@ namespace Identity.API.GrpcServices;
 
 public class IdentityGrpcService : IdentityService.IdentityServiceBase
 {
-    public IRepository<User> _userRepository { get; set; }
+    public IRepository<User> _userRepository;
+    public IRepository<RolePermission> _rolePermissionRepository { get; set; }
+
     public ILogger<IdentityGrpcService> _logger { get; set; }
 
-    public IdentityGrpcService(IRepository<User> userRepository, ILogger<IdentityGrpcService> logger)
+    public IdentityGrpcService(IRepository<User> userRepository, IRepository<RolePermission> rolePermissionRepository, ILogger<IdentityGrpcService> logger)
     {
         _userRepository = userRepository;
+        _rolePermissionRepository = rolePermissionRepository;
         _logger = logger;
     }
 
-    public override async Task<GetUserPermissionsResponse> GetUserPermissions(GetUserPermissionsRequest request, ServerCallContext context)
+    public override async Task<GetUserInfoResponse> GetUserInfo(GetUserInfoRequest request, ServerCallContext context)
     {
 
         if (!Guid.TryParse(request.UserId, out var userId))
         {
-            _logger.LogError("IdentityGrpcService.GetUserPermissions: Invalid User ID: {UserId}", request.UserId);
+            _logger.LogError("IdentityGrpcService.GetUserInfo: Invalid User ID: {UserId}", request.UserId);
             throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid User ID"));
         }
 
-        var permissions = await _userRepository.FirstOrDefaultAsync(x => x.Role!.RolePermissions.Select(p => p.Permission!.Name), x => x.Id == userId);
+        var user = await _userRepository.FirstOrDefaultAsync(x => x.Id == userId);
 
-        if (permissions == null)
+        if (user == null)
         {
-            _logger.LogError("IdentityGrpcService.GetUserPermissions: User not found or have no permissions: {UserId}", request.UserId);
-            throw new RpcException(new Status(StatusCode.NotFound, "IdentityGrpcService.GetUserPermissions: User not found or have no permissions"));
+            _logger.LogError("IdentityGrpcService.GetUserInfo: User not found: {UserId}", request.UserId);
+            throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
         }
 
-        return new GetUserPermissionsResponse { Permissions = { permissions } };
+        var permissions = await _rolePermissionRepository.GetAllAsync(x => x.Permission.Name, x => x.RoleId == user.RoleId);
+
+
+        return new GetUserInfoResponse { NameEn = user.NameEn, NameAr = user.NameAr, UserType = user.UserType.ToString(), Permissions = { permissions } };
     }
 
 

@@ -1,7 +1,5 @@
-﻿using Application.Lib.Infrastructure.Services.Discount.GrpcClients;
-using Identity.GRPC;
+﻿using Identity.GRPC;
 using Platform.Lib.Core.Services.Identity;
-using Platform.Lib.Core.Services.Identity.DTOs;
 
 namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients
 {
@@ -13,10 +11,10 @@ namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients
             _IdentityClient = IdentityClient;
         }
 
-        public async Task<UserPermissionsResponse> GetUserPermissionsAsync(Guid productId)
+        public async Task<GetUserInfoResponse> GetUserInfoAsync(Guid userId)
         {
-            var response = await _IdentityClient.GetUserPermissionsAsync(new GetUserPermissionsRequest { UserId = productId.ToString() });
-            return IdentityGrpcClientMapper.ToDTO(response);
+            var response = await _IdentityClient.GetUserInfoAsync(new GetUserInfoRequest { UserId = userId.ToString() });
+            return response;
         }
     }
 }

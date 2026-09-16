@@ -3,6 +3,7 @@ using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 using FreeMediator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Identity;
 using Platform.Lib.Core.Services.Localization;
 using Platform.Lib.Core.Services.Security;
+using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
@@ -162,9 +164,12 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
-            // Add EncryptService & HashService
-            builder.Services.AddSingleton<IEncryptService, EncryptService>();
-            builder.Services.AddSingleton<IHashService, HashService>();
+
+            // Add Authorization Services
+            builder.Services.AddSingleton<IAuthorizationHandler, UserTypeAuthorizationHandler>();
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, UserTypePolicyProvider>();
+
+
 
             // Add IdentityService Service
             builder.Services.AddSingleton<IIdentityService, IdentityGrpcClient>();
@@ -207,8 +212,12 @@ namespace Platform.Lib.API.Extensions
                           }
 
                           var identityGrpcClient = context.HttpContext.RequestServices.GetRequiredService<IIdentityService>();
-                          var response = await identityGrpcClient.GetUserPermissionsAsync(userGuidId);
+                          var response = await identityGrpcClient.GetUserInfoAsync(userGuidId);
                           var identity = context.Principal!.Identity as ClaimsIdentity;
+
+                          identity!.AddClaim(new Claim("name_en", response.NameEn));
+                          identity!.AddClaim(new Claim("name_ar", response.NameAr));
+                          identity!.AddClaim(new Claim("usertype", response.UserType.ToString()));
 
                           foreach (var permission in response.Permissions)
                           {
@@ -231,6 +240,9 @@ namespace Platform.Lib.API.Extensions
                 }
             });
 
+            // Add EncryptService & HashService
+            builder.Services.AddSingleton<IEncryptService, EncryptService>();
+            builder.Services.AddSingleton<IHashService, HashService>();
 
             builder.Services.AddControllers();
 

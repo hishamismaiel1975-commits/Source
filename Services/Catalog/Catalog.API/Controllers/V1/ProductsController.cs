@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.API.Responses;
 using Platform.Lib.Core.DTOs;
+using Platform.Lib.Core.Services.Identity.Enums;
+using Platform.Lib.Core.Services.Security;
+using Platform.Lib.Infrastructure.Authorization;
 using ProductsApp = Catalog.Application.Products;
 
 
@@ -18,10 +21,12 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ICurrentUserService _currentUserService;
 
-        public ProductsController(IMediator mediator)
+        public ProductsController(IMediator mediator, ICurrentUserService currentUserService)
         {
             _mediator = mediator;
+            _currentUserService = currentUserService;
         }
 
         [AllowAnonymous]
@@ -50,14 +55,19 @@ namespace Catalog.API.Controllers.V1
 
 
         [Authorize(Policy = PermissionConstants.Product.Create)]
+        //[UserTypeAuthorize(UserTypes.Employee, UserTypes.Customer)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost]
         public async Task<Result<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)
         {
+            var cuser = _currentUserService;
+            //cuser.UserType == UserTypes.
             var result = await _mediator.Send(command);
             return Result<ProductResponse>.Success(result);
         }
 
         [Authorize(Policy = PermissionConstants.Product.Update)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPut("{id:guid}")]
         public async Task<Result<ProductResponse>> UpdateProduct(Guid id, UpdateProductCommand command)
         {
@@ -66,6 +76,7 @@ namespace Catalog.API.Controllers.V1
         }
 
         [Authorize(Policy = PermissionConstants.Product.Delete)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpDelete("{id:guid}")]
         public async Task<Result<ProductResponse>> DeleteProduct(Guid id)
         {

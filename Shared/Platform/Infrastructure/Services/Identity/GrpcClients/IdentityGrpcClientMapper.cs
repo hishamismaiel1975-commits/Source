@@ -7,7 +7,7 @@ namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients
     [Mapper]
     public static partial class IdentityGrpcClientMapper
     {
-        public static partial UserPermissionsResponse ToDTO(GetUserPermissionsResponse getUserPermissionsResponse);
+        public static partial UserInfoRequest ToDTO(GetUserInfoResponse getUserInfoResponse);
 
     }
 }

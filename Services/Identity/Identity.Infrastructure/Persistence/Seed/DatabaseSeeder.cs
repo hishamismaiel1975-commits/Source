@@ -1,7 +1,7 @@
-﻿using Identity.Core.Enums;
-using Identity.Core.Persistence.Entities;
+﻿using Identity.Core.Persistence.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Core.Services.Identity.Enums;
 
 namespace Identity.Infrastructure.Persistence.Seed
 {
@@ -50,7 +50,7 @@ namespace Identity.Infrastructure.Persistence.Seed
                             PasswordHash = "XXQGU2+HXrQO1eYDsSoZ02UhtxmCHPki4B/ybqbpUYM=",
                             NameEn = "Admin",
                             NameAr = "مدير",
-                            UserType    = UserType.Employee,
+                            UserType    = UserTypes.Employee,
                             IsBuiltIn= true,
                             IsActive=true,
                             RoleId= adminRole.Id

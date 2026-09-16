@@ -4,14 +4,17 @@ option csharp_namespace = "Identity.GRPC";
 
 package Identity;
 
-service IdentityService {
-  rpc GetUserPermissions(GetUserPermissionsRequest) returns (GetUserPermissionsResponse);
-}
-
-message GetUserPermissionsRequest {
+message GetUserInfoRequest {
   string user_id = 1;
 }
 
-message GetUserPermissionsResponse {
-  repeated string permissions = 1;
+message GetUserInfoResponse {
+  string name_en = 1;
+  string name_ar = 2;
+  string user_type = 3;
+  repeated string permissions = 4;
+}
+
+service IdentityService {
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
 }

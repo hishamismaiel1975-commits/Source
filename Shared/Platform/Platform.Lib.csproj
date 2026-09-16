@@ -61,5 +61,9 @@
 	  <Protobuf Include="Infrastructure\Services\Identity\Proto\Identity.proto" GrpcServices="Client" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="API\Extensions\" />
+	</ItemGroup>
+
 </Project>
 
