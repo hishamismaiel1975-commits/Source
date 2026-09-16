@@ -28,6 +28,7 @@ app.UsePlatform<Program>();
 app.MapGrpcService<IdentityGrpcService>();
 app.MapGrpcReflectionService();
 
+
 // Add Built-in Roles, Users, and Update Always New Permissions to the database. 
 using (var scope = app.Services.CreateScope())
 {

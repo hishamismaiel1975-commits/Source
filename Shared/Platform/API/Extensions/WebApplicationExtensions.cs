@@ -41,14 +41,22 @@ namespace Platform.Lib.API.Extensions
     {
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder, IEnumerable<string?> permissions)
         {
-            // Configure Kestrel to listen on port 80 for HTTP requests
+            // Configure Kestrel to listen on different ports for HTTP/1.1 and HTTP/2
             builder.WebHost.ConfigureKestrel(options =>
             {
                 options.ListenAnyIP(80, listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http1;
                 });
+
+                options.ListenAnyIP(81, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http2;
+                });
             });
+
+            builder.Services.AddGrpc();
+            builder.Services.AddGrpcReflection();
 
             // Register Auditing & CurrentUser services
             builder.Services.AddHttpContextAccessor();
