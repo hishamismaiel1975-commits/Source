@@ -213,12 +213,17 @@ namespace Platform.Lib.API.Extensions
 
                           var identityGrpcClient = context.HttpContext.RequestServices.GetRequiredService<IIdentityService>();
                           var response = await identityGrpcClient.GetUserInfoAsync(userGuidId);
+                          if (!response.IsActive)
+                          {
+                              context.Fail("User account is locked or inactive.");
+                              return;
+                          }
+
                           var identity = context.Principal!.Identity as ClaimsIdentity;
 
                           identity!.AddClaim(new Claim("name_en", response.NameEn));
                           identity!.AddClaim(new Claim("name_ar", response.NameAr));
-                          identity!.AddClaim(new Claim("usertype", response.UserType.ToString()));
-
+                          identity!.AddClaim(new Claim("usertype", response.UserType.ToString().ToLower()));
                           foreach (var permission in response.Permissions)
                           {
                               identity!.AddClaim(

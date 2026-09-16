@@ -12,7 +12,8 @@ message GetUserInfoResponse {
   string name_en = 1;
   string name_ar = 2;
   string user_type = 3;
-  repeated string permissions = 4;
+  bool is_active = 4;
+  repeated string permissions = 5;
 }
 
 service IdentityService {

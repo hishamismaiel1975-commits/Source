@@ -5,6 +5,7 @@
         string NameEn,
         string NameAr,
         string UserType,
+        bool IsActive,
         ICollection<string> Permissions
      );
 }

@@ -39,7 +39,7 @@ public class IdentityGrpcService : IdentityService.IdentityServiceBase
         var permissions = await _rolePermissionRepository.GetAllAsync(x => x.Permission.Name, x => x.RoleId == user.RoleId);
 
 
-        return new GetUserInfoResponse { NameEn = user.NameEn, NameAr = user.NameAr, UserType = user.UserType.ToString(), Permissions = { permissions } };
+        return new GetUserInfoResponse { NameEn = user.NameEn, NameAr = user.NameAr, UserType = user.UserType.ToString().ToLower(), IsActive = user.IsActive, Permissions = { permissions } };
     }
 
 
