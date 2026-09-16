@@ -1,9 +1,9 @@
-﻿using Application.Lib.Core.Services.Discount;
-using Identity.GRPC;
+﻿using Identity.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Platform.Lib.Core.Services.Identity;
 
-namespace Application.Lib.Infrastructure.Services.Identity.GrpcClients;
+namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
 
 public static class IdentityGrpcClientConfig
 {

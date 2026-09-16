@@ -22,16 +22,20 @@ using Platform.Lib.API.Swagger;
 using Platform.Lib.Application.Behaviors;
 using Platform.Lib.Core.Persistence.MongoDB;
 using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Core.Services.Identity;
 using Platform.Lib.Core.Services.Localization;
 using Platform.Lib.Core.Services.Security;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
+using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security.Claims;
 
 
 namespace Platform.Lib.API.Extensions
@@ -158,6 +162,13 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
+            // Add EncryptService & HashService
+            builder.Services.AddSingleton<IEncryptService, EncryptService>();
+            builder.Services.AddSingleton<IHashService, HashService>();
+
+            // Add IdentityService Service
+            builder.Services.AddSingleton<IIdentityService, IdentityGrpcClient>();
+
             // Add JWT Authentication
             builder.Services.AddAuthentication(options =>
             {
@@ -166,6 +177,7 @@ namespace Platform.Lib.API.Extensions
             })
               .AddJwtBearer(options =>
               {
+                  options.MapInboundClaims = false;
                   options.RequireHttpsMetadata = false;
                   options.TokenValidationParameters = new TokenValidationParameters
                   {
@@ -178,6 +190,32 @@ namespace Platform.Lib.API.Extensions
                       ValidAudience = builder.Configuration["Security:Audience"],
 
                       IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Security:SecretKey"]))
+                  };
+
+                  // Add gRPC call to fetch user permissions and add them as claims
+                  options.Events = new JwtBearerEvents
+                  {
+                      OnTokenValidated = async context =>
+                      {
+
+                          var userId = context.Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub);
+
+                          if (!Guid.TryParse(userId, out var userGuidId))
+                          {
+                              context.Fail("Invalid user ID.");
+                              return;
+                          }
+
+                          var identityGrpcClient = context.HttpContext.RequestServices.GetRequiredService<IIdentityService>();
+                          var response = await identityGrpcClient.GetUserPermissionsAsync(userGuidId);
+                          var identity = context.Principal!.Identity as ClaimsIdentity;
+
+                          foreach (var permission in response.Permissions)
+                          {
+                              identity!.AddClaim(
+                                  new Claim("permission", permission));
+                          }
+                      }
                   };
               });
 
@@ -193,9 +231,6 @@ namespace Platform.Lib.API.Extensions
                 }
             });
 
-            // Add EncryptService & HashService
-            builder.Services.AddSingleton<IEncryptService, EncryptService>();
-            builder.Services.AddSingleton<IHashService, HashService>();
 
             builder.Services.AddControllers();
 

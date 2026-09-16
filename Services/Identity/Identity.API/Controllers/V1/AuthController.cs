@@ -75,7 +75,7 @@ namespace Identity.API.Controllers.V1
                 issuer: _configuration["Security:Issuer"],
                 audience: _configuration["Security:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Security:TokenExpirationInMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
                 signingCredentials: creds);
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);

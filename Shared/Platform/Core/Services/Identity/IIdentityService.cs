@@ -1,6 +1,6 @@
-﻿using Application.Lib.Core.Services.Identity.DTOs;
+﻿using Platform.Lib.Core.Services.Identity.DTOs;
 
-namespace Application.Lib.Core.Services.Discount;
+namespace Platform.Lib.Core.Services.Identity;
 
 public interface IIdentityService
 {

@@ -20,9 +20,6 @@
 		<PackageReference Include="Riok.Mapperly" Version="4.3.1" />
 	</ItemGroup>
 	
-	<ItemGroup>
-		<Protobuf Include="Infrastructure\Services\Identity\Proto\Identity.proto" GrpcServices="Client" />
-		<Protobuf Include="Infrastructure\Services\Discount\Proto\discount.proto" GrpcServices="Client" />
-	</ItemGroup>
+	
 
 </Project>

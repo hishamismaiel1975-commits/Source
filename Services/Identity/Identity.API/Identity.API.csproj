@@ -60,7 +60,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Shared\Application\Infrastructure\Services\Identity\Proto\identity.proto"
+		<Protobuf Include="..\..\..\Shared\Platform\Infrastructure\Services\Identity\Proto\identity.proto"
 				  GrpcServices="Server" />
 	</ItemGroup>
 

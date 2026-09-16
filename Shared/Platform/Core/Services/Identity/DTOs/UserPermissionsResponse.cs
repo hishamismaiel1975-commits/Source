@@ -1,4 +1,4 @@
-﻿namespace Application.Lib.Core.Services.Identity.DTOs
+﻿namespace Platform.Lib.Core.Services.Identity.DTOs
 {
     public record UserPermissionsResponse
     (

@@ -1,12 +1,15 @@
 using Application.Lib.Core.Constants;
-using Application.Lib.Infrastructure.Services.Identity.GrpcClients;
 using Identity.API.GrpcServices;
 using Identity.Application;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence.Seed;
 using Platform.Lib.API.Extensions;
+using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Identity gRPC Client to get user permissions from Identity Service
+builder.AddIdentityGrpcService();
 
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
@@ -17,8 +20,6 @@ builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:Connec
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
 
-// Add Identity gRPC Client to get user permissions from Identity Service
-builder.AddIdentityGrpcService();
 
 var app = builder.Build();
 

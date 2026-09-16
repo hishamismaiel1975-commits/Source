@@ -1,5 +1,4 @@
 using Application.Lib.Core.Constants;
-using Application.Lib.Infrastructure.Services.Identity.GrpcClients;
 using Catalog.API.EventBus.Consumer;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
@@ -7,8 +6,12 @@ using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
+using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Identity gRPC Client to get user permissions from Identity Service
+builder.AddIdentityGrpcService();
 
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.Permissions);
@@ -52,8 +55,7 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
-// Add Identity gRPC Client to get user permissions from Identity Service
-builder.AddIdentityGrpcService();
+
 
 var app = builder.Build();
 

@@ -1,9 +1,9 @@
-﻿using Application.Lib.Core.Services.Discount;
-using Application.Lib.Core.Services.Identity.DTOs;
-using Application.Lib.Infrastructure.Services.Discount.GrpcClients;
+﻿using Application.Lib.Infrastructure.Services.Discount.GrpcClients;
 using Identity.GRPC;
+using Platform.Lib.Core.Services.Identity;
+using Platform.Lib.Core.Services.Identity.DTOs;
 
-namespace Application.Lib.Infrastructure.Services.Identity.GrpcClients
+namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients
 {
     public class IdentityGrpcClient : IIdentityService
     {

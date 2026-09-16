@@ -1,6 +1,4 @@
 ﻿using Application.Lib.Core.Constants;
-using Application.Lib.Core.Services.Discount;
-using Application.Lib.Core.Services.Discount.DTOs;
 using Asp.Versioning;
 using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
@@ -20,12 +18,10 @@ namespace Catalog.API.Controllers.V1
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IDiscountService _discountService;
 
-        public ProductsController(IMediator mediator, IDiscountService discountService)
+        public ProductsController(IMediator mediator)
         {
             _mediator = mediator;
-            _discountService = discountService;
         }
 
         [AllowAnonymous]
@@ -76,13 +72,6 @@ namespace Catalog.API.Controllers.V1
             var command = new ProductsApp.Commands.DeleteProductCommand(id);
             await _mediator.Send(command);
             return Result<ProductResponse>.Success();
-        }
-
-        [HttpGet("discount/{id:guid}")]
-        public async Task<Result<DiscountResponse>> GetProductDiscount(Guid id)
-        {
-            var response = await _discountService.GetDiscountAsync(id);
-            return Result<DiscountResponse>.Success(response);
         }
 
     }
