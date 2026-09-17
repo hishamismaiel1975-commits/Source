@@ -32,7 +32,7 @@ using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
 using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
-using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
+using Platform.Lib.Infrastructure.Services.Identity;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
 using Platform.Lib.Infrastructure.Services.Token;

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Identity.GRPC";
+
+package Identity;
+
+message GetUserInfoRequest {
+  string user_id = 1;
+}
+
+message GetUserInfoResponse {
+  string name_en = 1;
+  string name_ar = 2;
+  string user_type = 3;
+  bool is_active = 4;
+  repeated string permissions = 5;
+}
+
+service IdentityService {
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+}

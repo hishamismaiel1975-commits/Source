@@ -6,7 +6,7 @@ using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
+using Platform.Lib.Infrastructure.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

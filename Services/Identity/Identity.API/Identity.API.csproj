@@ -60,7 +60,15 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Protobuf Include="..\..\..\Shared\Platform\Infrastructure\Services\Identity\Proto\identity.proto" GrpcServices="Server" />
+	<PackageReference Include="Grpc.Net.ClientFactory" Version="2.83.0" />
+	<PackageReference Include="Google.Protobuf" Version="3.36.1" />
+	<PackageReference Include="Grpc.Tools" Version="2.83.0">
+		<PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="GrpcServices\Identity.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 	

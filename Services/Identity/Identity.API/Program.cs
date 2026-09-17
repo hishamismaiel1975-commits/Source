@@ -4,7 +4,7 @@ using Identity.Application;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence.Seed;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
+using Platform.Lib.Infrastructure.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

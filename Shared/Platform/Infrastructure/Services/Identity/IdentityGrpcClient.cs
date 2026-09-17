@@ -1,7 +1,7 @@
 ﻿using Identity.GRPC;
 using Platform.Lib.Core.Services.Identity;
 
-namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients
+namespace Platform.Lib.Infrastructure.Services.Identity
 {
     public class IdentityGrpcClient : IIdentityService
     {
