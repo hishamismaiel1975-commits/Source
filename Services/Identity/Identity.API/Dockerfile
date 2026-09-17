@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Source/Services/Identity/Identity.API/Identity.API.csproj", "Source/Services/Identity/Identity.API/"]
-COPY ["Source/Shared/Platform/Platform.Lib.csproj", "Source/Shared/Platform/"]
+COPY ["Source/Services/Shared/Platform/Platform.Lib.csproj", "Source/Services/Shared/Platform/"]
 COPY ["Source/Services/Identity/Identity.Application/Identity.Application.csproj", "Source/Services/Identity/Identity.Application/"]
 COPY ["Source/Services/Identity/Identity.Core/Identity.Core.csproj", "Source/Services/Identity/Identity.Core/"]
 COPY ["Source/Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj", "Source/Services/Identity/Identity.Infrastructure/"]
