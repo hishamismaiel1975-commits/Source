@@ -40,8 +40,8 @@ namespace Identity.API.Controllers.V1
         }
 
         [AllowAnonymous]
-        [HttpGet("token/refresh/{refreshToken}")]
-        public async Task<Result<string>> TokenRefresh(string refreshToken)
+        [HttpPost("token/refresh")]
+        public async Task<Result<string>> TokenRefresh([FromBody] string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
                 throw AppException.Throw("RefreshTokenIsRequired");
@@ -49,7 +49,7 @@ namespace Identity.API.Controllers.V1
             ClaimsPrincipal principal;
             if (!ValidateRefreshToken(refreshToken, out principal)) throw AppException.Throw("RefreshTokenIsInvalid");
 
-            var userId = principal.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var user = await _userRepository.GetByIdAsync(Guid.Parse(userId));
             if (user == null) { AppException.Throw("UserNotFound"); }
@@ -78,9 +78,10 @@ namespace Identity.API.Controllers.V1
             // Verify the password
             if (!_hashService.Verify(loginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
+
             // Generate JWT Access Token
-            var accessToken = GenerateJwtToken(user, "accesstoken");
-            var refreshToken = GenerateJwtToken(user, "refreshtoken");
+            var accessToken = GenerateJwtToken(user, "access_token");
+            var refreshToken = GenerateJwtToken(user, "refresh_token");
 
             return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
         }
@@ -105,6 +106,7 @@ namespace Identity.API.Controllers.V1
             return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
         }
 
+        [NonAction]
         private string GenerateJwtToken(User user, string tokenType)
         {
             var claims = new[]
@@ -118,17 +120,20 @@ namespace Identity.API.Controllers.V1
                 issuer: _configuration["Security:Issuer"],
                 audience: _configuration["Security:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Security:AccessTokenLifetimeInMinutes")),
+                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>(
+                    tokenType == "access_token " ? "Security:AccessTokenLifetimeInMinutes" : "Security:RefreshTokenLifetimeInMinutes")),
                 signingCredentials: creds);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        [NonAction]
         public bool ValidateRefreshToken(string refreshToken, out ClaimsPrincipal claimsPrincipal)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var validationParameters = new TokenValidationParameters
             {
+
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"])),
@@ -169,6 +174,7 @@ namespace Identity.API.Controllers.V1
                 return false;
             }
         }
+
     }
 
 }

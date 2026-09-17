@@ -6,5 +6,6 @@
   "UnexpectedError": "An unexpected error occurred.",
   "InvalidUsernameOrPassword": "Invalid username or password.",
   "InvalidUserID": "Invalid user ID.",
-  "UserNotFound": "User Not Found"
+  "UserNotFound": "User Not Found",
+  "RefreshTokenIsInvalid": "Refresh Token Is Invalid"
 }

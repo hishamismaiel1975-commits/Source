@@ -6,6 +6,7 @@
   "UnexpectedError": "حدث خطأ غير متوقع.",
   "InvalidUsernameOrPassword": "اسم المستخدم أو كلمة المرور غير صحيحة.",
   "InvalidUserID": "معرف المستخدم غير صالح.",
-  "UserNotFound": "المستخدم غير موجود"
+  "UserNotFound": "المستخدم غير موجود",
+  "RefreshTokenIsInvalid": "رمز التحديث غير صالح أو منتهي الصلاحية"
 
 }
