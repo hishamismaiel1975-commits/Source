@@ -25,14 +25,14 @@ namespace Identity.Application.Auth.Handlers
 
         public async Task<LoginResponse> Handle(LoginEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == request.LoginRequest.UserName);
+            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == request.UserName);
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             // Check if the user is an employee
             if (user.UserType != UserTypes.Employee) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             // Verify the password
-            if (!_hashService.Verify(request.LoginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
+            if (!_hashService.Verify(request.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
 
             // Generate JWT Access Token
             var accessToken = _tokenService.GenerateJwtToken(user.Id, "access_token");

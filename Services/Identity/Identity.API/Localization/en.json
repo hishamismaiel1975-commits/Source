@@ -7,5 +7,6 @@
   "InvalidUsernameOrPassword": "Invalid username or password.",
   "InvalidUserID": "Invalid user ID.",
   "UserNotFound": "User Not Found",
-  "RefreshTokenIsInvalid": "Refresh Token Is Invalid"
+  "RefreshTokenIsInvalid": "Refresh Token Is Invalid",
+  "UserAlreadyExist": "User Already Exist"
 }

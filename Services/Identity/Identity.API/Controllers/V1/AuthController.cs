@@ -39,20 +39,27 @@ namespace Identity.API.Controllers.V1
 
         [AllowAnonymous]
         [HttpPost("customer/login")]
-        public async Task<Result<LoginResponse>> LoginCustomer(LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginCustomer(LoginCustomerCommand loginCustomerCommand)
         {
-            var result = await _mediator.Send(new LoginCustomerCommand(loginRequest));
+            var result = await _mediator.Send(loginCustomerCommand);
             return Result<LoginResponse>.Success(result);
         }
 
         [AllowAnonymous]
         [HttpPost("employee/login")]
-        public async Task<Result<LoginResponse>> LoginEmployee(LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginEmployee(LoginEmployeeCommand loginEmployeeCommand)
         {
-            var result = await _mediator.Send(new LoginEmployeeCommand(loginRequest));
+            var result = await _mediator.Send(loginEmployeeCommand);
             return Result<LoginResponse>.Success(result);
         }
 
+        [AllowAnonymous]
+        [HttpPost("customer/register")]
+        public async Task<Result<bool>> RegisterCustomer(RegisterCustomerCommand registerCustomerCommand)
+        {
+            var result = await _mediator.Send(registerCustomerCommand);
+            return Result<bool>.Success(result);
+        }
     }
 
 }
