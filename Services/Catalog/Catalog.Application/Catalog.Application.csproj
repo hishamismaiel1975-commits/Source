@@ -15,9 +15,7 @@
 
   <ItemGroup>
 
-    <ProjectReference Include="..\..\..\Shared\Application\Application.Lib.csproj" />
-
-    <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
+    <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
 
     <ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
   </ItemGroup>

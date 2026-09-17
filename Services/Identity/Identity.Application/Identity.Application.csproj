@@ -15,7 +15,7 @@
 
 	
 	<ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
+    <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
     <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
   </ItemGroup>
 
