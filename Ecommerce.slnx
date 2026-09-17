@@ -15,7 +15,6 @@
     <Project Path="Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" Id="b7c4adf5-9a1f-46c2-8ea3-5e6cfd95619b" />
   </Folder>
   <Folder Name="/Shared/">
-    <Project Path="Shared/Application/Application.Lib.csproj" />
     <Project Path="Shared/Platform/Platform.Lib.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">

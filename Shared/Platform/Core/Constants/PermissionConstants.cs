@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Application.Lib.Core.Constants
+namespace Platform.Lib.Core.Constants
 {
     public static class PermissionConstants
     {

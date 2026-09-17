@@ -1,5 +1,5 @@
-﻿using Application.Lib.Core.Constants;
-using Identity.Core.Persistence.Entities;
+﻿using Identity.Core.Persistence.Entities;
+using Platform.Lib.Core.Constants;
 
 namespace Identity.Infrastructure.Persistence.Seed
 {

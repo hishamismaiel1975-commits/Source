@@ -1,4 +1,3 @@
-using Application.Lib.Core.Constants;
 using Catalog.API.EventBus.Consumer;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
@@ -6,6 +5,7 @@ using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Platform.Lib.API.Extensions;
+using Platform.Lib.Core.Constants;
 using Platform.Lib.Infrastructure.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
