@@ -1,17 +1,12 @@
 ﻿using Asp.Versioning;
-using Identity.API.DTOs;
-using Identity.Core.Persistence.Entities;
+using FreeMediator;
+using Identity.Application.Auth.Commands;
+using Identity.Application.Auth.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Platform.Lib.API.Responses;
-using Platform.Lib.Core.Exceptions;
-using Platform.Lib.Core.Persistence.Repositories;
-using Platform.Lib.Core.Services.Identity.Enums;
 using Platform.Lib.Core.Services.Security;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+
 namespace Identity.API.Controllers.V1
 {
     [ApiController]
@@ -19,160 +14,43 @@ namespace Identity.API.Controllers.V1
     [Route("api/v{version:apiVersion}/[controller]")]
     public class AuthController : ControllerBase
     {
-        public IRepository<User> _userRepository { get; set; }
-        public IHashService _hashService { get; set; }
-        public IConfiguration _configuration { get; set; }
-        private readonly ICurrentUserService _currentUserService;
+        private IMediator _mediator { get; set; }
 
-        public AuthController(IHashService hashService, IRepository<User> userRepository, IConfiguration configuration, ICurrentUserService currentUserService)
+        public AuthController(IMediator mediator)
         {
-            _hashService = hashService;
-            _userRepository = userRepository;
-            _configuration = configuration;
-            _currentUserService = currentUserService;
+            _mediator = mediator;
         }
 
         [Authorize]
         [HttpGet("user/info")]
-        public Result<ICurrentUserService> UserInfo()
+        public async Task<Result<ICurrentUserService>> UserInfo()
         {
-            return Result<ICurrentUserService>.Success(_currentUserService);
+            var result = await _mediator.Send(new UserInfoCommand());
+            return Result<ICurrentUserService>.Success(result);
         }
 
         [AllowAnonymous]
         [HttpPost("token/refresh")]
         public async Task<Result<string>> TokenRefresh([FromBody] string refreshToken)
         {
-            if (string.IsNullOrWhiteSpace(refreshToken))
-                throw AppException.Throw("RefreshTokenIsRequired");
-
-            ClaimsPrincipal principal;
-            if (!ValidateRefreshToken(refreshToken, out principal)) throw AppException.Throw("RefreshTokenIsInvalid");
-
-            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var user = await _userRepository.GetByIdAsync(Guid.Parse(userId));
-            if (user == null) { AppException.Throw("UserNotFound"); }
-
-            if (!user.IsActive) { AppException.Throw("UserNotFound"); }
-
-            // Generate JWT Access Token
-            var accessToken = GenerateJwtToken(user, "access_token");
-
-            return Result<string>.Success(accessToken);
+            var result = await _mediator.Send(new TokenRefreshCommand(refreshToken));
+            return Result<string>.Success(result);
         }
-
 
         [AllowAnonymous]
         [HttpPost("customer/login")]
-        public async Task<Result<LoginResponse>> LoginCustomer(DTOs.LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginCustomer(LoginRequest loginRequest)
         {
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
-
-            // Check if the user exists
-            if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-            // Check if the user is an Customer
-            if (user.UserType != UserTypes.Customer) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-            // Verify the password
-            if (!_hashService.Verify(loginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-
-            // Generate JWT Access Token
-            var accessToken = GenerateJwtToken(user, "access_token");
-            var refreshToken = GenerateJwtToken(user, "refresh_token");
-
-            return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
+            var result = await _mediator.Send(new LoginCustomerCommand(loginRequest));
+            return Result<LoginResponse>.Success(result);
         }
 
         [AllowAnonymous]
         [HttpPost("employee/login")]
-        public async Task<Result<LoginResponse>> LoginEmployee(DTOs.LoginRequest loginRequest)
+        public async Task<Result<LoginResponse>> LoginEmployee(LoginRequest loginRequest)
         {
-            var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == loginRequest.UserName);
-            if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-            // Check if the user is an employee
-            if (user.UserType != UserTypes.Employee) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-            // Verify the password
-            if (!_hashService.Verify(loginRequest.Password, user.PasswordHash)) { AppException.Throw("InvalidUsernameOrPassword"); }
-
-            // Generate JWT Access Token
-            var accessToken = GenerateJwtToken(user, "access_token");
-            var refreshToken = GenerateJwtToken(user, "refresh_token");
-
-            return Result<LoginResponse>.Success(new LoginResponse(accessToken, refreshToken));
-        }
-
-        [NonAction]
-        private string GenerateJwtToken(User user, string tokenType)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim("token_type", tokenType),
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Security:Issuer"],
-                audience: _configuration["Security:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>(
-                    tokenType == "access_token " ? "Security:AccessTokenLifetimeInMinutes" : "Security:RefreshTokenLifetimeInMinutes")),
-                signingCredentials: creds);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        [NonAction]
-        public bool ValidateRefreshToken(string refreshToken, out ClaimsPrincipal claimsPrincipal)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var validationParameters = new TokenValidationParameters
-            {
-
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_configuration["Security:SecretKey"])),
-
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Security:Issuer"],
-
-                ValidateAudience = true,
-                ValidAudience = _configuration["Security:Audience"],
-
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            try
-            {
-                var principal = tokenHandler.ValidateToken(
-                    refreshToken,
-                    validationParameters,
-                    out var validatedToken);
-
-                claimsPrincipal = principal;
-
-                if (validatedToken is not JwtSecurityToken jwtToken)
-                    return false;
-
-                // Check token type
-                var tokenType = principal.FindFirst("token_type")?.Value;
-
-                if (tokenType != "refresh_token")
-                    return false;
-
-                return true;
-            }
-            catch (SecurityTokenException)
-            {
-                claimsPrincipal = null;
-                return false;
-            }
+            var result = await _mediator.Send(new LoginEmployeeCommand(loginRequest));
+            return Result<LoginResponse>.Success(result);
         }
 
     }

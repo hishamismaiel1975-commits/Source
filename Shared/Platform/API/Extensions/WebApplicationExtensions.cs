@@ -27,6 +27,7 @@ using Platform.Lib.Core.Services.Identity;
 using Platform.Lib.Core.Services.Identity.Enums;
 using Platform.Lib.Core.Services.Localization;
 using Platform.Lib.Core.Services.Security;
+using Platform.Lib.Core.Services.Token;
 using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Interceptors;
 using Platform.Lib.Infrastructure.Persistence.EFCore.Repositories;
@@ -34,6 +35,7 @@ using Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
 using Platform.Lib.Infrastructure.Services.Identity.GrpcClients;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
+using Platform.Lib.Infrastructure.Services.Token;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IdentityModel.Tokens.Jwt;
@@ -64,10 +66,22 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddGrpc();
             builder.Services.AddGrpcReflection();
 
-            // Register Auditing & CurrentUser services
+            // Register Auditing 
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
             builder.Services.AddScoped<AuditingSaveChangesInterceptor>();
+
+            // CurrentUser services & TokenService
+            builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            builder.Services.AddSingleton<ITokenService, TokenService>();
+
+            // Add Authorization Services
+            builder.Services.AddSingleton<IAuthorizationHandler, UserTypeAuthorizationHandler>();
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, UserTypePolicyProvider>();
+
+            // Add EncryptService & HashService
+            builder.Services.AddSingleton<IEncryptService, EncryptService>();
+            builder.Services.AddSingleton<IHashService, HashService>();
+
 
             //Add Serilog 
             builder.Host.UseSerilog((context, services, configuration) =>
@@ -166,10 +180,6 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
 
-            // Add Authorization Services
-            builder.Services.AddSingleton<IAuthorizationHandler, UserTypeAuthorizationHandler>();
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider, UserTypePolicyProvider>();
-
 
 
             // Add IdentityService Service
@@ -260,9 +270,7 @@ namespace Platform.Lib.API.Extensions
                 }
             });
 
-            // Add EncryptService & HashService
-            builder.Services.AddSingleton<IEncryptService, EncryptService>();
-            builder.Services.AddSingleton<IHashService, HashService>();
+
 
             builder.Services.AddControllers();
 

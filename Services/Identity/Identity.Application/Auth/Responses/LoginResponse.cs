@@ -1,4 +1,4 @@
-﻿namespace Identity.API.DTOs
+﻿namespace Identity.Application.Auth.Responses
 {
     public record LoginResponse
     (

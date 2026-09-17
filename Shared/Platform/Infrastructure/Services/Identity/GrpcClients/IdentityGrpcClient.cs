@@ -16,5 +16,6 @@ namespace Platform.Lib.Infrastructure.Services.Identity.GrpcClients
             var response = await _IdentityClient.GetUserInfoAsync(new GetUserInfoRequest { UserId = userId.ToString() });
             return response;
         }
+
     }
 }

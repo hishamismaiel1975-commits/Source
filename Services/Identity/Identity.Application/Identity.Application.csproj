@@ -6,9 +6,24 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+		<PackageReference Include="FreeMediator" Version="1.4.0" />
+		<PackageReference Include="MassTransit" Version="8.5.10" />
+		<PackageReference Include="Riok.Mapperly" Version="4.3.1" />
+	</ItemGroup>
+
+	
+	<ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Application\Application.Lib.csproj" />
     <ProjectReference Include="..\..\..\Shared\Platform\Platform.Lib.csproj" />
     <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Auth\Mappers\" />
+    <Folder Include="Auth\Validator\" />
+    <Folder Include="Auth\Queries\" />
   </ItemGroup>
 
 </Project>
