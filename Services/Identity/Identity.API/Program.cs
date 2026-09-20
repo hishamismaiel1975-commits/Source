@@ -28,7 +28,6 @@ app.UsePlatform<Program>();
 
 // Add gRPC service to the request pipeline & reflection for postman support
 app.MapGrpcService<IdentityGrpcService>();
-app.MapGrpcReflectionService();
 
 
 // Add Built-in Roles, Users, and Update Always New Permissions to the database. 

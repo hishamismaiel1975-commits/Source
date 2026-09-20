@@ -140,6 +140,12 @@ namespace Platform.Lib.API.Extensions
                 {
                     [new OpenApiSecuritySchemeReference("Bearer", document)] = []
                 });
+
+                var apiName = typeof(TProgram).Assembly.GetName().Name.Split('.')[0];
+                options.AddServer(new OpenApiServer
+                {
+                    Url = $"/{apiName}"
+                });
             });
 
 
@@ -297,6 +303,7 @@ namespace Platform.Lib.API.Extensions
                             $"/Identity/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
                     }
+
                 });
             }
 

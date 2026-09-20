@@ -62,9 +62,7 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
-    ports:
-      - "8003:80" 
-      - "8103:81"
+
 
  mongodb:
    image: mongo:8.3.8

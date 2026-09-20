@@ -17,6 +17,12 @@ builder.WebHost.ConfigureKestrel(options =>
 
 });
 
+// Load Yarb reverseproxy setting file
+builder.Configuration
+    .AddJsonFile(
+        "reverseproxy.json",
+        optional: false,
+        reloadOnChange: true);
 
 // Add services to the container.
 builder.Services

@@ -1,0 +1,62 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "identity-grpc": {
+        "ClusterId": "identity-grpc",
+        "Match": {
+          "Path": "/identity/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/identity"
+          }
+        ]
+      },
+      "identity-swagger": {
+        "ClusterId": "identity",
+        "Match": {
+          "Path": "/Identity/swagger/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/Identity"
+          }
+        ]
+      },
+      "identity": {
+        "ClusterId": "identity",
+        "Match": {
+          "Path": "/identity/api/v1/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/Identity"
+          }
+        ]
+      }
+    },
+
+    "Clusters": {
+      "identity": {
+        "Destinations": {
+          "identity-api": {
+            "Address": "http://identity-api:80/"
+          }
+        }
+      },
+
+      "identity-grpc": {
+        "HttpRequest": {
+          "Version": "2.0",
+          "VersionPolicy": "RequestVersionExact"
+        },
+        "Destinations": {
+          "identity-grpc": {
+            "Address": "http://identity-api:81/"
+          }
+        }
+      }
+    }
+  }
+}
+
