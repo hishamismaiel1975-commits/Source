@@ -10,7 +10,7 @@ services:
       redisinsight:
         condition: service_started
     ports:
-      - "80:80"
+      - "127.0.0.1:80:80"      # will be access from iis revese proxy to be public on intenet as https
       - "127.0.0.1:81:81"      # internal on server only
       - "127.0.0.1:8000:8000"  # internal on server only
  
@@ -112,7 +112,7 @@ services:
     environment:
        RI_PROXY_PATH: /redisinsight
 
-
+  # Database will be docker only in develpoment. in production we be installed in dedicate VM Server or Use Azure Managment DB
  mongodb:
    image: mongo:8.3.8
    restart: always
