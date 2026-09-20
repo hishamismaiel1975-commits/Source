@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost/identity/api/v1/Auth/token/refresh
+  url: http://{{URL}}/identity/api/v1/Auth/token/refresh
   headers:
     - name: Accept-Language
       value: en

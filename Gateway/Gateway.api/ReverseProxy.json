@@ -1,37 +1,68 @@
 {
   "ReverseProxy": {
     "Routes": {
+
       "identity-swagger": {
         "ClusterId": "identity",
         "Match": { "Path": "/identity/swagger/{**catch-all}" },
         "Transforms": [ { "PathRemovePrefix": "/identity" } ]
       },
+
       "identity-grpc": {
         "ClusterId": "identity-grpc",
         "Match": { "Path": "/grpc/identity/{**catch-all}" },
         "Transforms": [ { "PathRemovePrefix": "/grpc/identity" } ]
       },
+
       "identity": {
         "ClusterId": "identity",
         "Match": { "Path": "/identity/api/v1/{**catch-all}" },
         "Transforms": [ { "PathRemovePrefix": "/identity" } ]
       },
+
       "catalog-swagger": {
         "ClusterId": "catalog",
         "Match": { "Path": "/catalog/swagger/{**catch-all}" },
         "Transforms": [ { "PathRemovePrefix": "/catalog" } ]
       },
+
       "catalog": {
         "ClusterId": "catalog",
         "Match": { "Path": "/catalog/api/v1/{**catch-all}" },
         "Transforms": [ { "PathRemovePrefix": "/catalog" } ]
+      },
+
+      "portainer": {
+        "ClusterId": "portainer",
+        "Match": { "Path": "/portainer/{**catch-all}" },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/portainer"
+          }
+        ]
+      },
+
+      "rabbitmq": {
+        "ClusterId": "rabbitmq",
+        "Match": { "Path": "/rabbitmq/{**catch-all}" },
+        "Transforms": [ { "PathRemovePrefix": "/rabbitmq" } ]
+      },
+
+      "redisinsight": {
+        "ClusterId": "redisinsight",
+        "Match": { "Path": "/redisinsight/{**catch-all}" }
+
       }
 
     },
     "Clusters": {
+
       "identity": {
-        "Destinations": { "identity-api": { "Address": "http://identity-api:80/" } }
+        "Destinations": {
+          "identity-api": { "Address": "http://identity-api:80/" }
+        }
       },
+
       "identity-grpc": {
         "HttpRequest": {
           "Version": "2.0",
@@ -39,8 +70,27 @@
         },
         "Destinations": { "identity-grpc": { "Address": "http://identity-api:81/" } }
       },
+
       "catalog": {
-        "Destinations": { "catalog-api": { "Address": "http://catalog-api:80/" }}
+        "Destinations": { "catalog-api": { "Address": "http://catalog-api:80/" } }
+      },
+
+      "portainer": {
+        "Destinations": { "portainer": { "Address": "http://portainer:9000/" }}
+      },
+
+      "rabbitmq": {
+        "Destinations": {
+          "rabbitmq": {
+            "Address": "http://rabbitmq:15672/"
+          }
+        }
+      },
+
+      "redisinsight": {
+        "Destinations": {
+          "redisinsight": { "Address": "http://redisinsight:5540/" }
+        }
       }
     }
   }

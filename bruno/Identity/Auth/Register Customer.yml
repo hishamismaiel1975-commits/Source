@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: http://localhost/Identity/api/v1/Auth/customer/login
+  url: http://{{URL}}/Identity/api/v1/Auth/customer/login
   headers:
     - name: Accept-Language
       value: en

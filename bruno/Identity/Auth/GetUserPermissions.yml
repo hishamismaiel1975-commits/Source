@@ -4,7 +4,7 @@ info:
   seq: 5
 
 grpc:
-  url: http://localhost:81/grpc/identity
+  url: http://{{URL}}:81/grpc/identity
   method: /Identity.IdentityService/GetUserInfo
   methodType: unary
   protoFilePath: ../Services/Identity/Identity.API/GrpcServices/Identity.proto

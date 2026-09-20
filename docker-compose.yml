@@ -6,9 +6,13 @@ services:
     build:
       context: .
       dockerfile: Gateway/Gateway.api/Dockerfile
+    depends_on:
+      redisinsight:
+        condition: service_started
     ports:
       - "80:80"
-      - "81:81"
+      - "127.0.0.1:81:81"      # internal on server only
+      - "127.0.0.1:8000:8000"  # internal on server only
  
  identity-api:
     image: ${DOCKER_REGISTRY-}identity-api
@@ -63,6 +67,51 @@ services:
       rabbitmq:
         condition: service_healthy
 
+ portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+ rabbitmq:
+    image: rabbitmq:4.2-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_LOGS: "-"
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log [{console,[{level,warning}]}]"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s  
+ 
+ redis:
+    image: redis:8.2
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+ redisinsight:
+    image: redis/redisinsight:latest
+    restart: always
+    volumes:
+        - redisinsight_data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+       RI_PROXY_PATH: /redisinsight
+
 
  mongodb:
    image: mongo:8.3.8
@@ -106,6 +155,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d Catalog"]
       interval: 10s
@@ -115,55 +165,6 @@ services:
     ports:
       - "2003:5432"
   
- redis:
-    image: redis:8.2
-    restart: always
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-  
- rabbitmq:
-    image: rabbitmq:4.2-management
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
-    healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    ports:
-      - "2004:15672"
-
- portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
-    ports:
-      - "2005:9000"
-
-
- redisinsight:
-    image: redis/redisinsight:latest
-    restart: always
-    volumes:
-        - redisinsight_data:/data
-    depends_on:
-      redis:
-        condition: service_healthy
-    ports:
-      - "2006:5540"
- 
- 
 
 volumes:
   mongo_data:
