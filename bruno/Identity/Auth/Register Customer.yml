@@ -1,0 +1,43 @@
+info:
+  name: Register Customer
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost/Identity/api/v1/Auth/customer/login
+  headers:
+    - name: Accept-Language
+      value: en
+  body:
+    type: json
+    data: |-
+      {
+        "userName": "h2",
+        "fullNameEn": "hisham",
+        "fullNameAr": "هشام",
+        "password": "123"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const response = res.getBody();
+
+        if (response.isSuccess && response.data) {
+          bru.setEnvVar("access-token", response.data.accessToken);
+          bru.setEnvVar("refresh-token", response.data.refreshToken);
+
+          console.log("Access token saved successfully.");
+        } else {
+          console.error("Login failed:", response.errorMessages);
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

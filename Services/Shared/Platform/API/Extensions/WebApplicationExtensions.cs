@@ -300,7 +300,7 @@ namespace Platform.Lib.API.Extensions
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
                         options.SwaggerEndpoint(
-                            $"/Identity/swagger/{description.GroupName}/swagger.json",
+                            $"/{apiName.Split('.')[0]}/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
                     }
 

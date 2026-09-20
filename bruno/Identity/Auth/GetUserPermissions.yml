@@ -1,0 +1,17 @@
+info:
+  name: GetUserPermissions
+  type: grpc
+  seq: 5
+
+grpc:
+  url: http://localhost:81/grpc/identity
+  method: /Identity.IdentityService/GetUserInfo
+  methodType: unary
+  protoFilePath: ../Services/Identity/Identity.API/GrpcServices/Identity.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "user_id": "93F55C3F-ECEE-6E81-7000-01A0AC359718"
+        }
+  auth: inherit

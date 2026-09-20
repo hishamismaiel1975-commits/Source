@@ -1,0 +1,43 @@
+info:
+  name: Register Employee
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost/Identity/api/v1/Auth/Employee/login
+  headers:
+    - name: Accept-Language
+      value: en
+  body:
+    type: json
+    data: |-
+      {
+        "userName": "admin",
+        "fullNameEn": "123",
+        "fullNameAr": "هشام",
+        "password": "123"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const response = res.getBody();
+
+        if (response.isSuccess && response.data) {
+          bru.setEnvVar("access-token", response.data.accessToken);
+          bru.setEnvVar("refresh-token", response.data.refreshToken);
+
+          console.log("Access token saved successfully.");
+        } else {
+          console.error("Login failed:", response.errorMessages);
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
