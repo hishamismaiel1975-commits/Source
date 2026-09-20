@@ -1,4 +1,14 @@
 services:
+
+ gateway.api:
+    image: ${DOCKER_REGISTRY-}gatewayapi
+    restart: always
+    build:
+      context: .
+      dockerfile: Gateway/Gateway.api/Dockerfile
+    ports:
+      - "80:80"
+      - "81:81"
  
  identity-api:
     image: ${DOCKER_REGISTRY-}identity-api
@@ -16,9 +26,7 @@ services:
       Security__Audience: "${Security__Audience}"
       Security__AccessTokenLifetimeInMinutes: ${Security__AccessTokenLifetimeInMinutes}    # 1 Hour
       Security__RefreshTokenLifetimeInMinutes: ${Security__RefreshTokenLifetimeInMinutes} # 24 hours
-    ports:
-       -  "8001:80" 
-       -  "8101:81"
+   
 
  # report.api:
  #  image: ${DOCKER_REGISTRY-}report-api
@@ -157,6 +165,8 @@ services:
     ports:
       - "2006:5540"
  
+ 
+
 volumes:
   mongo_data:
   sqlserver_data:
@@ -167,4 +177,5 @@ volumes:
   
 
   
+
 

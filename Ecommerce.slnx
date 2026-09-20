@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Deployment/" />
-  <Folder Name="/Gateway/" />
+  <Folder Name="/Gateway/">
+    <Project Path="Gateway/Gateway.api/Gateway.api.csproj" Id="b682a445-cf9d-4250-a36e-b9fb19c03078" DisplayName="Gateway.API" />
+  </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Catalog/">
     <Project Path="Services/Catalog/Catalog.API/Catalog.API.csproj" />

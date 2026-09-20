@@ -5,7 +5,7 @@
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
       "composeLaunchServiceName": "identity-api",
-      "composeLaunchUrl": "http://localhost:8001/swagger/index.html",
+      "composeLaunchUrl": "http://localhost/identity/swagger/index.html",
       "serviceActions": {
         "identity-api": "StartDebugging",
         "catalog-api": "StartDebugging",
@@ -15,7 +15,8 @@
         "redis": "StartWithoutDebugging",
         "sqlserver": "StartWithoutDebugging",
         "portainer": "StartWithoutDebugging",
-        "redisinsight": "StartWithoutDebugging"
+        "redisinsight": "StartWithoutDebugging",
+        "gateway.api": "StartDebugging"
       }
     }
   }

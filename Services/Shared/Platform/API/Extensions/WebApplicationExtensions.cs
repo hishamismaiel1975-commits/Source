@@ -64,7 +64,6 @@ namespace Platform.Lib.API.Extensions
             });
 
             builder.Services.AddGrpc();
-            builder.Services.AddGrpcReflection();
 
             // Register Auditing 
             builder.Services.AddHttpContextAccessor();
@@ -295,7 +294,7 @@ namespace Platform.Lib.API.Extensions
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
                         options.SwaggerEndpoint(
-                            $"/swagger/{description.GroupName}/swagger.json",
+                            $"/Identity/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
                     }
                 });
