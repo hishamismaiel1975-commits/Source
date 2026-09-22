@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { ProductResponse } from '../../models/product.model';
 
 @Component({
   imports: [],
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './products.css',
   templateUrl: './products.html',
 })
-export class Products {}
+export class Products {
+  products = input.required<ProductResponse[]>();
+}
