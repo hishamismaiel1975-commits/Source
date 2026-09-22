@@ -1,6 +1,4 @@
-﻿using Catalog.Core.Persistence.Entities;
-
-namespace Catalog.Application.Products.Responses
+﻿namespace Catalog.Application.Products.Responses
 {
     public record ProductResponse
    (
@@ -14,8 +12,8 @@ namespace Catalog.Application.Products.Responses
         decimal Price,
         DateTime CreatedDate,
 
-        ProductBrand? ProductBrand,
-        ProductType? ProductType
+        ProductBrandResponse? ProductBrand,
+        ProductTypeResponse? ProductType
 
     );
 }
