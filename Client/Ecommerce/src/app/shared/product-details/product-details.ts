@@ -18,11 +18,12 @@ export class ProductDetails implements OnInit {
 
   ngOnInit(): void {
     this.productService.getProduct(this.productId!).subscribe((result) => {
-      debugger;
       if (result.isSuccess) {
         this.product.set(result.data);
       } else {
-        alert(result.errorMessages?.toString());
+        debugger;
+        let x = result.errorMessages;
+        alert(result.errorMessages);
       }
     });
   }

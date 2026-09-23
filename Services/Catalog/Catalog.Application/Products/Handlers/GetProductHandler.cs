@@ -3,6 +3,7 @@ using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
+using Platform.Lib.Core.Exceptions;
 using Platform.Lib.Core.Persistence.Repositories;
 
 namespace Catalog.Application.Products.Handlers
@@ -18,6 +19,10 @@ namespace Catalog.Application.Products.Handlers
         public async Task<ProductResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(request.Id);
+            if (product is null)
+            {
+                AppException.Throw("ProductNotFound");
+            }
             return ProductResponseMapper.ToResponse(product);
         }
     }

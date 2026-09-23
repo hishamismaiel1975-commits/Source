@@ -25,6 +25,7 @@ export class Home {
   onSearch() {
     if (this.searchText()) {
       this.productService.searchProducts(this.searchText()).subscribe((result) => {
+        debugger;
         this.products.set(result.data);
       });
     } else {

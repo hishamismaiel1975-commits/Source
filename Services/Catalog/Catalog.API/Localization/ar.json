@@ -16,5 +16,6 @@
   "ProductPriceRequired": "سعر المنتج مطلوب.",
   "ProductPricePositive": "سعر المنتج يجب أن يكون أكبر من صفر.",
   "RefreshTokenIsRequired": "رمز التحديث مطلوب",
-  "RefreshTokenIsInvalid": "رمز التحديث غير صحيح"
+  "RefreshTokenIsInvalid": "رمز التحديث غير صحيح",
+  "ProductNotFound": "المنتج غير موجود"
 }

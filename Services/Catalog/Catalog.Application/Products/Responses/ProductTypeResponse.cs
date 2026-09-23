@@ -2,7 +2,7 @@
 {
     public record ProductTypeResponse
     (
-        Guid Id,
-        string Name
+        Guid id,
+        string name
     );
 }

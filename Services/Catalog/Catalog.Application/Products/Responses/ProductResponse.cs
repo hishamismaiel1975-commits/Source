@@ -2,18 +2,18 @@
 {
     public record ProductResponse
    (
-        Guid Id,
-        string Name,
-        string Summary,
-        string Description,
-        string ImageFile,
-        Guid ProductBrandId,
-        Guid ProductTypeId,
-        decimal Price,
-        DateTime CreatedDate,
+        Guid id,
+        string name,
+        string summary,
+        string description,
+        string imageFile,
+        Guid productBrandId,
+        Guid productTypeId,
+        decimal price,
+        DateTime createdDate,
 
-        ProductBrandResponse? ProductBrand,
-        ProductTypeResponse? ProductType
+        ProductBrandResponse? productBrand,
+        ProductTypeResponse? productType
 
     );
 }
