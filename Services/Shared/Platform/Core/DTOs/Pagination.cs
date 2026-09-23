@@ -5,19 +5,19 @@
         public Pagination() { }
         public Pagination(int pageIndex, int pageSize, int totalPages, int count, IReadOnlyCollection<T> data)
         {
-            this.pageIndex = pageIndex;
-            this.pageSize = pageSize;
-            this.totalPages = totalPages;
-            this.count = count;
-            this.data = data;
+            this.PageIndex = pageIndex;
+            this.PageSize = pageSize;
+            this.TotalPages = totalPages;
+            this.Count = count;
+            this.Data = data;
         }
 
-        public int pageIndex { get; set; }
-        public int pageSize { get; set; }
-        public int count { get; set; }
-        public int totalPages { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public int Count { get; set; }
+        public int TotalPages { get; set; }
 
-        public IReadOnlyCollection<T> data { get; set; }
+        public IReadOnlyCollection<T> Data { get; set; }
 
     }
 }

@@ -2,16 +2,16 @@
 {
     public sealed class Result<T>
     {
-        public bool isSuccess { get; init; }
-        public IList<string>? errorMessages { get; init; }
-        public T? data { get; init; }
+        public bool IsSuccess { get; init; }
+        public IList<string>? ErrorMessages { get; init; }
+        public T? Data { get; init; }
 
         public static Result<T> Success(T value)
         {
             return new Result<T>
             {
-                isSuccess = true,
-                data = value
+                IsSuccess = true,
+                Data = value
             };
         }
 
@@ -19,7 +19,7 @@
         {
             return new Result<T>
             {
-                isSuccess = true,
+                IsSuccess = true,
             };
         }
 
@@ -27,8 +27,8 @@
         {
             return new Result<T>
             {
-                isSuccess = false,
-                errorMessages = new List<string> { error }
+                IsSuccess = false,
+                ErrorMessages = new List<string> { error }
             };
         }
 
@@ -36,8 +36,8 @@
         {
             return new Result<T>
             {
-                isSuccess = false,
-                errorMessages = errors
+                IsSuccess = false,
+                ErrorMessages = errors
             };
         }
 

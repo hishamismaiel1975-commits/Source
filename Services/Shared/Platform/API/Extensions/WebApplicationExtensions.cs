@@ -41,6 +41,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
+using System.Text.Json;
 
 
 namespace Platform.Lib.API.Extensions
@@ -276,8 +277,13 @@ namespace Platform.Lib.API.Extensions
             });
 
 
-
-            builder.Services.AddControllers();
+            // Json Naming CamelCase for all Response to be like client side 
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.PropertyNamingPolicy =
+                            JsonNamingPolicy.CamelCase;
+                    });
 
             // Add Localization Service
             builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();

@@ -2,7 +2,7 @@
 {
     public record ProductBrandResponse
     (
-        Guid id,
-        string name
+        Guid Id,
+        string Name
     );
 }
