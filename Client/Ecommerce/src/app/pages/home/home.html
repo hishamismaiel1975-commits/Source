@@ -9,6 +9,8 @@
     type="text"
     placeholder="Search "
     class="border border-gray-300 bg-blue-100 focus:border focus:outline-none h-8 me-2 px-2"
+    [value]="searchText()"
+    (input)="searchText.set($any($event.target).value)"
   />
   <button
     type="button"
@@ -19,5 +21,8 @@
   </button>
 </section>
 <section class="results">
-  <app-products [products]="products()"></app-products>
+  <app-products [products]="products().data"></app-products>
+  @if (products().count > 0) {
+    <h1>Total:{{ products().count }} -- Page No: {{ products().pageIndex }}</h1>
+  }
 </section>

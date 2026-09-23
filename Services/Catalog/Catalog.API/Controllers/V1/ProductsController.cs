@@ -4,7 +4,6 @@ using Catalog.Application.Products.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.API.Responses;
 using Platform.Lib.Core.Constants;
 using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Services.Identity.Enums;

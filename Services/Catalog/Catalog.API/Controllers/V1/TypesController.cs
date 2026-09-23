@@ -3,7 +3,7 @@ using Catalog.Application.Types.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.API.Responses;
+using Platform.Lib.Core.DTOs;
 using TypeApp = Catalog.Application.Types;
 
 

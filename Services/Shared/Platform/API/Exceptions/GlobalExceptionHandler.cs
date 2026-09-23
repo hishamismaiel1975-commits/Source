@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Platform.Lib.API.Responses;
+using Platform.Lib.Core.DTOs;
 using Platform.Lib.Core.Services.Localization;
 using System.Text.Json;
 

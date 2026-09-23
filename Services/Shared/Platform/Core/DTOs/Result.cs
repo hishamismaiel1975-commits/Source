@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.API.Responses
+﻿namespace Platform.Lib.Core.DTOs
 {
     public sealed class Result<T>
     {

@@ -1,0 +1,14 @@
+<div class="overflow-hidden rounded-xl bg-white shadow mt-5">
+  <img src="images/product.jpg" alt="Product" class="h-56 w-full object-cover" />
+
+  <div class="p-5">
+    <h3 class="text-lg font-semibold text-gray-900">{{ product()?.name }}</h3>
+    <p class="mt-2 text-sm text-gray-600">{{ product()?.summary }}</p>
+    <h2 class="text-lg font-semibold text-gray-900">
+      {{ product()?.productBrand?.name }} -- {{ product()?.productType?.name }}
+    </h2>
+    <div class="mt-4 flex items-center justify-between">
+      <span class="text-xl font-bold text-gray-900"> {{ product()?.price }} </span>
+    </div>
+  </div>
+</div>
