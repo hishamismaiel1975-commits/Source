@@ -3,9 +3,10 @@ import { Products } from '../../shared/products/products';
 import { ProductResponse } from '../../models/product.model';
 import { ProductService } from '../../core/services/product.service';
 import { Pagination } from '../../models/pagination.model';
+import { form, FormField } from '@angular/forms/signals';
 
 @Component({
-  imports: [Products],
+  imports: [Products, FormField],
   selector: 'app-home',
   styleUrl: './home.css',
   templateUrl: './home.html',
@@ -13,7 +14,12 @@ import { Pagination } from '../../models/pagination.model';
 export class Home {
   private readonly productService = inject(ProductService);
 
-  searchText = signal('');
+  searchModel = signal({
+    searchText: '',
+  });
+
+  searchForm = form(this.searchModel);
+
   products = signal<Pagination<ProductResponse>>({
     pageIndex: 0,
     pageSize: 0,
@@ -23,9 +29,8 @@ export class Home {
   });
 
   onSearch() {
-    if (this.searchText()) {
-      this.productService.searchProducts(this.searchText()).subscribe((result) => {
-        debugger;
+    if (this.searchModel().searchText) {
+      this.productService.searchProducts(this.searchModel().searchText).subscribe((result) => {
         this.products.set(result.data);
       });
     } else {

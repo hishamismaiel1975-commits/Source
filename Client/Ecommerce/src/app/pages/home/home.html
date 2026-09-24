@@ -9,8 +9,7 @@
     type="text"
     placeholder="Search "
     class="border border-gray-300 bg-blue-100 focus:border focus:outline-none h-8 me-2 px-2"
-    [value]="searchText()"
-    (input)="searchText.set($any($event.target).value)"
+    [formField]="searchForm.searchText"
   />
   <button
     type="button"
