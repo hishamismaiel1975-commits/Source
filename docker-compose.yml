@@ -1,19 +1,25 @@
 services:
 
- gateway.api:
-    image: ${DOCKER_REGISTRY-}gatewayapi
+ gateway-api:
+    image: ${DOCKER_REGISTRY-}gateway-api
     restart: always
     build:
       context: .
       dockerfile: Gateway/Gateway.api/Dockerfile
+    environment:
+     OTEL_Service_Name: gateway-api
+     OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
       redisinsight:
+        condition: service_started
+      otel-lgtm:
         condition: service_started
     ports:
       - "127.0.0.1:80:80"      # will be access from iis revese proxy to be public on intenet as https
       - "127.0.0.1:81:81"      # internal on server only
-      - "127.0.0.1:8000:8000"  # internal on server only
- 
+      - "127.0.0.1:8000:8000"  # internal on server onl
+    
+
  identity-api:
     image: ${DOCKER_REGISTRY-}identity-api
     restart: always
@@ -30,7 +36,11 @@ services:
       Security__Audience: "${Security__Audience}"
       Security__AccessTokenLifetimeInMinutes: ${Security__AccessTokenLifetimeInMinutes}    # 1 Hour
       Security__RefreshTokenLifetimeInMinutes: ${Security__RefreshTokenLifetimeInMinutes} # 24 hours
-   
+      OTEL_Service_Name: identity-api
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
+    depends_on:
+      otel-lgtm:
+        condition: service_started
 
  # report.api:
  #  image: ${DOCKER_REGISTRY-}report-api
@@ -55,6 +65,8 @@ services:
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"
       Security__Audience: "${Security__Audience}"
+      OTEL_Service_Name:  catalog-api
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
       mongodb:
         condition: service_healthy
@@ -66,6 +78,9 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+      otel-lgtm:
+        condition: service_started
+
 
  portainer:
     image: portainer/portainer-ce:latest
@@ -112,7 +127,20 @@ services:
     environment:
        RI_PROXY_PATH: /redisinsight
 
-  # Database will be docker only in develpoment. in production we be installed in dedicate VM Server or Use Azure Managment DB
+ otel-lgtm:
+    image: grafana/otel-lgtm:latest
+    container_name: otel-lgtm
+    restart: unless-stopped
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    ports:
+      - "3000:3000"   # Grafana
+    volumes:
+      - otel-lgtm-data:/data    
+  
+ # Database will be docker only in develpoment. in production we be installed in dedicate VM Server or Use Azure Managment DB
  mongodb:
    image: mongo:8.3.8
    restart: always
@@ -164,8 +192,8 @@ services:
       start_period: 10s
     ports:
       - "2003:5432"
-  
 
+ 
 volumes:
   mongo_data:
   sqlserver_data:
@@ -173,6 +201,7 @@ volumes:
   rabbitmq_data:
   portainer_data:
   redisinsight_data:
+  otel-lgtm-data:
   
 
   

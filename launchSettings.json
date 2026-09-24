@@ -16,7 +16,8 @@
         "sqlserver": "StartWithoutDebugging",
         "portainer": "StartWithoutDebugging",
         "redisinsight": "StartWithoutDebugging",
-        "gateway.api": "StartDebugging"
+        "gateway-api": "StartDebugging",
+        "otel-lgtm": "StartWithoutDebugging"
       }
     }
   }

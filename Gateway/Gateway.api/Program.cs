@@ -1,4 +1,9 @@
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +59,75 @@ builder.Services.AddCors(options =>
     });
 });
 
+//Add OpenTelemetry services & Add Grafana OTEL
+var endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+var resourceBuilder = ResourceBuilder.CreateDefault()
+    .AddService(builder.Configuration["OTEL_Service_Name"]!);
+
+// =============================
+// Logging
+// =============================
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+builder.Logging.AddOpenTelemetry(options =>
+{
+    options.IncludeFormattedMessage = true;
+    options.IncludeScopes = true;
+    options.ParseStateValues = true;
+
+    options.SetResourceBuilder(resourceBuilder);
+    options.AddOtlpExporter(exporter =>
+    {
+        exporter.Endpoint = new Uri(endpoint + "/v1/logs");
+
+
+        exporter.Protocol =
+            OtlpExportProtocol.HttpProtobuf;
+    });
+});
+
+// =============================
+// OpenTelemetry
+// =============================
+builder.Services.AddOpenTelemetry()
+
+ // =========================
+ // Tracing
+ // =========================
+ .WithTracing(tracing =>
+ {
+     tracing
+         .SetResourceBuilder(resourceBuilder)
+         .SetSampler(new AlwaysOnSampler())
+         .AddAspNetCoreInstrumentation()
+         .AddOtlpExporter(exporter =>
+         {
+             exporter.Endpoint = new Uri(endpoint + "/v1/traces");
+
+
+             exporter.Protocol =
+                 OtlpExportProtocol.HttpProtobuf;
+         });
+ })
+
+    // =========================
+    // Metrics
+    // =========================
+    .WithMetrics(metrics =>
+    {
+        metrics.SetResourceBuilder(resourceBuilder);
+        metrics.AddAspNetCoreInstrumentation();
+        metrics.AddRuntimeInstrumentation();
+        metrics.AddOtlpExporter(exporter =>
+        {
+            exporter.Endpoint = new Uri(endpoint + "/v1/metrics");
+
+
+            exporter.Protocol =
+                OtlpExportProtocol.HttpProtobuf;
+        });
+    });
 
 var app = builder.Build();
 

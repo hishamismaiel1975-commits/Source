@@ -71,5 +71,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 // Configure the HTTP request pipeline.
 app.UsePlatform<Program>();
 
+var logger = app.Services
+    .GetRequiredService<ILogger<Program>>();
+
 app.Run();
+
 

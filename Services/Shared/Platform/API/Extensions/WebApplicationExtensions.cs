@@ -11,10 +11,13 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MongoDB.Driver;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -36,13 +39,11 @@ using Platform.Lib.Infrastructure.Services.Identity;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
 using Platform.Lib.Infrastructure.Services.Token;
-using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text.Json;
-
 
 namespace Platform.Lib.API.Extensions
 {
@@ -81,15 +82,6 @@ namespace Platform.Lib.API.Extensions
             // Add EncryptService & HashService
             builder.Services.AddSingleton<IEncryptService, EncryptService>();
             builder.Services.AddSingleton<IHashService, HashService>();
-
-
-            //Add Serilog 
-            builder.Host.UseSerilog((context, services, configuration) =>
-            {
-                configuration
-                    .ReadFrom.Configuration(context.Configuration)
-                    .ReadFrom.Services(services);
-            });
 
             // Register the global exception handler
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -142,7 +134,7 @@ namespace Platform.Lib.API.Extensions
                     [new OpenApiSecuritySchemeReference("Bearer", document)] = []
                 });
 
-                var apiName = typeof(TProgram).Assembly.GetName().Name.Split('.')[0];
+                var apiName = typeof(TProgram).Assembly.GetName().Name!.Split('.')[0];
                 options.AddServer(new OpenApiServer
                 {
                     Url = $"/{apiName}"
@@ -150,31 +142,76 @@ namespace Platform.Lib.API.Extensions
             });
 
 
-            //Add OpenTelemetry services
+            //Add OpenTelemetry services & Add Grafana OTEL
+            var endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+            var resourceBuilder = ResourceBuilder.CreateDefault()
+                .AddService(builder.Configuration["OTEL_Service_Name"]!);
+
+            // =============================
+            // Logging
+            // =============================
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+
+            builder.Logging.AddOpenTelemetry(options =>
+            {
+                options.IncludeFormattedMessage = true;
+                options.IncludeScopes = true;
+                options.ParseStateValues = true;
+
+                options.SetResourceBuilder(resourceBuilder);
+                options.AddOtlpExporter(exporter =>
+                {
+                    exporter.Endpoint = new Uri(endpoint + "/v1/logs");
+
+
+                    exporter.Protocol =
+                        OtlpExportProtocol.HttpProtobuf;
+                });
+            });
+
+            // =============================
+            // OpenTelemetry
+            // =============================
             builder.Services.AddOpenTelemetry()
-             .ConfigureResource(resource =>
-             {
-                 resource.AddService(
-                typeof(TProgram).Assembly.GetName().Name!);
-             })
+
+             // =========================
+             // Tracing
+             // =========================
              .WithTracing(tracing =>
-            {
-                tracing
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation();
-                //  .AddOtlpExporter();
-            })
-             .WithMetrics(metrics =>
-            {
-                metrics
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation();
-                //  .AddOtlpExporter();
-            })
-             .WithLogging(logging =>
              {
-                 // logging.AddOtlpExporter();
-             });
+                 tracing
+                     .SetResourceBuilder(resourceBuilder)
+                     .SetSampler(new AlwaysOnSampler())
+                     .AddAspNetCoreInstrumentation()
+                     .AddOtlpExporter(exporter =>
+                     {
+                         exporter.Endpoint = new Uri(endpoint + "/v1/traces");
+
+
+                         exporter.Protocol =
+                             OtlpExportProtocol.HttpProtobuf;
+                     });
+             })
+
+                // =========================
+                // Metrics
+                // =========================
+                .WithMetrics(metrics =>
+                {
+                    metrics.SetResourceBuilder(resourceBuilder);
+                    metrics.AddAspNetCoreInstrumentation();
+                    metrics.AddRuntimeInstrumentation();
+                    metrics.AddOtlpExporter(exporter =>
+                    {
+                        exporter.Endpoint = new Uri(endpoint + "/v1/metrics");
+
+
+                        exporter.Protocol =
+                            OtlpExportProtocol.HttpProtobuf;
+                    });
+                });
+
 
             //Register FreeMediator 
             builder.Services.AddMediator(config =>
@@ -292,8 +329,6 @@ namespace Platform.Lib.API.Extensions
         }
         public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
-            app.UseSerilogRequestLogging();
-
             // Enable Swagger
             var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
             if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
