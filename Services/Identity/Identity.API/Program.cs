@@ -14,6 +14,8 @@ builder.AddIdentityGrpcService();
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
+builder.AddGrafanaOTEL("Identity-api");
+
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:ConnectionString"]);
 

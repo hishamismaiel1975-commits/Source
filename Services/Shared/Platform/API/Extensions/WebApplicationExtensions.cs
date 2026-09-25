@@ -142,77 +142,6 @@ namespace Platform.Lib.API.Extensions
             });
 
 
-            //Add OpenTelemetry services & Add Grafana OTEL
-            var endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-            var resourceBuilder = ResourceBuilder.CreateDefault()
-                .AddService(builder.Configuration["OTEL_Service_Name"]!);
-
-            // =============================
-            // Logging
-            // =============================
-            builder.Logging.ClearProviders();
-            builder.Logging.AddConsole();
-
-            builder.Logging.AddOpenTelemetry(options =>
-            {
-                options.IncludeFormattedMessage = true;
-                options.IncludeScopes = true;
-                options.ParseStateValues = true;
-
-                options.SetResourceBuilder(resourceBuilder);
-                options.AddOtlpExporter(exporter =>
-                {
-                    exporter.Endpoint = new Uri(endpoint + "/v1/logs");
-
-
-                    exporter.Protocol =
-                        OtlpExportProtocol.HttpProtobuf;
-                });
-            });
-
-            // =============================
-            // OpenTelemetry
-            // =============================
-            builder.Services.AddOpenTelemetry()
-
-             // =========================
-             // Tracing
-             // =========================
-             .WithTracing(tracing =>
-             {
-                 tracing
-                     .SetResourceBuilder(resourceBuilder)
-                     .SetSampler(new AlwaysOnSampler())
-                     .AddAspNetCoreInstrumentation()
-                     .AddOtlpExporter(exporter =>
-                     {
-                         exporter.Endpoint = new Uri(endpoint + "/v1/traces");
-
-
-                         exporter.Protocol =
-                             OtlpExportProtocol.HttpProtobuf;
-                     });
-             })
-
-                // =========================
-                // Metrics
-                // =========================
-                .WithMetrics(metrics =>
-                {
-                    metrics.SetResourceBuilder(resourceBuilder);
-                    metrics.AddAspNetCoreInstrumentation();
-                    metrics.AddRuntimeInstrumentation();
-                    metrics.AddOtlpExporter(exporter =>
-                    {
-                        exporter.Endpoint = new Uri(endpoint + "/v1/metrics");
-
-
-                        exporter.Protocol =
-                            OtlpExportProtocol.HttpProtobuf;
-                    });
-                });
-
-
             //Register FreeMediator 
             builder.Services.AddMediator(config =>
             {
@@ -327,6 +256,82 @@ namespace Platform.Lib.API.Extensions
 
             return builder;
         }
+
+        public static WebApplicationBuilder AddGrafanaOTEL(this WebApplicationBuilder builder, string ServiceName)
+        {
+            //Add OpenTelemetry services & Add Grafana OTEL
+            var endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+            var resourceBuilder = ResourceBuilder.CreateDefault()
+                .AddService(ServiceName);
+
+            // =============================
+            // Logging
+            // =============================
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+
+            builder.Logging.AddOpenTelemetry(options =>
+            {
+                options.IncludeFormattedMessage = true;
+                options.IncludeScopes = true;
+                options.ParseStateValues = true;
+
+                options.SetResourceBuilder(resourceBuilder);
+                options.AddOtlpExporter(exporter =>
+                {
+                    exporter.Endpoint = new Uri(endpoint + "/v1/logs");
+
+
+                    exporter.Protocol =
+                        OtlpExportProtocol.HttpProtobuf;
+                });
+            });
+
+            // =============================
+            // OpenTelemetry
+            // =============================
+            builder.Services.AddOpenTelemetry()
+
+             // =========================
+             // Tracing
+             // =========================
+             .WithTracing(tracing =>
+             {
+                 tracing
+                     .SetResourceBuilder(resourceBuilder)
+                     .SetSampler(new AlwaysOnSampler())
+                     .AddAspNetCoreInstrumentation()
+                     .AddOtlpExporter(exporter =>
+                     {
+                         exporter.Endpoint = new Uri(endpoint + "/v1/traces");
+
+
+                         exporter.Protocol =
+                             OtlpExportProtocol.HttpProtobuf;
+                     });
+             })
+
+                // =========================
+                // Metrics
+                // =========================
+                .WithMetrics(metrics =>
+                {
+                    metrics.SetResourceBuilder(resourceBuilder);
+                    metrics.AddAspNetCoreInstrumentation();
+                    metrics.AddRuntimeInstrumentation();
+                    metrics.AddOtlpExporter(exporter =>
+                    {
+                        exporter.Endpoint = new Uri(endpoint + "/v1/metrics");
+
+
+                        exporter.Protocol =
+                            OtlpExportProtocol.HttpProtobuf;
+                    });
+                });
+
+            return builder;
+        }
+
         public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
             // Enable Swagger
@@ -355,6 +360,7 @@ namespace Platform.Lib.API.Extensions
 
             return app;
         }
+
         public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder, IMongoDbConfiguration mongoDbConfiguration)
         {
             var connectionString = builder.Configuration["MongoDB:ConnectionString"];

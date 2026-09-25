@@ -16,6 +16,8 @@ builder.AddIdentityGrpcService();
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
+builder.AddGrafanaOTEL("Catalog-api");
+
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
 //builder.AddMongoDB(new MongoDbConfiguration());
 

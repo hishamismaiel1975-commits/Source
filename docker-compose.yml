@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: Gateway/Gateway.api/Dockerfile
     environment:
-     OTEL_Service_Name: gateway-api
      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
       redisinsight:
@@ -19,7 +18,6 @@ services:
       - "127.0.0.1:81:81"      # internal on server only
       - "127.0.0.1:8000:8000"  # internal on server onl
     
-
  identity-api:
     image: ${DOCKER_REGISTRY-}identity-api
     restart: always
@@ -36,7 +34,6 @@ services:
       Security__Audience: "${Security__Audience}"
       Security__AccessTokenLifetimeInMinutes: ${Security__AccessTokenLifetimeInMinutes}    # 1 Hour
       Security__RefreshTokenLifetimeInMinutes: ${Security__RefreshTokenLifetimeInMinutes} # 24 hours
-      OTEL_Service_Name: identity-api
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
       otel-lgtm:
@@ -65,7 +62,6 @@ services:
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"
       Security__Audience: "${Security__Audience}"
-      OTEL_Service_Name:  catalog-api
       OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
       mongodb:
@@ -132,11 +128,11 @@ services:
     container_name: otel-lgtm
     restart: unless-stopped
     environment:
+      GF_SERVER_ROOT_URL: "http://localhost:8000/grafana/"
+      GF_SERVER_SERVE_FROM_SUB_PATH: "true"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
-    ports:
-      - "3000:3000"   # Grafana
     volumes:
       - otel-lgtm-data:/data    
   

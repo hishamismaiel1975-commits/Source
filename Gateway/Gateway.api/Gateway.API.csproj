@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\Shared\Platform\Platform.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="ReverseProxy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -52,6 +52,18 @@
         "ClusterId": "redisinsight",
         "Match": { "Path": "/redisinsight/{**catch-all}" }
 
+      },
+
+      "grafana": {
+        "ClusterId": "grafana",
+        "Match": {
+          "Path": "/grafana/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "RequestHeaderOriginalHost": "true"
+          }
+        ]
       }
 
     },
@@ -76,7 +88,7 @@
       },
 
       "portainer": {
-        "Destinations": { "portainer": { "Address": "http://portainer:9000/" }}
+        "Destinations": { "portainer": { "Address": "http://portainer:9000/" } }
       },
 
       "rabbitmq": {
@@ -91,7 +103,15 @@
         "Destinations": {
           "redisinsight": { "Address": "http://redisinsight:5540/" }
         }
+      },
+
+      "grafana": {
+        "Destinations": {
+          "grafana": {
+            "Address": "http://otel-lgtm:3000/"
+          }
+        }
       }
     }
+    }
   }
-}
