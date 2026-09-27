@@ -69,7 +69,9 @@ app.Use(async (context, next) =>
     var isAdminRoute =
         context.Request.Path.StartsWithSegments("/portainer") ||
         context.Request.Path.StartsWithSegments("/rabbitmq") ||
-        context.Request.Path.StartsWithSegments("/redisinsight");
+        context.Request.Path.StartsWithSegments("/redisinsight") ||
+        context.Request.Path.StartsWithSegments("/grafana");
+
 
     if (isAdminRoute && port != 8000)
     {
