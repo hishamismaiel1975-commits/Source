@@ -14,14 +14,15 @@ builder.AddIdentityGrpcService();
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
-builder.AddGrafanaOTEL("Identity-api");
-
 // Add SQL Server Database Service & SQL Server Repository Services
 builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:ConnectionString"]);
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
 
+builder.AddGrafanaOTEL("Identity-api");
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -38,5 +39,6 @@ using (var scope = app.Services.CreateScope())
     await DatabaseSeeder.SeedAsync(scope.ServiceProvider);
 }
 
+app.MapHealthChecks("/health");
 
 app.Run();

@@ -56,6 +56,8 @@ builder.Services.AddMassTransit(config =>
 
 builder.AddGrafanaOTEL("Catalog-api");
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 //Seed db on startup 
@@ -72,6 +74,8 @@ app.UsePlatform<Program>();
 
 var logger = app.Services
     .GetRequiredService<ILogger<Program>>();
+
+app.MapHealthChecks("/health");
 
 app.Run();
 

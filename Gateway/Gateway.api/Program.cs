@@ -58,6 +58,8 @@ builder.Services.AddCors(options =>
 
 builder.AddGrafanaOTEL("Gateway-api");
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 app.UseCors("GatewayCors");
@@ -81,5 +83,7 @@ app.Use(async (context, next) =>
 });
 
 app.MapReverseProxy();
+
+app.MapHealthChecks("/health");
 
 app.Run();
