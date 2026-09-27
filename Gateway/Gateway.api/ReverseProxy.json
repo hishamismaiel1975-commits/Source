@@ -32,15 +32,6 @@
         "Transforms": [ { "PathRemovePrefix": "/catalog" } ]
       },
 
-      "portainer": {
-        "ClusterId": "portainer",
-        "Match": { "Path": "/portainer/{**catch-all}" },
-        "Transforms": [
-          {
-            "PathRemovePrefix": "/portainer"
-          }
-        ]
-      },
 
       "rabbitmq": {
         "ClusterId": "rabbitmq",
@@ -85,10 +76,6 @@
 
       "catalog": {
         "Destinations": { "catalog-api": { "Address": "http://catalog-api:80/" } }
-      },
-
-      "portainer": {
-        "Destinations": { "portainer": { "Address": "http://portainer:9000/" } }
       },
 
       "rabbitmq": {

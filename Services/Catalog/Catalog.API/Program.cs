@@ -16,8 +16,6 @@ builder.AddIdentityGrpcService();
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
-builder.AddGrafanaOTEL("Catalog-api");
-
 // Add MongoDB Database Service & Configure MongoDB Serializers & MongoDB Repository Services
 //builder.AddMongoDB(new MongoDbConfiguration());
 
@@ -29,7 +27,6 @@ builder.AddSqlServer<CatalogDbContext>(builder.Configuration["CatalogDb:Connecti
 
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
-
 
 // Add MassTransit with RabbitMQ and Entity Framework Outbox
 builder.Services.AddMassTransit(config =>
@@ -57,7 +54,7 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
-
+builder.AddGrafanaOTEL("Catalog-api");
 
 var app = builder.Build();
 
