@@ -1,6 +1,7 @@
 services:
 
  gateway-api:
+    container_name: ecommerce-gateway-api
     image: ${DOCKER_REGISTRY-}gateway-api
     restart: always
     build:
@@ -19,6 +20,7 @@ services:
       - "127.0.0.1:8000:8000"  # internal on server onl
     
  identity-api:
+    container_name: ecommerce-identity-api
     image: ${DOCKER_REGISTRY-}identity-api
     restart: always
     build:
@@ -46,6 +48,7 @@ services:
  #    dockerfile: Services/Report/Report.API/Dockerfile
 
  catalog-api:
+    container_name: ecommerce-catalog-api
     image: ${DOCKER_REGISTRY-}catalog-api
     restart: always
     build:
@@ -79,6 +82,7 @@ services:
 
 
  rabbitmq:
+    container_name: ecommerce-rabbitmq
     image: rabbitmq:4.2-management
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
@@ -95,6 +99,7 @@ services:
       start_period: 10s  
  
  redis:
+    container_name: ecommerce-redis
     image: redis:8.2
     restart: always
     healthcheck:
@@ -105,7 +110,8 @@ services:
       start_period: 10s
 
  redisinsight:
-    image: redis/redisinsight:latest
+    container_name: ecommerce-redisinsight
+    image: redis/redisinsight:3.8.0
     restart: always
     volumes:
         - redisinsight_data:/data
@@ -116,8 +122,8 @@ services:
        RI_PROXY_PATH: /redisinsight
 
  otel-lgtm:
-    image: grafana/otel-lgtm:latest
-    container_name: otel-lgtm
+    container_name: ecommerce-grafana-otel-lgtm
+    image: grafana/otel-lgtm:0.34.0
     restart: unless-stopped
     environment:
       GF_SERVER_ROOT_URL: "http://localhost:8000/grafana/"

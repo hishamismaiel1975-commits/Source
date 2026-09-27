@@ -14,7 +14,6 @@
         "rabbitmq": "StartWithoutDebugging",
         "redis": "StartWithoutDebugging",
         "sqlserver": "StartWithoutDebugging",
-        "portainer": "StartWithoutDebugging",
         "redisinsight": "StartWithoutDebugging",
         "gateway-api": "StartDebugging",
         "otel-lgtm": "StartWithoutDebugging"
