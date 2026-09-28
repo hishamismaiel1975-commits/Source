@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-api
+  namespace: ecommerce
+  labels:
+    app: catalog-api
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: catalog-api
+
+  template:
+    metadata:
+      labels:
+        app: catalog-api
+
+    spec:
+      containers:
+        - name: catalog-api
+          image: catalog-api:latest
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-config
+                  key: ASPNETCORE_ENVIRONMENT
+
+            - name: CatalogDb__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-secrets
+                  key: CatalogDb__ConnectionString
+
+            - name: RedisSettings__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-config
+                  key: RedisSettings__ConnectionString
+
+            - name: GrpcSettings__IdentityServiceUrl
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-config
+                  key: GrpcSettings__IdentityServiceUrl
+
+            - name: EventBusSettings__HostAddress
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-secrets
+                  key: EventBusSettings__HostAddress
+
+            - name: Security__SecretKey
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-secrets
+                  key: Security__SecretKey
+
+            - name: Security__Issuer
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-config
+                  key: Security__Issuer
+
+            - name: Security__Audience
+              valueFrom:
+                secretKeyRef:
+                  name: ecommerce-config
+                  key: Security__Audience
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://otel-lgtm:4317"
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3

@@ -59,7 +59,6 @@ services:
       CatalogDb__ConnectionString: ${CatalogDb__ConnectionString}
       RedisSettings__ConnectionString: ${RedisSettings__ConnectionString}
       GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}
-      HttpClient__DiscountUrl: ${HttpClient__DiscountUrl}
       GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
       EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
       Security__SecretKey: ${Security__SecretKey}
@@ -167,7 +166,7 @@ services:
       retries: 10
       start_period: 20s
     ports:
-      - "2002:1433"
+      - "1433:1433"
   
  postgres:
     image: postgres:18.6

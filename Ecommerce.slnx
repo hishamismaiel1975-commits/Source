@@ -1,5 +1,4 @@
 <Solution>
-  <Folder Name="/Deployment/" />
   <Folder Name="/Gateway/">
     <Project Path="Gateway/Gateway.api/Gateway.api.csproj" Id="b682a445-cf9d-4250-a36e-b9fb19c03078" />
   </Folder>

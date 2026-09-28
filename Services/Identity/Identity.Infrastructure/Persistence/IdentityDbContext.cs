@@ -17,6 +17,8 @@ namespace Identity.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            // Set the default collation for the database to Case Insensitive
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<User>(builder =>
             {

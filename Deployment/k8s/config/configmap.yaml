@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecommerce-config
+  namespace: ecommerce
+data:
+  ASPNETCORE_ENVIRONMENT: Staging
+
+  # OTEL_EXPORTER for Grafana OTEL
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-lgtm:4318
+
+  # Security settings
+  Security__Issuer: "ecommerce.identity"
+  Security__Audience: "ecommerce.clients"
+  Security__AccessTokenLifetimeInMinutes: "60" # 1 Hour
+  Security__RefreshTokenLifetimeInMinutes: "1440" # 24 hours
+
+  # Redis connection string for caching
+  RedisSettings__ConnectionString: redis:6379
+
+  # gRPC service URL
+  GrpcSettings__IdentityServiceUrl: http://identity-api:81
