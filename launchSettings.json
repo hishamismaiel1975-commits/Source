@@ -15,8 +15,8 @@
         "redis": "StartWithoutDebugging",
         "sqlserver": "StartWithoutDebugging",
         "redisinsight": "StartWithoutDebugging",
-        "gateway-api": "StartDebugging",
-        "otel-lgtm": "StartWithoutDebugging"
+        "otel-lgtm": "StartWithoutDebugging",
+        "gateway-api": "StartDebugging"
       }
     }
   }

@@ -6,7 +6,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: Gateway/Gateway.api/Dockerfile
+      dockerfile: Services/Gateway/Gateway.api/Dockerfile
     environment:
      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
@@ -15,9 +15,12 @@ services:
       otel-lgtm:
         condition: service_started
     ports:
-      - "127.0.0.1:80:80"      # will be access from iis revese proxy to be public on intenet as https
-      - "127.0.0.1:81:81"      # internal on server only
-      - "127.0.0.1:8000:8000"  # internal on server onl
+      # will be access from iis revese proxy to be public on intenet as https
+      - "127.0.0.1:80:80"      
+     
+      # internal on server only
+      - "127.0.0.1:81:81"      
+      - "127.0.0.1:8000:8000"  
     
  identity-api:
     container_name: ecommerce-identity-api

@@ -7,7 +7,7 @@
     <Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/Services/Gateway/">
-    <Project Path="Services/Gateway/Gateway.api/Gateway.API.csproj" />
+    <Project Path="Services/Gateway/Gateway.API/Gateway.API.csproj" />
   </Folder>
   <Folder Name="/Services/Identity/">
     <Project Path="Services/Identity/Identity.API/Identity.API.csproj" />
@@ -16,7 +16,7 @@
     <Project Path="Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" Id="b7c4adf5-9a1f-46c2-8ea3-5e6cfd95619b" />
   </Folder>
   <Folder Name="/Shared/">
-    <Project Path="Services/Shared/Platform/Platform.Lib.csproj" />
+    <Project Path="Shared/Platform/Platform.Lib.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />
