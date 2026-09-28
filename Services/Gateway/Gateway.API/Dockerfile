@@ -5,18 +5,17 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Gateway/Gateway.api/Gateway.API.csproj", "Gateway/Gateway.api/"]
-COPY ["Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
-RUN dotnet restore "./Gateway/Gateway.api/Gateway.API.csproj"
+COPY ["Services/Gateway/Gateway.API/Gateway.API.csproj", "Gateway/Gateway.API/"]
+COPY ["Services/Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
+RUN dotnet restore "./Gateway/Gateway.API/Gateway.API.csproj"
 COPY . .
-WORKDIR "/src/Gateway/Gateway.api"
+WORKDIR "/src/Services/Gateway/Gateway.API"
 RUN dotnet build "./Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
