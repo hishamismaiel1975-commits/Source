@@ -1,27 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog-api
+  name: identity-api
   namespace: ecommerce
   labels:
-    app: catalog-api
-
+    app: identity-api
 spec:
   replicas: 2
 
   selector:
     matchLabels:
-      app: catalog-api
+      app: identity-api
 
   template:
     metadata:
       labels:
-        app: catalog-api
+        app: identity-api
 
     spec:
       containers:
-        - name: catalog-api
-          image: catalog-api:1.0.0
+        - name: identity-api
+          image: identity-api:1.0.0
           imagePullPolicy: IfNotPresent
 
           ports:
@@ -36,17 +35,11 @@ spec:
                   name: ecommerce-config
                   key: ASPNETCORE_ENVIRONMENT
 
-            - name: CatalogDb__ConnectionString
+            - name: IdentityDb__ConnectionString
               valueFrom:
                 configMapKeyRef:
                   name: ecommerce-config
-                  key: CatalogDb__ConnectionString
-
-            - name: RedisSettings__ConnectionString
-              valueFrom:
-                configMapKeyRef:
-                  name: ecommerce-config
-                  key: RedisSettings__ConnectionString
+                  key: IdentityDb__ConnectionString
 
             - name: GrpcSettings__IdentityServiceUrl
               valueFrom:
@@ -78,16 +71,23 @@ spec:
                   name: ecommerce-config
                   key: Security__Audience
 
-            - name: OTEL_EXPORTER_OTLP_ENDPOINT
-              value: "http://otel-lgtm:4317"
+            - name: Security__AccessTokenLifetimeInMinutes
+              valueFrom:
+                configMapKeyRef:
+                  name: ecommerce-config
+                  key: Security__AccessTokenLifetimeInMinutes
 
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
+            - name: Security__RefreshTokenLifetimeInMinutes
+              valueFrom:
+                configMapKeyRef:
+                  name: ecommerce-config
+                  key: Security__RefreshTokenLifetimeInMinutes
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: ecommerce-config
+                  key: OTEL_EXPORTER_OTLP_ENDPOINT
 
           readinessProbe:
             httpGet:
@@ -96,7 +96,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
-            failureThreshold: 3
 
           livenessProbe:
             httpGet:
@@ -105,4 +104,11 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 20
             timeoutSeconds: 5
-            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

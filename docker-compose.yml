@@ -1,12 +1,12 @@
 services:
-
+ 
  gateway-api:
     container_name: ecommerce-gateway-api
     image: ${DOCKER_REGISTRY-}gateway-api
     restart: always
     build:
-      context: .
-      dockerfile: Services/Gateway/Gateway.api/Dockerfile
+      context: Services
+      dockerfile: Gateway/Gateway.api/Dockerfile
     environment:
      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     depends_on:
@@ -189,7 +189,7 @@ services:
     ports:
       - "2003:5432"
 
- 
+
 volumes:
   mongo_data:
   sqlserver_data:
@@ -201,5 +201,6 @@ volumes:
   
 
   
+
 
 

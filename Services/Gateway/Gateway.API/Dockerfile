@@ -11,11 +11,11 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Gateway/Gateway.API/Gateway.API.csproj", "Gateway/Gateway.API/"]
-COPY ["Services/Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
+COPY ["Gateway/Gateway.API/Gateway.API.csproj", "Gateway/Gateway.API/"]
+COPY ["Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
 RUN dotnet restore "./Gateway/Gateway.API/Gateway.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Gateway/Gateway.API"
+WORKDIR "/src/Gateway/Gateway.API"
 RUN dotnet build "./Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

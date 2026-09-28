@@ -10,6 +10,7 @@ data:
   OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-lgtm:4318
 
   # Security settings
+  Security__SecretKey: 879b274c-9cab-4afa-a868-bf5d3038c8
   Security__Issuer: "ecommerce.identity"
   Security__Audience: "ecommerce.clients"
   Security__AccessTokenLifetimeInMinutes: "60" # 1 Hour
@@ -20,3 +21,15 @@ data:
 
   # gRPC service URL
   GrpcSettings__IdentityServiceUrl: http://identity-api:81
+
+  # Database Connections
+  CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+  IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+
+  # RabbitMQ
+  EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
+  RABBITMQ_DEFAULT_USER: admin
+  RABBITMQ_DEFAULT_PASS: pass_123456789
+
+  # SQL Server
+  MSSQL_SA_PASSWORD: pass_123456789

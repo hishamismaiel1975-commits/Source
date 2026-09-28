@@ -35,14 +35,14 @@ spec:
           env:
             - name: RABBITMQ_DEFAULT_USER
               valueFrom:
-                secretKeyRef:
-                  name: ecommerce-secrets
+                configMapKeyRef:
+                  name: ecommerce-config
                   key: RABBITMQ_DEFAULT_USER
 
             - name: RABBITMQ_DEFAULT_PASS
               valueFrom:
-                secretKeyRef:
-                  name: ecommerce-secrets
+                configMapKeyRef:
+                  name: ecommerce-config
                   key: RABBITMQ_DEFAULT_PASS
 
             - name: RABBITMQ_LOGS
