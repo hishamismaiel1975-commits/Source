@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Gateway/Gateway.api/Gateway.API.csproj", "Gateway/Gateway.api/"]
+COPY ["Shared/Platform/Platform.Lib.csproj", "Shared/Platform/"]
 RUN dotnet restore "./Gateway/Gateway.api/Gateway.API.csproj"
 COPY . .
 WORKDIR "/src/Gateway/Gateway.api"
