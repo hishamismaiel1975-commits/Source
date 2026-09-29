@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: identity-api
-          image: identity-api:dev
+          image: identity-api:1.0.0
           imagePullPolicy: IfNotPresent
 
           ports:

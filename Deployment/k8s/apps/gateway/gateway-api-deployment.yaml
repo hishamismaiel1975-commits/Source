@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: gateway-api
-          image: gateway-api:dev
+          image: gateway-api:1.0.0
           imagePullPolicy: IfNotPresent
 
           ports:
@@ -33,7 +33,7 @@ spec:
               protocol: TCP
 
             - name: management
-              containerPort: 8000
+              containerPort: 82
               protocol: TCP
 
           env:

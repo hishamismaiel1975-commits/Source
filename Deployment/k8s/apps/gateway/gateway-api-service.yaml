@@ -7,7 +7,7 @@ metadata:
     app: gateway-api
 
 spec:
-  type: LoadBalancer
+  type: ClusterIP
 
   selector:
     app: gateway-api
@@ -15,7 +15,7 @@ spec:
   ports:
     # Public Gateway
     - name: http
-      port: 82
+      port: 80
       targetPort: http
       protocol: TCP
 
@@ -27,6 +27,6 @@ spec:
 
     # Internal management/metrics
     - name: management
-      port: 8000
+      port: 82
       targetPort: management
       protocol: TCP
