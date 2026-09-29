@@ -30,6 +30,9 @@ namespace Identity.Application.Auth.Handlers
             // Check if the user exists
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
 
+            // Check If user is not active
+            if (!user!.IsActive) { AppException.Throw("InvalidUsernameOrPassword"); }
+
             // Check if the user is an Customer
             if (user.UserType != UserTypes.Customer) { AppException.Throw("InvalidUsernameOrPassword"); }
 

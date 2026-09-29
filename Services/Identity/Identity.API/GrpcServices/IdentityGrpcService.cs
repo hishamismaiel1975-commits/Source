@@ -36,6 +36,7 @@ public class IdentityGrpcService : IdentityService.IdentityServiceBase
             throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
         }
 
+
         var permissions = await _rolePermissionRepository.GetAllAsync(x => x.Permission.Name, x => x.RoleId == user.RoleId);
 
 

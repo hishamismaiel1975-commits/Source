@@ -19,7 +19,7 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 
     // Internal/Admin HTTP
-    options.ListenAnyIP(8000, listenOptions =>
+    options.ListenAnyIP(82, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1;
     });
@@ -66,7 +66,7 @@ app.Use(async (context, next) =>
         context.Request.Path.StartsWithSegments("/rabbitmq") ||
         context.Request.Path.StartsWithSegments("/redisinsight");
 
-    if (isAdminRoute && port != 8000)
+    if (isAdminRoute && port != 82)
     {
         context.Response.StatusCode = StatusCodes.Status404NotFound;
         return;

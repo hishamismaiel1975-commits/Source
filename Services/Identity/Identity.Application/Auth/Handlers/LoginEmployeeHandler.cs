@@ -28,6 +28,9 @@ namespace Identity.Application.Auth.Handlers
             var user = await _userRepository.FirstOrDefaultAsync(x => x.UserName == request.UserName);
             if (user == null) { AppException.Throw("InvalidUsernameOrPassword"); }
 
+            // Check If user is not active
+            if (!user!.IsActive) { AppException.Throw("InvalidUsernameOrPassword"); }
+
             // Check if the user is an employee
             if (user.UserType != UserTypes.Employee) { AppException.Throw("InvalidUsernameOrPassword"); }
 

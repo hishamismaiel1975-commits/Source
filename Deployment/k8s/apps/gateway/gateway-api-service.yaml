@@ -15,7 +15,7 @@ spec:
   ports:
     # Public Gateway
     - name: http
-      port: 80
+      port: 82
       targetPort: http
       protocol: TCP
 

@@ -4,7 +4,7 @@ info:
   seq: 5
 
 grpc:
-  url: http://{{URL}}:81/grpc/identity
+  url: http://{{GRPC_URL}}/grpc/identity
   method: /Identity.IdentityService/GetUserInfo
   methodType: unary
   protoFilePath: ../Services/Identity/Identity.API/GrpcServices/Identity.proto
@@ -12,6 +12,6 @@ grpc:
     - title: message 1
       message: |-
         {
-          "user_id": "93F55C3F-ECEE-6E81-7000-01A0AC359718"
+          "user_id": "BC000BEF-D836-0D80-7000-01A0E1EFDD01"
         }
   auth: inherit
