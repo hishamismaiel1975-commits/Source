@@ -137,7 +137,7 @@ namespace Platform.Lib.API.Extensions
                 var apiName = typeof(TProgram).Assembly.GetName().Name!.Split('.')[0];
                 options.AddServer(new OpenApiServer
                 {
-                    Url = $"/{apiName}"
+                    Url = $"/api/{apiName}"
                 });
             });
 
@@ -346,7 +346,7 @@ namespace Platform.Lib.API.Extensions
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
                         options.SwaggerEndpoint(
-                            $"/{apiName.Split('.')[0]}/swagger/{description.GroupName}/swagger.json",
+                            $"/api/{apiName.Split('.')[0]}/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
                     }
 

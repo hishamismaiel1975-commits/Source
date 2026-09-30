@@ -6,16 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Configure Kestrel
 builder.WebHost.ConfigureKestrel(options =>
 {
-    // Public HTTP API
     options.ListenAnyIP(80, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1;
-    });
-
-    // Internal gRPC
-    options.ListenAnyIP(81, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http2;
     });
 
 });

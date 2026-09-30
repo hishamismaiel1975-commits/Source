@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: http://{{URL}}/Catalog/api/v1/Brands
+  url: http://{{URL}}/Catalog/v1/Brands
   headers:
     - name: Accept-Language
       value: en

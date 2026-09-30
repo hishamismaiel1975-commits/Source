@@ -11,7 +11,7 @@ namespace Identity.API.Controllers.V1
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     public class AuthController : ControllerBase
     {
         private IMediator _mediator { get; set; }
