@@ -1,7 +1,7 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
-import { ProductResponse } from '../../models/product.model';
+import { ProductResponse } from '../../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../core/services/product.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   imports: [],

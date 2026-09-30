@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
-import { Products } from '../../shared/products/products';
+import { Products } from '../../shared/components/products/products';
 import { ProductResponse } from '../../models/product.model';
-import { ProductService } from '../../core/services/product.service';
+import { ProductService } from '../../shared/services/product.service';
 import { Pagination } from '../../models/pagination.model';
 import { form, FormField } from '@angular/forms/signals';
 

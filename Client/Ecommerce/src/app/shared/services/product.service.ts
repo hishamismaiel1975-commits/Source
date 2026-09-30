@@ -9,7 +9,7 @@ import { Result } from '../../models/result.model';
 export class ProductService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrlBase = 'http://localhost/Catalog/api/v1/';
+  private readonly apiUrlBase = window.__env.apiBaseUrl;
 
   getProducts(): Observable<Result<Pagination<ProductResponse>>> {
     return this.http.get<Result<Pagination<ProductResponse>>>(this.apiUrlBase + 'products');
