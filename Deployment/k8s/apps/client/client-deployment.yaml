@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-client
-          image: ecommerce-client:1.0.0
+          image: ecommerce-client:1.1.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
