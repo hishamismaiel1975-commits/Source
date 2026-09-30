@@ -32,10 +32,6 @@ spec:
               containerPort: 81
               protocol: TCP
 
-            - name: management
-              containerPort: 82
-              protocol: TCP
-
           env:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               valueFrom:

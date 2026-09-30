@@ -18,12 +18,6 @@ builder.WebHost.ConfigureKestrel(options =>
         listenOptions.Protocols = HttpProtocols.Http2;
     });
 
-    // Internal/Admin HTTP
-    options.ListenAnyIP(82, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http1;
-    });
-
 });
 
 // Add services to the container.
@@ -56,24 +50,6 @@ builder.Services.AddHealthChecks();
 var app = builder.Build();
 
 app.UseCors("GatewayCors");
-
-app.Use(async (context, next) =>
-{
-    var port = context.Connection.LocalPort;
-
-    var isAdminRoute =
-        context.Request.Path.StartsWithSegments("/grafana") ||
-        context.Request.Path.StartsWithSegments("/rabbitmq") ||
-        context.Request.Path.StartsWithSegments("/redisinsight");
-
-    if (isAdminRoute && port != 82)
-    {
-        context.Response.StatusCode = StatusCodes.Status404NotFound;
-        return;
-    }
-
-    await next();
-});
 
 app.MapReverseProxy();
 

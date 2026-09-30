@@ -24,9 +24,3 @@ spec:
       port: 81
       targetPort: internal
       protocol: TCP
-
-    # Internal management/metrics
-    - name: management
-      port: 82
-      targetPort: management
-      protocol: TCP

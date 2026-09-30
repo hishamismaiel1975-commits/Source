@@ -9,19 +9,19 @@ import { Result } from '../../models/result.model';
 export class ProductService {
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrlBase = 'http://localhost/Catalog/api/v1';
+  private readonly apiUrlBase = 'http://localhost/Catalog/api/v1/';
 
   getProducts(): Observable<Result<Pagination<ProductResponse>>> {
-    return this.http.get<Result<Pagination<ProductResponse>>>(this.apiUrlBase + '/products');
+    return this.http.get<Result<Pagination<ProductResponse>>>(this.apiUrlBase + 'products');
   }
 
   getProduct(id: string): Observable<Result<ProductResponse>> {
-    return this.http.get<Result<ProductResponse>>(`${this.apiUrlBase + '/products'}/${id}`);
+    return this.http.get<Result<ProductResponse>>(`${this.apiUrlBase + 'products'}/${id}`);
   }
 
   searchProducts(search: string): Observable<Result<Pagination<ProductResponse>>> {
     return this.http.get<Result<Pagination<ProductResponse>>>(
-      `${this.apiUrlBase + '/products'}?ProductName=${encodeURIComponent(search)}`,
+      `${this.apiUrlBase + 'products'}?ProductName=${encodeURIComponent(search)}`,
     );
   }
 }

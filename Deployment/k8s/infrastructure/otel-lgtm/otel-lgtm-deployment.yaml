@@ -45,18 +45,10 @@ spec:
               memory: 2Gi
 
           env:
-            - name: GF_SERVER_ROOT_URL
-              value: "http://localhost:8000/grafana/"
-
-            - name: GF_SERVER_SERVE_FROM_SUB_PATH
-              value: "true"
-
             - name: GF_AUTH_ANONYMOUS_ENABLED
               value: "true"
-
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
               value: "Admin"
-
             - name: GF_AUTH_DISABLE_LOGIN_FORM
               value: "true"
 
