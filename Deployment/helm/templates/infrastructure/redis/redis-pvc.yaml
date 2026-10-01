@@ -1,0 +1,21 @@
+{{- if .Values.infrastructure.redis.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.infrastructure.redis.name }}-pvc
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.infrastructure.redis.name }}
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: {{ .Values.infrastructure.redis.persistence.size }}
+      storageClassName:
+        {{ .Values.infrastructure.redis.persistence.storageClass }}
+
+{{- end }}

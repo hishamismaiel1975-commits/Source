@@ -1,0 +1,278 @@
+global:
+  namespace: ecommerce
+
+apps:
+  identity:
+    enabled: true
+    name: identity-api
+    replicas: 2
+
+    image:
+      repository: identity-api:1.0.0
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+
+  catalog:
+    enabled: true
+    name: catalog-api
+    replicas: 2
+
+    image:
+      repository: catalog-api:1.0.0
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  gateway:
+    enabled: true
+    name: gateway-api
+    replicas: 2
+
+    image:
+      repository: gateway-api:1.0.0
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  client:
+    enabled: true
+    name: ecommerce-client
+    replicas: 2
+
+    image:
+      repository: ecommerce-client:1.0.0
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+infrastructure:
+  sqlserver:
+    enabled: true
+    name: sqlserver
+
+    image:
+      repository: mcr.microsoft.com/mssql/server:2022-latest
+
+    service:
+      type: ClusterIP
+      port: 1433
+
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: ""
+
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"
+
+  rabbitmq:
+    enabled: true
+    name: rabbitmq
+
+    image:
+      repository: rabbitmq:4.2-management
+
+    service:
+      type: ClusterIP
+      amqpPort: 5672
+      managementPort: 15672
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClass: ""
+
+  redis:
+    enabled: true
+    name: redis
+
+    image:
+      repository: redis:8.2
+
+    service:
+      type: ClusterIP
+      port: 6379
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+
+    persistence:
+      enabled: true
+      size: 2Gi
+      storageClass: ""
+
+  redisinsight:
+    enabled: true
+    name: redisinsight
+
+    image:
+      repository: redis/redisinsight:3.8.0
+
+    service:
+      type: ClusterIP
+      port: 5540
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+    persistence:
+      enabled: true
+      size: 1Gi
+      storageClass: ""
+
+  otelLgtm:
+    enabled: true
+    name: otel-lgtm
+
+    image:
+      repository: grafana/otel-lgtm:0.34.0
+
+    service:
+      type: ClusterIP
+      port: 3000
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 2Gi
+
+    persistence:
+      size: 10Gi
+      storageClass: ""
+
+ingress:
+  enabled: true
+
+  name: ecommerce-ingress
+  className: nginx
+
+  annotations:
+    proxyBodySize: "50m"
+    proxyReadTimeout: "120"
+    proxySendTimeout: "120"
+
+  hosts:
+    host: ecommerce.local
+
+    paths:
+      # Angular client
+      - path: /
+        pathType: Prefix
+        service:
+          name: ecommerce-client
+          port: 80
+
+      # Gateway
+      - path: /api
+        pathType: Prefix
+        service:
+          name: gateway-api
+          port: 80
+
+  tls: []
+
+config:
+  ASPNETCORE_ENVIRONMENT: Staging
+
+  # OTEL_EXPORTER for Grafana OTEL
+  OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-lgtm:4318
+
+  # Security settings
+  Security__SecretKey: 879b274c-9cab-4afa-a868-bf5d3038c8
+  Security__Issuer: "ecommerce.identity"
+  Security__Audience: "ecommerce.clients"
+  Security__AccessTokenLifetimeInMinutes: "60" # 1 Hour
+  Security__RefreshTokenLifetimeInMinutes: "1440" # 24 hours
+
+  # Redis connection string for caching
+  RedisSettings__ConnectionString: redis:6379
+
+  # gRPC service URL
+  GrpcSettings__IdentityServiceUrl: http://identity-api:81
+
+  # Database Connections
+  CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+  IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+
+  # RabbitMQ
+  EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
+  RABBITMQ_DEFAULT_USER: admin
+  RABBITMQ_DEFAULT_PASS: pass_123456789
+
+  # SQL Server
+  MSSQL_SA_PASSWORD: pass_123456789

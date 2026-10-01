@@ -1,0 +1,17 @@
+{{- if .Values.infrastructure.otelLgtm.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.infrastructure.otelLgtm.name }}-data
+  namespace: {{ .Values.global.namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.infrastructure.otelLgtm.persistence.size }}
+      storageClassName:
+        {{ .Values.infrastructure.otelLgtm.persistence.storageClass }}
+        
+{{- end }}

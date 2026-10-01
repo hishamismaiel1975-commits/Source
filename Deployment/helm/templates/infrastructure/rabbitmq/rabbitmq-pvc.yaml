@@ -1,0 +1,21 @@
+{{- if .Values.infrastructure.rabbitmq.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.infrastructure.rabbitmq.name }}-pvc
+  namespace: ecommerce
+  labels:
+    app: {{ .Values.global.namespace }}
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: {{ .Values.infrastructure.rabbitmq.persistence.size }}
+      storageClassName:
+        {{ .Values.infrastructure.rabbitmq.persistence.storageClass }}
+      
+{{- end }}

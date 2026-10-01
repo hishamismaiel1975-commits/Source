@@ -1,0 +1,63 @@
+{{- if .Values.apps.gateway.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.apps.gateway.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.apps.gateway.name }}
+
+spec:
+  replicas: {{ .Values.apps.gateway.replicas }}
+
+  selector:
+    matchLabels:
+      app: {{ .Values.apps.gateway.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.apps.gateway.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.apps.gateway.name }}
+          image: "{{ .Values.apps.gateway.image.repository }}"
+          imagePullPolicy: {{ .Values.apps.gateway.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          env:
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: ecommerce-config
+                  key: OTEL_EXPORTER_OTLP_ENDPOINT
+
+          resources:
+            {{- toYaml .Values.apps.gateway.resources | nindent 12 }}
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+{{- end }}

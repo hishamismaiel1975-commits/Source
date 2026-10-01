@@ -1,0 +1,21 @@
+{{- if .Values.infrastructure.redisinsight.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.infrastructure.redisinsight.name }}-pvc
+  namespace: ecommerce
+  labels:
+    app: {{ .Values.infrastructure.redisinsight.name }}
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: {{ .Values.infrastructure.redisinsight.persistence.size }}
+      storageClassName:
+        {{ .Values.infrastructure.redisinsight.persistence.storageClass }}
+
+{{- end }}

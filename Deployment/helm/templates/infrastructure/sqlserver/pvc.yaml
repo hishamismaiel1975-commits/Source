@@ -1,0 +1,18 @@
+{{- if .Values.infrastructure.sqlserver.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.infrastructure.sqlserver.name }}-pvc
+  namespace: {{ .Values.global.namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.infrastructure.sqlserver.persistence.size }}
+      storageClassName:
+        {{ .Values.infrastructure.sqlserver.persistence.storageClass }}
+        
+
+{{- end }}

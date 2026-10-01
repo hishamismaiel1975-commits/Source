@@ -1,0 +1,30 @@
+{{- if .Values.infrastructure.otelLgtm.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.infrastructure.otelLgtm.name }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  type: {{ .Values.infrastructure.otelLgtm.service.type }}
+
+  selector:
+    app: {{ .Values.infrastructure.otelLgtm.name }}
+
+  ports:
+    - name: grafana
+      port: {{ .Values.infrastructure.otelLgtm.service.port }}
+      targetPort: 3000
+      protocol: TCP
+
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+      protocol: TCP
+
+    - name: otlp-http
+      port: 4318
+      targetPort: 4318
+      protocol: TCP
+      
+{{- end }}
