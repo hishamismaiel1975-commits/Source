@@ -1,0 +1,19 @@
+{{- if .Values.apps.client.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: { { .Values.apps.client.name } }
+  namespace: { { .Values.global.namespace } }
+spec:
+  type: { { .Values.apps.client.service.type } }
+
+  selector:
+    app: { { .Values.apps.client.name } }
+  ports:
+    - name: http
+      port: { { .Values.apps.client.service.port } }
+      targetPort: { { .Values.apps.client.service.targetPort } }
+      protocol: { { .Values.apps.client.service.protocol } }
+
+{{- end }}

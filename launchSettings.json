@@ -5,7 +5,7 @@
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
       "composeLaunchServiceName": "identity-api",
-      "composeLaunchUrl": "http://localhost/identity/swagger/index.html",
+      "composeLaunchUrl": "http://localhost/api/identity/swagger/index.html",
       "serviceActions": {
         "identity-api": "StartDebugging",
         "catalog-api": "StartDebugging",

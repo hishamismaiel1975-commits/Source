@@ -1,0 +1,22 @@
+{{- if .Values.apps.redisinsight.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redisinsight
+  namespace: ecommerce
+  labels:
+    app: redisinsight
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: redisinsight
+
+  ports:
+    - name: http
+      port: 5540
+      targetPort: http
+      protocol: TCP
+{{- end }}

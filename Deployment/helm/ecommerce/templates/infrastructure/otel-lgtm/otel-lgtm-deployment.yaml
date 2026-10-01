@@ -1,0 +1,58 @@
+{{- if .Values.apps.otelLgtm.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Values.infrastructure.otelLgtm.name } }
+  namespace: { { .Values.global.namespace } }
+  labels:
+    app: { { .Values.infrastructure.otelLgtm.name } }
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: { { .Values.infrastructure.otelLgtm.name } }
+
+  template:
+    metadata:
+      labels:
+        app: { { .Values.infrastructure.otelLgtm.name } }
+
+    spec:
+      containers:
+        - name: { { .Values.infrastructure.otelLgtm.name } }
+          image: { { .Values.infrastructure.otelLgtm.image.repository } }: {{ .Values.infrastructure.otelLgtm.image.tag }}
+
+          ports:
+            - name: grafana
+              containerPort: { { .Values.infrastructure.otelLgtm.service.port } }
+              protocol: TCP
+
+            - name: otlp-grpc
+              containerPort: 4317
+              protocol: TCP
+
+            - name: otlp-http
+              containerPort: 4318
+              protocol: TCP
+
+          env:
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: "Admin"
+            - name: GF_AUTH_DISABLE_LOGIN_FORM
+              value: "true"
+           
+          resources: { { -toYaml .Values.apps.otelLgtm.resources | nindent 6 } }
+          
+          volumeMounts:
+            - name: otel-lgtm-data
+              mountPath: /data
+
+      volumes:
+        - name: otel-lgtm-data
+          persistentVolumeClaim:
+            claimName: otel-lgtm-data
+{{- end }}
