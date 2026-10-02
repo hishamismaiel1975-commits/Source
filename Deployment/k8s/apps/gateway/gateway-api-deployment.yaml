@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: gateway-api
-          image: gateway-api:1.1.0
+          image: gateway-api:1.0.2
           imagePullPolicy: IfNotPresent
 
           ports:

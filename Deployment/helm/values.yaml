@@ -8,7 +8,7 @@ apps:
     replicas: 2
 
     image:
-      repository: identity-api:1.0.0
+      repository: identity-api:1.0.2
       pullPolicy: IfNotPresent
 
     service:
@@ -31,7 +31,7 @@ apps:
     replicas: 2
 
     image:
-      repository: catalog-api:1.0.0
+      repository: catalog-api:1.0.2
       pullPolicy: IfNotPresent
 
     service:
@@ -54,7 +54,7 @@ apps:
     replicas: 2
 
     image:
-      repository: gateway-api:1.0.0
+      repository: gateway-api:1.0.2
       pullPolicy: IfNotPresent
 
     service:
@@ -77,7 +77,7 @@ apps:
     replicas: 2
 
     image:
-      repository: ecommerce-client:1.0.0
+      repository: client:1.0.3
       pullPolicy: IfNotPresent
 
     service:

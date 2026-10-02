@@ -4,5 +4,5 @@ description: Ecommerce application and infrastructure Helm chart
 
 type: application
 
-version: 1.0.0
-appVersion: "1.0.0"
+version: 1.0.3
+appVersion: "1.0.3"

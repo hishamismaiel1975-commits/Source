@@ -9,11 +9,6 @@ services:
       dockerfile: Gateway/Gateway.api/Dockerfile
     environment:
      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
-    depends_on:
-      redisinsight:
-        condition: service_started
-      otel-lgtm:
-        condition: service_started
     ports:
       - "8000:80"      
     
@@ -39,7 +34,8 @@ services:
     depends_on:
       otel-lgtm:
         condition: service_started
-   
+    ports:
+      - "8001:80"
 
  catalog-api:
     container_name: ecommerce-catalog-api
@@ -72,7 +68,8 @@ services:
         condition: service_healthy
       otel-lgtm:
         condition: service_started
-   
+    ports:
+      - "8002:80"
  
  otel-lgtm:
     container_name: ecommerce-grafana-otel-lgtm
