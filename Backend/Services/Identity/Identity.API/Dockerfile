@@ -11,14 +11,14 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Source/Services/Identity/Identity.API/Identity.API.csproj", "Source/Services/Identity/Identity.API/"]
-COPY ["Source/Services/Shared/Platform/Platform.Lib.csproj", "Source/Services/Shared/Platform/"]
-COPY ["Source/Services/Identity/Identity.Application/Identity.Application.csproj", "Source/Services/Identity/Identity.Application/"]
-COPY ["Source/Services/Identity/Identity.Core/Identity.Core.csproj", "Source/Services/Identity/Identity.Core/"]
-COPY ["Source/Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj", "Source/Services/Identity/Identity.Infrastructure/"]
-RUN dotnet restore "./Source/Services/Identity/Identity.API/Identity.API.csproj"
+COPY ["Backend/Services/Identity/Identity.API/Identity.API.csproj", "Backend/Services/Identity/Identity.API/"]
+COPY ["Backend/Services/Shared/Platform/Platform.Lib.csproj", "Backend/Services/Shared/Platform/"]
+COPY ["Backend/Services/Identity/Identity.Application/Identity.Application.csproj", "Backend/Services/Identity/Identity.Application/"]
+COPY ["Backend/Services/Identity/Identity.Core/Identity.Core.csproj", "Backend/Services/Identity/Identity.Core/"]
+COPY ["Backend/Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj", "Backend/Services/Identity/Identity.Infrastructure/"]
+RUN dotnet restore "./Backend/Services/Identity/Identity.API/Identity.API.csproj"
 COPY . .
-WORKDIR "/src/Source/Services/Identity/Identity.API"
+WORKDIR "/src/Backend/Services/Identity/Identity.API"
 RUN dotnet build "./Identity.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

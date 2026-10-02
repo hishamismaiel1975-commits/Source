@@ -3,7 +3,7 @@ global:
 
 apps:
   identity:
-    enabled: false
+    enabled: true
     name: identity-api
     replicas: 2
 
@@ -26,7 +26,7 @@ apps:
         memory: "512Mi"
 
   catalog:
-    enabled: false
+    enabled: true
     name: catalog-api
     replicas: 2
 
@@ -49,7 +49,7 @@ apps:
         memory: 512Mi
 
   gateway:
-    enabled: false
+    enabled: true
     name: gateway-api
     replicas: 2
 
@@ -72,7 +72,7 @@ apps:
         memory: 512Mi
 
   client:
-    enabled: false
+    enabled: true
     name: ecommerce-client
     replicas: 2
 
