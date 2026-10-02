@@ -15,8 +15,7 @@ services:
       otel-lgtm:
         condition: service_started
     ports:
-      # will be access from iis revese proxy to be public on intenet as https API
-      - "80:80"      
+      - "8000:80"      
     
     
  identity-api:
@@ -24,8 +23,8 @@ services:
     image: ${DOCKER_REGISTRY-}identity-api
     restart: always
     build:
-      context: ..
-      dockerfile: Source/Services/Identity/Identity.API/Dockerfile
+      context: .
+      dockerfile: Services/Identity/Identity.API/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       IdentityDb__ConnectionString: ${IdentityDb__ConnectionString}
@@ -40,12 +39,7 @@ services:
     depends_on:
       otel-lgtm:
         condition: service_started
-
- # report.api:
- #  image: ${DOCKER_REGISTRY-}report-api
- #  build:
- #    context: .
- #    dockerfile: Services/Report/Report.API/Dockerfile
+   
 
  catalog-api:
     container_name: ecommerce-catalog-api
@@ -78,6 +72,7 @@ services:
         condition: service_healthy
       otel-lgtm:
         condition: service_started
+   
  
  otel-lgtm:
     container_name: ecommerce-grafana-otel-lgtm
@@ -150,7 +145,7 @@ services:
       retries: 5
       start_period: 10s
    ports:
-      - "2001:27017"
+      - "27017:27017"
 
  sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -167,7 +162,7 @@ services:
       retries: 10
       start_period: 20s
     ports:
-      - "2002:1433"
+      - "1433:1433"
   
  postgres:
     image: postgres:18.6
@@ -185,7 +180,7 @@ services:
       retries: 5
       start_period: 10s
     ports:
-      - "2003:5432"
+      - "5432:5432"
 
 
 volumes:

@@ -139,10 +139,7 @@ namespace Platform.Lib.API.Extensions
                 {
                     Url = $"/api/{apiName}"
                 });
-                options.AddServer(new OpenApiServer
-                {
-                    Url = $"/{apiName}"
-                });
+
             });
 
 
@@ -352,6 +349,7 @@ namespace Platform.Lib.API.Extensions
                         options.SwaggerEndpoint(
                             $"/api/{apiName.Split('.')[0]}/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
+
                     }
 
                 });
