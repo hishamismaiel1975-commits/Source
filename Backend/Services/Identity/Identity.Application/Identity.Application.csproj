@@ -6,6 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Auth\Mappers\**" />
+    <Compile Remove="Auth\Queries\**" />
+    <Compile Remove="Auth\Validator\**" />
+    <EmbeddedResource Remove="Auth\Mappers\**" />
+    <EmbeddedResource Remove="Auth\Queries\**" />
+    <EmbeddedResource Remove="Auth\Validator\**" />
+    <None Remove="Auth\Mappers\**" />
+    <None Remove="Auth\Queries\**" />
+    <None Remove="Auth\Validator\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="12.1.1" />
 		<PackageReference Include="FreeMediator" Version="1.4.0" />
@@ -17,12 +29,6 @@
 	<ItemGroup>
     <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
     <ProjectReference Include="..\Identity.Core\Identity.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Auth\Mappers\" />
-    <Folder Include="Auth\Validator\" />
-    <Folder Include="Auth\Queries\" />
   </ItemGroup>
 
 </Project>

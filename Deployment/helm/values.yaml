@@ -17,6 +17,11 @@ apps:
       targetPort: http
       protocol: TCP
 
+    serviceGrpc:
+      port: 81
+      targetPort: grpc
+      protocol: TCP
+
     resources:
       requests:
         cpu: "100m"

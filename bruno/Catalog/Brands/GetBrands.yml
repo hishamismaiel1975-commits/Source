@@ -5,11 +5,10 @@ info:
 
 http:
   method: GET
-  url: http://localhost:10/Catalog/v1/Brands
+  url: "{{url-base-Gateway}}/api/Catalog/v1/Brands"
   headers:
     - name: Accept-Language
       value: en
-  auth: inherit
 
 settings:
   encodeUrl: true

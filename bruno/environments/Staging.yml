@@ -1,1 +1,15 @@
-name: token
+name: Staging
+variables:
+  - name: access-token
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYzAwMGJlZi1kODM2LTBkODAtNzAwMC0wMWEwZTFlZmRkMDEiLCJ0b2tlbl90eXBlIjoiYWNjZXNzX3Rva2VuIiwiZXhwIjoxNzkwNzY5NjkyLCJpc3MiOiJlY29tbWVyY2UuaWRlbnRpdHkiLCJhdWQiOiJlY29tbWVyY2UuY2xpZW50cyJ9.xvfdHef7IV_q8yjkk73_G_KgxQiQvZSvQSqrLvS5SEU
+    disabled: true
+    description: ""
+  - name: refresh-token
+    value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzYjRlNjQxZC00NzJhLTA4ODEtNzAwMC0wMWEwYjA3NWViZTYiLCJ0b2tlbl90eXBlIjoicmVmcmVzaF90b2tlbiIsImV4cCI6MTc5MDM0MTQ0NiwiaXNzIjoiZWNvbW1lcmNlLmlkZW50aXR5IiwiYXVkIjoiZWNvbW1lcmNlLmNsaWVudHMifQ.FxLRwwYZGq_rPB4UObRS0tZUV6SlOYydrQ9oBIah6Oc
+    description: ""
+  - name: url-base-Gateway
+    value: ecommerce.local
+    description: ""
+  - name: url-base-grpc
+    value: localhost:8101
+    description: ""

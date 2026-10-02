@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Lib.Core.Persistence.Repositories;
 using Platform.Lib.Core.Services.Identity.Enums;
+using Platform.Lib.Core.Services.Security;
 
 namespace Identity.Infrastructure.Persistence.Seed
 {
@@ -14,6 +15,9 @@ namespace Identity.Infrastructure.Persistence.Seed
             var userRepository = services.GetRequiredService<IRepository<User>>();
             var permissionRepository = services.GetRequiredService<IRepository<Permission>>();
             var rolePermissionRepository = services.GetRequiredService<IRepository<RolePermission>>();
+
+            var hashService = services.GetRequiredService<IHashService>();
+
 
             // --------------------------------------------------
             // Roles
@@ -47,7 +51,7 @@ namespace Identity.Infrastructure.Persistence.Seed
                         new User
                         {
                             UserName = "admin",
-                            PasswordHash = "XXQGU2+HXrQO1eYDsSoZ02UhtxmCHPki4B/ybqbpUYM=",
+                            PasswordHash = hashService.Hash("123"),
                             NameEn = "Admin",
                             NameAr = "مدير",
                             UserType    = UserTypes.Employee,
@@ -58,7 +62,7 @@ namespace Identity.Infrastructure.Persistence.Seed
                          new User
                         {
                             UserName = "customer",
-                            PasswordHash = "XXQGU2+HXrQO1eYDsSoZ02UhtxmCHPki4B/ybqbpUYM=",
+                            PasswordHash = hashService.Hash("123"),
                             NameEn = "Customer",
                             NameAr = "عميل",
                             UserType    = UserTypes.Customer,

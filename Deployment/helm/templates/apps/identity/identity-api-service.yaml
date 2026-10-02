@@ -19,4 +19,10 @@ spec:
       targetPort: {{ .Values.apps.identity.service.targetPort }}
       protocol: {{ .Values.apps.identity.service.protocol }}
 
+    - name: grpc
+      port: {{ .Values.apps.identity.serviceGrpc.port }}
+      targetPort: {{ .Values.apps.identity.serviceGrpc.targetPort }}
+      protocol: {{ .Values.apps.identity.serviceGrpc.protocol }}
+  
+
 {{- end }}
