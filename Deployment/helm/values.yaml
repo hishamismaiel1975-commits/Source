@@ -253,7 +253,7 @@ config:
   OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-lgtm:4318
 
   # Security settings
-  Security__SecretKey: 879b274c-9cab-4afa-a868-bf5d3038c8
+  Security__SecretKey: 879b274c-9cab-4afa-a868-bf5d3038c8d7
   Security__Issuer: "ecommerce.identity"
   Security__Audience: "ecommerce.clients"
   Security__AccessTokenLifetimeInMinutes: "60" # 1 Hour
