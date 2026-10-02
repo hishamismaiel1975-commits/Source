@@ -6,12 +6,13 @@ metadata:
   name: {{ .Values.infrastructure.otelLgtm.name }}-data
   namespace: {{ .Values.global.namespace }}
 spec:
+  storageClassName:
+        {{ .Values.infrastructure.otelLgtm.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: {{ .Values.infrastructure.otelLgtm.persistence.size }}
-      storageClassName:
-        {{ .Values.infrastructure.otelLgtm.persistence.storageClass }}
+      
         
 {{- end }}

@@ -139,6 +139,10 @@ namespace Platform.Lib.API.Extensions
                 {
                     Url = $"/api/{apiName}"
                 });
+                options.AddServer(new OpenApiServer
+                {
+                    Url = $"/{apiName}"
+                });
             });
 
 

@@ -9,13 +9,14 @@ metadata:
     app: {{ .Values.infrastructure.redisinsight.name }}
 
 spec:
+  storageClassName:
+        {{ .Values.infrastructure.redisinsight.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
 
   resources:
     requests:
       storage: {{ .Values.infrastructure.redisinsight.persistence.size }}
-      storageClassName:
-        {{ .Values.infrastructure.redisinsight.persistence.storageClass }}
+      
 
 {{- end }}

@@ -6,13 +6,14 @@ metadata:
   name: {{ .Values.infrastructure.sqlserver.name }}-pvc
   namespace: {{ .Values.global.namespace }}
 spec:
+  storageClassName:
+        {{ .Values.infrastructure.sqlserver.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: {{ .Values.infrastructure.sqlserver.persistence.size }}
-      storageClassName:
-        {{ .Values.infrastructure.sqlserver.persistence.storageClass }}
+      
         
 
 {{- end }}

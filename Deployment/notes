@@ -1,0 +1,16 @@
+winget install Helm.Hel 
+
+helm list -n ecommerce   
+helm install ecommerce ./helm  --namespace ecommerce   --create-namespace
+helm upgrade --install ecommerce ./helm  --namespace ecommerce
+helm uninstall ecommerce ./helm --namespace ecommerce 
+helm lint ./helm
+helm template ecommerce ./helm > rendered.yaml
+
+docker build --no-cache -t gateway-api:1.0.0 -f Dockerfile services
+docker build --no-cache -t client:1.0.0 -f Dockerfile .
+
+kubectl apply -R -f k8s
+
+
+

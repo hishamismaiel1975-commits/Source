@@ -3,7 +3,7 @@ global:
 
 apps:
   identity:
-    enabled: true
+    enabled: false
     name: identity-api
     replicas: 2
 
@@ -26,7 +26,7 @@ apps:
         memory: "512Mi"
 
   catalog:
-    enabled: true
+    enabled: false
     name: catalog-api
     replicas: 2
 
@@ -49,7 +49,7 @@ apps:
         memory: 512Mi
 
   gateway:
-    enabled: true
+    enabled: false
     name: gateway-api
     replicas: 2
 
@@ -72,7 +72,7 @@ apps:
         memory: 512Mi
 
   client:
-    enabled: true
+    enabled: false
     name: ecommerce-client
     replicas: 2
 
@@ -109,7 +109,7 @@ infrastructure:
     persistence:
       enabled: true
       size: 10Gi
-      storageClass: ""
+      storageClass: standard
 
     resources:
       requests:
@@ -142,7 +142,7 @@ infrastructure:
     persistence:
       enabled: true
       size: 5Gi
-      storageClass: ""
+      storageClass: standard
 
   redis:
     enabled: true
@@ -166,7 +166,7 @@ infrastructure:
     persistence:
       enabled: true
       size: 2Gi
-      storageClass: ""
+      storageClass: standard
 
   redisinsight:
     enabled: true
@@ -190,7 +190,7 @@ infrastructure:
     persistence:
       enabled: true
       size: 1Gi
-      storageClass: ""
+      storageClass: standard
 
   otelLgtm:
     enabled: true
@@ -213,7 +213,7 @@ infrastructure:
 
     persistence:
       size: 10Gi
-      storageClass: ""
+      storageClass: standard
 
 ingress:
   enabled: true

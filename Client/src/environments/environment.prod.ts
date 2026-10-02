@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost/api',
+  apiBaseUrl: 'http://ecommerce.local/api',
   apiCatalogUrl: '/Catalog/v1',
 };

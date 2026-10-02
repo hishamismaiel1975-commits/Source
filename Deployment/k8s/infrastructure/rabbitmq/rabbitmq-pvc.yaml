@@ -7,9 +7,11 @@ metadata:
     app: rabbitmq
 
 spec:
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
 
   resources:
     requests:
       storage: 5Gi
+      

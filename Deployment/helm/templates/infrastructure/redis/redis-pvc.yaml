@@ -9,13 +9,14 @@ metadata:
     app: {{ .Values.infrastructure.redis.name }}
 
 spec:
+  storageClassName:
+        {{ .Values.infrastructure.rabbitmq.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
 
   resources:
     requests:
       storage: {{ .Values.infrastructure.redis.persistence.size }}
-      storageClassName:
-        {{ .Values.infrastructure.redis.persistence.storageClass }}
+      
 
 {{- end }}

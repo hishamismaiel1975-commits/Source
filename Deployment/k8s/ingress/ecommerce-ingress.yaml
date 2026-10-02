@@ -11,7 +11,8 @@ spec:
   ingressClassName: nginx
 
   rules:
-    - http:
+   - host: ecommerce.local
+     http:
         paths:
           # Angular client
           - path: /

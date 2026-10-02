@@ -1,6 +1,6 @@
 import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from '../../../../node_modules/rxjs/dist/types';
 import { ProductResponse } from '../../models/product.model';
 import { Pagination } from '../../models/pagination.model';
 import { Result } from '../../models/result.model';
