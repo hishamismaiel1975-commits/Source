@@ -4,7 +4,7 @@ using Catalog.Application.Brands.Responses;
 using Catalog.Core.Constants;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Persistence.IRepositories;
 
 namespace Catalog.Application.Brands.Handlers
 {

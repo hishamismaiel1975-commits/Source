@@ -1,0 +1,15 @@
+﻿namespace Platform.Lib.Exceptions
+{
+    public static class AppException
+    {
+        public static ApplicationException Throw(string exceptionMessage, string innerException)
+        {
+            throw new ApplicationException(exceptionMessage, new Exception(innerException));
+        }
+
+        public static ApplicationException Throw(string exceptionMessage)
+        {
+            throw new ApplicationException(exceptionMessage);
+        }
+    }
+}

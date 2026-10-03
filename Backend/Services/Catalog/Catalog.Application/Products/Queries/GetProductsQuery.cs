@@ -1,6 +1,6 @@
 ﻿using Catalog.Application.Products.Responses;
 using FreeMediator;
-using Platform.Lib.Core.DTOs;
+using Platform.Lib.DTOs;
 
 namespace Catalog.Application.Products.Queries
 {

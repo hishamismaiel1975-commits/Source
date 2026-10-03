@@ -1,8 +1,8 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
-using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Extensions;
+using Platform.Lib.DTOs;
+using Platform.Lib.Extensions;
 using Riok.Mapperly.Abstractions;
 
 

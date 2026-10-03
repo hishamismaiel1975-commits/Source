@@ -50,11 +50,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Protobuf Include="Infrastructure\Services\Identity\Identity.proto" GrpcServices="Client" />
+	  <Protobuf Include="Services\Identity\Identity.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="API\Extensions\" />
+	  <Folder Include="Extensions\" />
 	</ItemGroup>
 
 </Project>

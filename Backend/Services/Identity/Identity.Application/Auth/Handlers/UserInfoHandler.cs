@@ -1,6 +1,6 @@
 ﻿using FreeMediator;
 using Identity.Application.Auth.Commands;
-using Platform.Lib.Core.Services.Security;
+using Platform.Lib.Services.Security;
 
 namespace Identity.Application.Auth.Handlers
 {

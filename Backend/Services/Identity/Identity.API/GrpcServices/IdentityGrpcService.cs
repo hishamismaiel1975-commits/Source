@@ -1,7 +1,7 @@
 ﻿using Grpc.Core;
 using Identity.Core.Persistence.Entities;
 using Identity.GRPC;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Persistence.IRepositories;
 
 namespace Identity.API.GrpcServices;
 

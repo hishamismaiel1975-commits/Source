@@ -1,4 +1,4 @@
-﻿using Platform.Lib.Core.Persistence.Entities;
+﻿using Platform.Lib.Persistence.Entities;
 
 namespace Identity.Core.Persistence.Entities
 {

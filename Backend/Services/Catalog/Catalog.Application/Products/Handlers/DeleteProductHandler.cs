@@ -1,7 +1,7 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Persistence.IRepositories;
 
 namespace Catalog.Application.Products.Handlers
 {

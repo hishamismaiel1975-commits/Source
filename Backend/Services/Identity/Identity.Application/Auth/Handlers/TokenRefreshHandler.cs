@@ -1,10 +1,10 @@
 ﻿using FreeMediator;
 using Identity.Application.Auth.Commands;
 using Identity.Core.Persistence.Entities;
-using Platform.Lib.Core.Exceptions;
-using Platform.Lib.Core.Persistence.Repositories;
-using Platform.Lib.Core.Services.Security;
-using Platform.Lib.Core.Services.Token;
+using Platform.Lib.Exceptions;
+using Platform.Lib.Persistence.IRepositories;
+using Platform.Lib.Services.Security;
+using Platform.Lib.Services.Token;
 using System.Security.Claims;
 
 namespace Identity.Application.Auth.Handlers

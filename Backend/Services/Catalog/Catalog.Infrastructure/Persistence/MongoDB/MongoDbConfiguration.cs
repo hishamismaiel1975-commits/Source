@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
-using Platform.Lib.Core.Persistence.Entities;
-using Platform.Lib.Core.Persistence.MongoDB;
+using Platform.Lib.Persistence.Entities;
+using Platform.Lib.Persistence.MongoDB;
 
 namespace Catalog.Infrastructure.Persistence.MongoDB;
 

@@ -3,7 +3,7 @@ using Identity.Application;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Persistence.Seed;
 using Platform.Lib.API.Extensions;
-using Platform.Lib.Core.Constants;
+using Platform.Lib.Constants;
 using Platform.Lib.Infrastructure.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

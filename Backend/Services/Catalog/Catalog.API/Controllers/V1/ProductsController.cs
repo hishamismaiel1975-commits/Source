@@ -4,10 +4,10 @@ using Catalog.Application.Products.Responses;
 using FreeMediator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.Core.Constants;
-using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Services.Identity.Enums;
+using Platform.Lib.Constants;
+using Platform.Lib.DTOs;
 using Platform.Lib.Infrastructure.Authorization;
+using Platform.Lib.Services.Identity.Enums;
 using ProductsApp = Catalog.Application.Products;
 
 

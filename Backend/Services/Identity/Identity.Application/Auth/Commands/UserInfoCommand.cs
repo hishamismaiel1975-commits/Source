@@ -1,5 +1,5 @@
 using FreeMediator;
-using Platform.Lib.Core.Services.Security;
+using Platform.Lib.Services.Security;
 
 namespace Identity.Application.Auth.Commands
 {

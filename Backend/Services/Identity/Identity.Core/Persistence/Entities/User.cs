@@ -1,5 +1,5 @@
-﻿using Platform.Lib.Core.Persistence.Entities;
-using Platform.Lib.Core.Services.Identity.Enums;
+﻿using Platform.Lib.Persistence.Entities;
+using Platform.Lib.Services.Identity.Enums;
 
 namespace Identity.Core.Persistence.Entities
 {

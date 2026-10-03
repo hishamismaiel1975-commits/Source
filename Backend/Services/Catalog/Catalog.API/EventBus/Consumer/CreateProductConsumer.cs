@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using Platform.Lib.Core.EventBus;
+using Platform.Lib.EventBus;
 using System.Text.Json;
 
 namespace Catalog.API.EventBus.Consumer

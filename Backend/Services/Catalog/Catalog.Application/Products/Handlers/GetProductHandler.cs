@@ -3,8 +3,8 @@ using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
-using Platform.Lib.Core.Exceptions;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.Exceptions;
+using Platform.Lib.Persistence.IRepositories;
 
 namespace Catalog.Application.Products.Handlers
 {

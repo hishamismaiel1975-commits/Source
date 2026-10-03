@@ -3,9 +3,9 @@ using Catalog.Application.Products.Queries;
 using Catalog.Application.Products.Responses;
 using Catalog.Core.Persistence.Entities;
 using FreeMediator;
-using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Extensions;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.DTOs;
+using Platform.Lib.Extensions;
+using Platform.Lib.Persistence.IRepositories;
 using System.Linq.Expressions;
 
 namespace Catalog.Application.Products.Handlers

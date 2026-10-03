@@ -5,8 +5,8 @@ using Catalog.Core.Persistence.Entities;
 using FreeMediator;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using Platform.Lib.Core.EventBus;
-using Platform.Lib.Core.Persistence.Repositories;
+using Platform.Lib.EventBus;
+using Platform.Lib.Persistence.IRepositories;
 
 namespace Catalog.Application.Products.Handlers
 {

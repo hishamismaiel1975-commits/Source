@@ -4,8 +4,8 @@ using Identity.Application.Auth.Commands;
 using Identity.Application.Auth.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platform.Lib.Core.DTOs;
-using Platform.Lib.Core.Services.Security;
+using Platform.Lib.DTOs;
+using Platform.Lib.Services.Security;
 
 namespace Identity.API.Controllers.V1
 {
