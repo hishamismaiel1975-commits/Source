@@ -1,9 +1,18 @@
 -- Install Helm
 winget install Helm.Hel
 
-helm install ecommerce ./helm --namespace ecommerce --create-namespace
-helm upgrade ecommerce ./helm --namespace ecommerce
-helm uninstall ecommerce ./helm --namespace ecommerce
+kubectl create namespace ecommerce
+kubectl delete namespace ecommerce
+
+helm install ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce 
+helm upgrade ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
+
+helm install ecommerce-apps ./helm-apps --namespace ecommerce 
+helm upgrade ecommerce-apps ./helm-apps --namespace ecommerce
+
+helm uninstall ecommerce-apps --namespace ecommerce 
+helm uninstall ecommerce-infrastructure  --namespace ecommerce 
+
 helm list -n ecommerce
 helm lint ./helm
 helm template ecommerce ./helm > rendered.yaml
@@ -14,13 +23,13 @@ helm rollback ecommerce 0 -n ecommerce
 -- Install Ingress Controller
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
-helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx `  --namespace ingress-nginx`
---create-namespace
+helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+helm repo list
 
-docker build --no-cache -t catalog-api:1.0.2 -f Services/catalog/catalog.api/Dockerfile .
-docker build --no-cache -t identity-api:1.0.2 -f Services/identity/identity.api/Dockerfile ..
-docker build --no-cache -t gateway-api:1.0.2 -f Services/Gateway/gateway.api/Dockerfile services
-docker build --no-cache -t client:1.0.3 -f Dockerfile .
+docker build --no-cache -t catalog-api:1.1.0 -f Services/catalog/catalog.api/Dockerfile .
+docker build --no-cache -t identity-api:1.1.0 -f Services/identity/identity.api/Dockerfile ..
+docker build --no-cache -t gateway-api:1.1.0 -f Services/Gateway/gateway.api/Dockerfile services
+docker build --no-cache -t client:1.1.0 -f Dockerfile .
 
 kubectl apply -R -f k8s
 kubectl get all -n ecommerce

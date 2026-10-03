@@ -1,0 +1,90 @@
+{{- if .Values.infrastructure.sqlserver.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.infrastructure.sqlserver.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.infrastructure.sqlserver.name }}
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: {{ .Values.infrastructure.sqlserver.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.infrastructure.sqlserver.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.infrastructure.sqlserver.name }}
+          image: {{ .Values.infrastructure.sqlserver.image.repository }}
+
+          ports:
+            - name: sqlserver
+              containerPort: {{ .Values.infrastructure.sqlserver.service.port }}
+              protocol: TCP
+
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: ecommerce-infrastructure-config
+                  key: MSSQL_SA_PASSWORD
+
+          resources:
+            {{- toYaml .Values.infrastructure.sqlserver.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: sqlserver-data
+              mountPath: /var/opt/mssql
+
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - >
+                  /opt/mssql-tools18/bin/sqlcmd
+                  -S localhost
+                  -U sa
+                  -P "$MSSQL_SA_PASSWORD"
+                  -C
+                  -Q "SELECT 1"
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 10
+
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - >
+                  /opt/mssql-tools18/bin/sqlcmd
+                  -S localhost
+                  -U sa
+                  -P "$MSSQL_SA_PASSWORD"
+                  -C
+                  -Q "SELECT 1"
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+      volumes:
+        - name: sqlserver-data
+          persistentVolumeClaim:
+            claimName: sqlserver-pvc
+
+{{- end }}

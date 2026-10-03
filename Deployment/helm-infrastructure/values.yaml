@@ -1,0 +1,134 @@
+global:
+  namespace: ecommerce
+
+apps:
+
+infrastructure:
+  sqlserver:
+    enabled: true
+    name: sqlserver
+
+    image:
+      repository: mcr.microsoft.com/mssql/server:2022-latest
+
+    service:
+      type: ClusterIP
+      port: 1433
+
+    persistence:
+      enabled: true
+      size: 10Gi
+      storageClass: standard
+
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "4Gi"
+
+  rabbitmq:
+    enabled: true
+    name: rabbitmq
+
+    image:
+      repository: rabbitmq:4.2-management
+
+    service:
+      type: ClusterIP
+      amqpPort: 5672
+      managementPort: 15672
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClass: standard
+
+  redis:
+    enabled: true
+    name: redis
+
+    image:
+      repository: redis:8.2
+
+    service:
+      type: ClusterIP
+      port: 6379
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+
+    persistence:
+      enabled: true
+      size: 2Gi
+      storageClass: standard
+
+  redisinsight:
+    enabled: true
+    name: redisinsight
+
+    image:
+      repository: redis/redisinsight:3.8.0
+
+    service:
+      type: ClusterIP
+      port: 5540
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+    persistence:
+      enabled: true
+      size: 1Gi
+      storageClass: standard
+
+  otelLgtm:
+    enabled: true
+    name: otel-lgtm
+
+    image:
+      repository: grafana/otel-lgtm:0.34.0
+
+    service:
+      type: ClusterIP
+      port: 3000
+
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 2Gi
+
+    persistence:
+      size: 10Gi
+      storageClass: standard
+
+config:
+  
+  # RabbitMQ
+  RABBITMQ_DEFAULT_USER: admin
+  RABBITMQ_DEFAULT_PASS: pass_123456789
+
+  # SQL Server
+  MSSQL_SA_PASSWORD: pass_123456789
