@@ -337,12 +337,13 @@ namespace Platform.Lib.API.Extensions
 
         public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
+            app.MapOpenApi();
+
             // Enable Swagger on Gateway and Staging Environments only, not in Production
             var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
             var apiName = typeof(TProgram).Assembly.GetName().Name?.Split('.')[0];
             if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
             {
-                app.MapOpenApi();
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
