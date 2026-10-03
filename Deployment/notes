@@ -28,8 +28,8 @@ helm repo update
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 helm repo list
 
-docker build --no-cache -t catalog-api:1.1.0 -f Services/catalog/catalog.api/Dockerfile .
-docker build --no-cache -t identity-api:1.1.0 -f Services/identity/identity.api/Dockerfile ..
+docker build --no-cache -t catalog-api:1.1.1 -f Services/catalog/catalog.api/Dockerfile .
+docker build --no-cache -t identity-api:1.1.1 -f Services/identity/identity.api/Dockerfile ..
 docker build --no-cache -t gateway-api:1.1.0 -f Services/Gateway/gateway.api/Dockerfile services
 docker build --no-cache -t client:1.1.0 -f Dockerfile .
 
