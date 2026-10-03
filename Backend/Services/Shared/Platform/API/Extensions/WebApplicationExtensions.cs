@@ -39,6 +39,7 @@ using Platform.Lib.Infrastructure.Services.Identity;
 using Platform.Lib.Infrastructure.Services.Localization;
 using Platform.Lib.Infrastructure.Services.Security;
 using Platform.Lib.Infrastructure.Services.Token;
+using Scalar.AspNetCore;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
@@ -337,17 +338,18 @@ namespace Platform.Lib.API.Extensions
         {
             // Enable Swagger
             var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+            var apiName = typeof(TProgram).Assembly.GetName().Name.Split('.')[0];
             if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
             {
                 app.MapOpenApi();
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    var apiName = typeof(TProgram).Assembly.GetName().Name;
+
                     foreach (var description in provider.ApiVersionDescriptions)
                     {
                         options.SwaggerEndpoint(
-                            $"/api/{apiName.Split('.')[0]}/swagger/{description.GroupName}/swagger.json",
+                            $"/api/{apiName}/swagger/{description.GroupName}/swagger.json",
                             $"{apiName} {description.GroupName.ToUpperInvariant()}");
 
                     }
@@ -355,10 +357,20 @@ namespace Platform.Lib.API.Extensions
                 });
             }
 
+            // Add Scalar API Documentation 
+            app.MapScalarApiReference(options =>
+            {
+                options
+                    .WithTitle(apiName);
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseExceptionHandler();
             app.MapControllers();
+
+
+
 
             return app;
         }

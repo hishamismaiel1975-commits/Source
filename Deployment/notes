@@ -1,3 +1,4 @@
+-- Install Helm
 winget install Helm.Hel
 
 helm install ecommerce ./helm --namespace ecommerce --create-namespace
@@ -10,7 +11,7 @@ helm status ecommerce -n ecommerce
 helm history ecommerce -n ecommerce
 helm rollback ecommerce 0 -n ecommerce
 
--- Install ingress controller
+-- Install Ingress Controller
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx `  --namespace ingress-nginx`
@@ -22,3 +23,4 @@ docker build --no-cache -t gateway-api:1.0.2 -f Services/Gateway/gateway.api/Doc
 docker build --no-cache -t client:1.0.3 -f Dockerfile .
 
 kubectl apply -R -f k8s
+kubectl get all -n ecommerce

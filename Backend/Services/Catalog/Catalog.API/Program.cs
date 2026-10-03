@@ -4,6 +4,7 @@ using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using Platform.Lib.API.Extensions;
 using Platform.Lib.Core.Constants;
 using Platform.Lib.Infrastructure.Services.Identity;
@@ -56,6 +57,28 @@ builder.Services.AddMassTransit(config =>
 
 builder.AddGrafanaOTEL("Catalog-api");
 
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Components ??= new OpenApiComponents();
+
+        document.Components.SecuritySchemes ??=
+            new Dictionary<string, IOpenApiSecurityScheme>();
+
+        document.Components.SecuritySchemes["Bearer"] =
+            new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Description = "Enter JWT access token"
+            };
+
+        return Task.CompletedTask;
+    });
+});
+
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
@@ -76,6 +99,7 @@ var logger = app.Services
     .GetRequiredService<ILogger<Program>>();
 
 app.MapHealthChecks("/health");
+
 
 app.Run();
 
