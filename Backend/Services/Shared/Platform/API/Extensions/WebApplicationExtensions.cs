@@ -336,9 +336,9 @@ namespace Platform.Lib.API.Extensions
 
         public static WebApplication UsePlatform<TProgram>(this WebApplication app)
         {
-            // Enable Swagger
+            // Enable Swagger on Gateway and Staging Environments only, not in Production
             var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-            var apiName = typeof(TProgram).Assembly.GetName().Name.Split('.')[0];
+            var apiName = typeof(TProgram).Assembly.GetName().Name?.Split('.')[0];
             if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
             {
                 app.MapOpenApi();
@@ -357,7 +357,7 @@ namespace Platform.Lib.API.Extensions
                 });
             }
 
-            // Add Scalar API Documentation 
+            // Add scalar API documentation direct on the Service 
             app.MapScalarApiReference(options =>
             {
                 options
