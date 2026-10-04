@@ -225,14 +225,16 @@ ingress:
 
   name: ecommerce-ingress
   className: nginx
+  host: ecommerce.local
+
+  tls:
+    enabled: true
+    secretName: ecommerce-tls
 
   annotations:
     proxyBodySize: "50m"
     proxyReadTimeout: "120"
     proxySendTimeout: "120"
-
-  hosts:
-    host: ecommerce.local
 
     paths:
       # Angular client
@@ -249,7 +251,6 @@ ingress:
           name: gateway-api
           port: 80
 
-  tls: []
 
 config:
   ASPNETCORE_ENVIRONMENT: Staging
