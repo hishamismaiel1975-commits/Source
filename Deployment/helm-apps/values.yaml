@@ -236,20 +236,20 @@ ingress:
     proxyReadTimeout: "120"
     proxySendTimeout: "120"
 
-    paths:
-      # Angular client
-      - path: /
-        pathType: Prefix
-        service:
-          name: ecommerce-client
-          port: 80
+  paths:
+    # Angular client
+    - path: /
+      pathType: Prefix
+      service:
+        name: ecommerce-client
+        port: 80
 
-      # Gateway
-      - path: /api
-        pathType: Prefix
-        service:
-          name: gateway-api
-          port: 80
+    # Gateway
+    - path: /api
+      pathType: Prefix
+      service:
+        name: gateway-api
+        port: 80
 
 
 config:
