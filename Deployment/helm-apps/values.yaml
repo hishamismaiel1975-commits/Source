@@ -82,7 +82,7 @@ apps:
     replicas: 2
 
     image:
-      repository: client:1.1.0
+      repository: client:1.1.1
       pullPolicy: IfNotPresent
 
     service:
