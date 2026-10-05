@@ -51,7 +51,6 @@ namespace Catalog.API.Controllers.V1
 
 
         [Authorize(Policy = PermissionConstants.Products.Create)]
-        //[UserTypeAuthorize(UserTypes.Employee, UserTypes.Customer)]
         [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost]
         public async Task<Result<ProductResponse>> CreateProduct([FromBody] CreateProductCommand command)

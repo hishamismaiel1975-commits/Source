@@ -57,12 +57,12 @@ spec:
               memory: {{ .Values.infrastructure.otelLgtm.resources.limits.memory | quote }}
 
           volumeMounts:
-            - name: otel-lgtm-data
+            - name: {{ .Values.infrastructure.otelLgtm.name }}-data
               mountPath: /data
 
       volumes:
-        - name: otel-lgtm-data
+        - name: {{ .Values.infrastructure.otelLgtm.name }}-data
           persistentVolumeClaim:
-            claimName: otel-lgtm-data
+            claimName: {{ .Values.infrastructure.otelLgtm.name }}-data
 
 {{- end }}

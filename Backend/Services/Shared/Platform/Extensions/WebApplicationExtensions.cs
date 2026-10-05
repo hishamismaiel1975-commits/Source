@@ -53,6 +53,9 @@ namespace Platform.Lib.API.Extensions
     {
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder, IEnumerable<string?> permissions)
         {
+            // Add Identity gRPC Client to get user permissions from Identity Service
+            builder.AddIdentityGrpcService();
+
             // Configure Kestrel to listen on different ports for HTTP/1.1 and HTTP/2
             builder.WebHost.ConfigureKestrel(options =>
             {
@@ -155,11 +158,6 @@ namespace Platform.Lib.API.Extensions
             builder.Services.AddValidatorsFromAssemblyContaining<TMediatr>();
 
 
-
-
-            // Add IdentityService Service
-            builder.Services.AddSingleton<IIdentityService, IdentityGrpcClient>();
-
             // Add JWT Authentication
             builder.Services.AddAuthentication(options =>
             {
@@ -256,6 +254,30 @@ namespace Platform.Lib.API.Extensions
 
             // Add Localization Service
             builder.Services.AddSingleton<ILocalizationService, JsonLocalizationService>();
+
+            builder.Services.AddOpenApi(options =>
+            {
+                options.AddDocumentTransformer((document, context, cancellationToken) =>
+                {
+                    document.Components ??= new OpenApiComponents();
+
+                    document.Components.SecuritySchemes ??=
+                        new Dictionary<string, IOpenApiSecurityScheme>();
+
+                    document.Components.SecuritySchemes["Bearer"] =
+                        new OpenApiSecurityScheme
+                        {
+                            Type = SecuritySchemeType.Http,
+                            Scheme = "bearer",
+                            BearerFormat = "JWT",
+                            Description = "Enter JWT access token"
+                        };
+
+                    return Task.CompletedTask;
+                });
+            });
+
+            builder.Services.AddHealthChecks();
 
             return builder;
         }
@@ -371,8 +393,7 @@ namespace Platform.Lib.API.Extensions
             app.UseExceptionHandler();
             app.MapControllers();
 
-
-
+            app.MapHealthChecks("/health");
 
             return app;
         }

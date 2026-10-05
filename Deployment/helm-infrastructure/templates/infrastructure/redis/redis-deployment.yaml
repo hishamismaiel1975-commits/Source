@@ -35,7 +35,7 @@ spec:
             {{- toYaml .Values.infrastructure.redis.resources | nindent 12 }}
 
           volumeMounts:
-            - name: redis-data
+            - name: {{ .Values.infrastructure.redis.name }}-data
               mountPath: /data
 
           readinessProbe:
@@ -59,8 +59,8 @@ spec:
             failureThreshold: 3
 
       volumes:
-        - name: redis-data
+        - name: {{ .Values.infrastructure.redis.name }}-data
           persistentVolumeClaim:
-            claimName: redis-pvc
+            claimName: {{ .Values.infrastructure.redis.name }}-pvc
 
 {{- end }}

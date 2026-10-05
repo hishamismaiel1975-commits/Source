@@ -36,7 +36,12 @@ namespace Identity.Infrastructure.Persistence.Seed
 
                 // Permission
                 new Permission { Name = PermissionConstants.Permissions.Read, NameEn = "Read Permissions", NameAr = "عرض الصلاحيات" },
-                new Permission { Name = PermissionConstants.Permissions.Assign, NameEn = "Assign Permissions", NameAr = "تعيين الصلاحيات" }
+                new Permission { Name = PermissionConstants.Permissions.Assign, NameEn = "Assign Permissions", NameAr = "تعيين الصلاحيات" },
+
+                 // File Storage
+                new Permission { Name = PermissionConstants.FileStorage.Upload, NameEn = "Upload File", NameAr = "رفع ملف" },
+                new Permission { Name = PermissionConstants.FileStorage.Delete, NameEn = "Delete File", NameAr = "حذف ملف" },
+
 
             };
     }

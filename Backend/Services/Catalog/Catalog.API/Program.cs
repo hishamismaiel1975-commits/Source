@@ -4,15 +4,10 @@ using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi;
 using Platform.Lib.API.Extensions;
 using Platform.Lib.Constants;
-using Platform.Lib.Infrastructure.Services.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add Identity gRPC Client to get user permissions from Identity Service
-builder.AddIdentityGrpcService();
 
 // Add Platform Services
 builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
@@ -57,30 +52,6 @@ builder.Services.AddMassTransit(config =>
 
 builder.AddGrafanaOTEL("Catalog-api");
 
-builder.Services.AddOpenApi(options =>
-{
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
-    {
-        document.Components ??= new OpenApiComponents();
-
-        document.Components.SecuritySchemes ??=
-            new Dictionary<string, IOpenApiSecurityScheme>();
-
-        document.Components.SecuritySchemes["Bearer"] =
-            new OpenApiSecurityScheme
-            {
-                Type = SecuritySchemeType.Http,
-                Scheme = "bearer",
-                BearerFormat = "JWT",
-                Description = "Enter JWT access token"
-            };
-
-        return Task.CompletedTask;
-    });
-});
-
-builder.Services.AddHealthChecks();
-
 var app = builder.Build();
 
 //Seed db on startup 
@@ -92,14 +63,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
     }
 }
 
-// Configure the HTTP request pipeline.
 app.UsePlatform<Program>();
-
-var logger = app.Services
-    .GetRequiredService<ILogger<Program>>();
-
-app.MapHealthChecks("/health");
-
 
 app.Run();
 

@@ -1,0 +1,20 @@
+{{- if .Values.apps.fileStorage.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.apps.fileStorage.name }}-pvc
+  namespace: {{ .Values.global.namespace }}
+
+spec:
+  storageClassName:
+        {{ .Values.apps.fileStorage.persistence.storageClass }}
+
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: {{ .Values.apps.fileStorage.persistence.size }}
+
+{{- end }}

@@ -62,7 +62,7 @@ spec:
               memory: {{ .Values.infrastructure.rabbitmq.resources.limits.memory | quote }}
 
           volumeMounts:
-            - name: rabbitmq-data
+            - name: {{ .Values.infrastructure.rabbitmq.name }}-data
               mountPath: /var/lib/rabbitmq
 
           startupProbe:
@@ -96,8 +96,8 @@ spec:
             failureThreshold: 3
 
       volumes:
-        - name: rabbitmq-data
+        - name: {{ .Values.infrastructure.rabbitmq.name }}-data
           persistentVolumeClaim:
-            claimName: rabbitmq-pvc
+            claimName: {{ .Values.infrastructure.rabbitmq.name }}-pvc
 
 {{- end }}

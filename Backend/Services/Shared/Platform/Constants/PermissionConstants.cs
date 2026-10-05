@@ -64,6 +64,12 @@ namespace Platform.Lib.Constants
             public const string Read = "Permission.Read";
             public const string Assign = "Permission.Assign";
         }
+        public static class FileStorage
+        {
+            public const string Upload = "FileStorage.Upload";
+            public const string Delete = "FileStorage.Delete";
+
+        }
 
     }
 }

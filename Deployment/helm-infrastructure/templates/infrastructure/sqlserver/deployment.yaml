@@ -45,7 +45,7 @@ spec:
             {{- toYaml .Values.infrastructure.sqlserver.resources | nindent 12 }}
 
           volumeMounts:
-            - name: sqlserver-data
+            - name: {{ .Values.infrastructure.sqlserver.name }}-data
               mountPath: /var/opt/mssql
 
           readinessProbe:
@@ -83,8 +83,8 @@ spec:
             failureThreshold: 3
 
       volumes:
-        - name: sqlserver-data
+        - name: {{ .Values.infrastructure.sqlserver.name }}-data
           persistentVolumeClaim:
-            claimName: sqlserver-pvc
+            claimName: {{ .Values.infrastructure.sqlserver.name }}-pvc
 
 {{- end }}

@@ -2,6 +2,7 @@ global:
   namespace: ecommerce
 
 apps:
+
   identity:
     enabled: true
     name: identity-api
@@ -29,6 +30,33 @@ apps:
       limits:
         cpu: "500m"
         memory: "512Mi"
+
+  fileStorage:
+    enabled: true
+    name: filestorage-api
+    replicas: 2
+
+    image:
+      repository: filestorage-api:1.3.0
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+
+    persistence:
+      size: 100Gi
+      storageClass: standard
 
   catalog:
     enabled: true
@@ -59,7 +87,7 @@ apps:
     replicas: 2
 
     image:
-      repository: gateway-api:1.1.0
+      repository: gateway-api:1.3.0
       pullPolicy: IfNotPresent
 
     service:

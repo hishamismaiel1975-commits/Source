@@ -1,0 +1,23 @@
+{{- if .Values.apps.fileStorage.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.apps.fileStorage.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.apps.fileStorage.name }}
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: {{ .Values.apps.fileStorage.name }}
+
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+
+{{- end }}

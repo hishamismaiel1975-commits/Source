@@ -11,7 +11,7 @@ services:
      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
     ports:
       - "8000:80"      
-    
+ 
  identity-api:
     container_name: ecommerce-identity-api
     image: ${DOCKER_REGISTRY-}identity-api
@@ -35,7 +35,30 @@ services:
         condition: service_started
     ports:
       - "8001:80"
-      - "8101:81"
+      - "8102:81"
+ 
+ filestorage-api:
+    container_name: ecommerce-filestorage-api
+    image: ${DOCKER_REGISTRY-}filestorage-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Services/FileStorage/FileStorage.API/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
+      Security__SecretKey: ${Security__SecretKey}
+      Security__Issuer: "${Security__Issuer}"
+      Security__Audience: "${Security__Audience}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
+    depends_on:
+      otel-lgtm:
+        condition: service_started
+    user: root
+    volumes:
+      - file-storage-data:/app/uploads
+    ports:
+      - "8002:80"
 
  catalog-api:
     container_name: ecommerce-catalog-api
@@ -48,7 +71,6 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       CatalogDb__ConnectionString: ${CatalogDb__ConnectionString}
       RedisSettings__ConnectionString: ${RedisSettings__ConnectionString}
-      GrpcSettings__DiscountUrl: ${GrpcSettings__DiscountUrl}
       GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
       EventBusSettings__HostAddress: ${EventBusSettings__HostAddress}
       Security__SecretKey: ${Security__SecretKey}
@@ -69,7 +91,7 @@ services:
       otel-lgtm:
         condition: service_started
     ports:
-      - "8002:80"
+      - "8003:80"
  
  otel-lgtm:
     container_name: ecommerce-grafana-otel-lgtm
@@ -188,6 +210,7 @@ volumes:
   portainer_data:
   redisinsight_data:
   otel-lgtm-data:
+  file-storage-data:
   
 
   
