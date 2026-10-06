@@ -1,252 +1,129 @@
 global:
   namespace: ecommerce
 
-apps:
+identity:
+  enabled: true
+  name: identity-api
+  replicas: 2
 
-  identity:
-    enabled: true
-    name: identity-api
-    replicas: 2
+  image:
+    repository: identity-api:1.1.1
+    pullPolicy: IfNotPresent
 
-    image:
-      repository: identity-api:1.1.1
-      pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+    protocol: TCP
 
-    service:
-      type: ClusterIP
-      port: 80
-      targetPort: http
-      protocol: TCP
+  serviceGrpc:
+    port: 81
+    targetPort: grpc
+    protocol: TCP
 
-    serviceGrpc:
-      port: 81
-      targetPort: grpc
-      protocol: TCP
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "128Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+fileStorage:
+  enabled: true
+  name: filestorage-api
+  replicas: 2
 
-  fileStorage:
-    enabled: true
-    name: filestorage-api
-    replicas: 2
+  image:
+    repository: filestorage-api:1.3.0
+    pullPolicy: IfNotPresent
 
-    image:
-      repository: filestorage-api:1.3.0
-      pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+    protocol: TCP
 
-    service:
-      type: ClusterIP
-      port: 80
-      targetPort: http
-      protocol: TCP
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
 
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "128Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+  persistence:
+    size: 100Gi
+    storageClass: standard
 
-    persistence:
-      size: 100Gi
-      storageClass: standard
+catalog:
+  enabled: true
+  name: catalog-api
+  replicas: 2
 
-  catalog:
-    enabled: true
-    name: catalog-api
-    replicas: 2
+  image:
+    repository: catalog-api:1.1.1
+    pullPolicy: IfNotPresent
 
-    image:
-      repository: catalog-api:1.1.1
-      pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+    protocol: TCP
 
-    service:
-      type: ClusterIP
-      port: 80
-      targetPort: http
-      protocol: TCP
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
+gateway:
+  enabled: true
+  name: gateway-api
+  replicas: 2
 
-  gateway:
-    enabled: true
-    name: gateway-api
-    replicas: 2
+  image:
+    repository: gateway-api:1.3.0
+    pullPolicy: IfNotPresent
 
-    image:
-      repository: gateway-api:1.3.0
-      pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+    protocol: TCP
 
-    service:
-      type: ClusterIP
-      port: 80
-      targetPort: http
-      protocol: TCP
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
+client:
+  enabled: true
+  name: ecommerce-client
+  replicas: 2
 
-  client:
-    enabled: true
-    name: ecommerce-client
-    replicas: 2
+  image:
+    repository: client:1.1.1
+    pullPolicy: IfNotPresent
 
-    image:
-      repository: client:1.1.1
-      pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: http
+    protocol: TCP
 
-    service:
-      type: ClusterIP
-      port: 80
-      targetPort: http
-      protocol: TCP
-
-    resources:
-      requests:
-        cpu: 50m
-        memory: 128Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
-
-
-  sqlserver:
-    enabled: true
-    name: sqlserver
-
-    image:
-      repository: mcr.microsoft.com/mssql/server:2022-latest
-
-    service:
-      type: ClusterIP
-      port: 1433
-
-    persistence:
-      enabled: true
-      size: 10Gi
-      storageClass: standard
-
-    resources:
-      requests:
-        cpu: "500m"
-        memory: "2Gi"
-      limits:
-        cpu: "2"
-        memory: "4Gi"
-
-  rabbitmq:
-    enabled: true
-    name: rabbitmq
-
-    image:
-      repository: rabbitmq:4.2-management
-
-    service:
-      type: ClusterIP
-      amqpPort: 5672
-      managementPort: 15672
-
-    resources:
-      requests:
-        cpu: 250m
-        memory: 512Mi
-      limits:
-        cpu: "1"
-        memory: 1Gi
-
-    persistence:
-      enabled: true
-      size: 5Gi
-      storageClass: standard
-
-  redis:
-    enabled: true
-    name: redis
-
-    image:
-      repository: redis:8.2
-
-    service:
-      type: ClusterIP
-      port: 6379
-
-    resources:
-      requests:
-        cpu: 50m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 256Mi
-
-    persistence:
-      enabled: true
-      size: 2Gi
-      storageClass: standard
-
-  redisinsight:
-    enabled: true
-    name: redisinsight
-
-    image:
-      repository: redis/redisinsight:3.8.0
-
-    service:
-      type: ClusterIP
-      port: 5540
-
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
-
-    persistence:
-      enabled: true
-      size: 1Gi
-      storageClass: standard
-
-  otelLgtm:
-    enabled: true
-    name: otel-lgtm
-
-    image:
-      repository: grafana/otel-lgtm:0.34.0
-
-    service:
-      type: ClusterIP
-      port: 3000
-
-    resources:
-      requests:
-        cpu: 250m
-        memory: 512Mi
-      limits:
-        cpu: "2"
-        memory: 2Gi
-
-    persistence:
-      size: 10Gi
-      storageClass: standard
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
 ingress:
   enabled: true
@@ -260,6 +137,7 @@ ingress:
     secretName: ecommerce-tls
 
   annotations:
+    clusterIssuer: ecommerce-selfsigned
     proxyBodySize: "50m"
     proxyReadTimeout: "120"
     proxySendTimeout: "120"
@@ -278,7 +156,6 @@ ingress:
       service:
         name: gateway-api
         port: 80
-
 
 config:
   ASPNETCORE_ENVIRONMENT: Staging
@@ -303,6 +180,5 @@ config:
   CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
   IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
 
- # RabbitMQ
+  # RabbitMQ
   EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
-  

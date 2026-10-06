@@ -1,0 +1,97 @@
+{{- if .Values.rabbitmq.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rabbitmq.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.rabbitmq.name }}
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: {{ .Values.rabbitmq.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.rabbitmq.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.rabbitmq.name }}
+          image: {{ .Values.rabbitmq.image.repository }}
+
+          ports:
+            - name: amqp
+              containerPort: 5672
+              protocol: TCP
+
+            - name: management
+              containerPort: 15672
+              protocol: TCP
+
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value:  {{ .Values.config.RABBITMQ_DEFAULT_USER }}
+
+            - name: RABBITMQ_DEFAULT_PASS
+              value:  {{ .Values.config.RABBITMQ_DEFAULT_PASS }}
+
+            - name: RABBITMQ_LOGS
+              value: "-"
+
+            - name: RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
+              value: "-rabbit log [{console,[{level,warning}]}]"
+
+          resources:
+            requests:
+              cpu: {{ .Values.rabbitmq.resources.requests.cpu | quote }}
+              memory: {{ .Values.rabbitmq.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.rabbitmq.resources.limits.cpu | quote }}
+              memory: {{ .Values.rabbitmq.resources.limits.memory | quote }}
+
+          volumeMounts:
+            - name: {{ .Values.rabbitmq.name }}-data
+              mountPath: /var/lib/rabbitmq
+
+          startupProbe:
+            exec:
+              command:
+                - rabbitmq-diagnostics
+                - -q
+                - ping
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 30
+
+          readinessProbe:
+            exec:
+              command:
+                - rabbitmq-diagnostics
+                - -q
+                - ping
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+          livenessProbe:
+            exec:
+              command:
+                - rabbitmq-diagnostics
+                - -q
+                - ping
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+      volumes:
+        - name: {{ .Values.rabbitmq.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.rabbitmq.name }}-pvc
+
+{{- end }}

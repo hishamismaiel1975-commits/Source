@@ -1,0 +1,89 @@
+{{- if .Values.fileStorage.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.fileStorage.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.fileStorage.name }}
+
+spec:
+  replicas: {{ .Values.fileStorage.replicas }}
+
+  selector:
+    matchLabels:
+      app: {{ .Values.fileStorage.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.fileStorage.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.fileStorage.name }}
+          image: "{{ .Values.fileStorage.image.repository }}"
+          imagePullPolicy: {{ .Values.fileStorage.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.config.ASPNETCORE_ENVIRONMENT }}
+                 
+            - name: GrpcSettings__IdentityServiceUrl
+              value: {{ .Values.config.GrpcSettings__IdentityServiceUrl }}
+
+            - name: Security__SecretKey
+              value: {{ .Values.config.Security__SecretKey }}
+
+            - name: Security__Issuer
+              value: {{ .Values.config.Security__Issuer }}
+
+            - name: Security__Audience
+              value: {{ .Values.config.Security__Audience }}
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.config.OTEL_EXPORTER_OTLP_ENDPOINT }}
+
+          volumeMounts:
+            - name: {{ .Values.fileStorage.name }}-data
+              mountPath: /app/uploads
+
+          resources:
+            requests:
+              cpu: {{ .Values.fileStorage.resources.requests.cpu | quote }}
+              memory: {{ .Values.fileStorage.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.fileStorage.resources.limits.cpu | quote }}
+              memory: {{ .Values.fileStorage.resources.limits.memory | quote }}
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+      volumes:
+        - name: {{ .Values.fileStorage.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.fileStorage.name }}-pvc
+    
+
+{{- end }}

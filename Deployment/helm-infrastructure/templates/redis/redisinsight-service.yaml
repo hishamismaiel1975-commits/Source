@@ -1,0 +1,23 @@
+{{- if .Values.redisinsight.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.redisinsight.name }}
+  namespace:  {{ .Values.global.namespace }}
+  labels:
+    app:  {{ .Values.redisinsight.name }}
+
+spec:
+  type: {{ .Values.redisinsight.service.type }}
+
+  selector:
+    app:  {{ .Values.redisinsight.name }}
+
+  ports:
+    - name: http
+      port: {{ .Values.redisinsight.service.port }}
+      targetPort: http
+      protocol: TCP
+      
+{{- end }}

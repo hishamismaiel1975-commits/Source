@@ -1,131 +1,127 @@
 global:
   namespace: ecommerce
 
-apps:
+sqlserver:
+  enabled: true
+  name: sqlserver
 
-infrastructure:
-  sqlserver:
+  image:
+    repository: mcr.microsoft.com/mssql/server:2022-latest
+
+  service:
+    type: ClusterIP
+    port: 1433
+
+  persistence:
     enabled: true
-    name: sqlserver
+    size: 10Gi
+    storageClass: standard
 
-    image:
-      repository: mcr.microsoft.com/mssql/server:2022-latest
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "2Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
 
-    service:
-      type: ClusterIP
-      port: 1433
+rabbitmq:
+  enabled: true
+  name: rabbitmq
 
-    persistence:
-      enabled: true
-      size: 10Gi
-      storageClass: standard
+  image:
+    repository: rabbitmq:4.2-management
 
-    resources:
-      requests:
-        cpu: "500m"
-        memory: "2Gi"
-      limits:
-        cpu: "2"
-        memory: "4Gi"
+  service:
+    type: ClusterIP
+    amqpPort: 5672
+    managementPort: 15672
 
-  rabbitmq:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+  persistence:
     enabled: true
-    name: rabbitmq
+    size: 5Gi
+    storageClass: standard
 
-    image:
-      repository: rabbitmq:4.2-management
+redis:
+  enabled: true
+  name: redis
 
-    service:
-      type: ClusterIP
-      amqpPort: 5672
-      managementPort: 15672
+  image:
+    repository: redis:8.2
 
-    resources:
-      requests:
-        cpu: 250m
-        memory: 512Mi
-      limits:
-        cpu: "1"
-        memory: 1Gi
+  service:
+    type: ClusterIP
+    port: 6379
 
-    persistence:
-      enabled: true
-      size: 5Gi
-      storageClass: standard
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
 
-  redis:
+  persistence:
     enabled: true
-    name: redis
+    size: 2Gi
+    storageClass: standard
 
-    image:
-      repository: redis:8.2
+redisinsight:
+  enabled: true
+  name: redisinsight
 
-    service:
-      type: ClusterIP
-      port: 6379
+  image:
+    repository: redis/redisinsight:3.8.0
 
-    resources:
-      requests:
-        cpu: 50m
-        memory: 128Mi
-      limits:
-        cpu: 250m
-        memory: 256Mi
+  service:
+    type: ClusterIP
+    port: 5540
 
-    persistence:
-      enabled: true
-      size: 2Gi
-      storageClass: standard
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
-  redisinsight:
+  persistence:
     enabled: true
-    name: redisinsight
+    size: 1Gi
+    storageClass: standard
 
-    image:
-      repository: redis/redisinsight:3.8.0
+otelLgtm:
+  enabled: true
+  name: otel-lgtm
 
-    service:
-      type: ClusterIP
-      port: 5540
+  image:
+    repository: grafana/otel-lgtm:0.34.0
 
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
+  service:
+    type: ClusterIP
+    port: 3000
 
-    persistence:
-      enabled: true
-      size: 1Gi
-      storageClass: standard
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "2"
+      memory: 2Gi
 
-  otelLgtm:
-    enabled: true
-    name: otel-lgtm
-
-    image:
-      repository: grafana/otel-lgtm:0.34.0
-
-    service:
-      type: ClusterIP
-      port: 3000
-
-    resources:
-      requests:
-        cpu: 250m
-        memory: 512Mi
-      limits:
-        cpu: "2"
-        memory: 2Gi
-
-    persistence:
-      size: 10Gi
-      storageClass: standard
+  persistence:
+    size: 10Gi
+    storageClass: standard
 
 config:
-  
   # RabbitMQ
   RABBITMQ_DEFAULT_USER: admin
   RABBITMQ_DEFAULT_PASS: pass_123456789

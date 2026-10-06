@@ -1,0 +1,19 @@
+{{- if .Values.client.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.client.name }}
+  namespace: {{ .Values.global.namespace }}
+spec:
+  type: {{ .Values.client.service.type }}
+
+  selector:
+    app: {{ .Values.client.name }}
+  ports:
+    - name: http
+      port: {{ .Values.client.service.port }}
+      targetPort: {{ .Values.client.service.targetPort }}
+      protocol: {{ .Values.client.service.protocol }}
+
+{{- end }}

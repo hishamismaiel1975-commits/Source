@@ -1,0 +1,22 @@
+{{- if .Values.redis.enabled }}
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.redis.name }}-pvc
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.redis.name }}
+
+spec:
+  storageClassName:
+        {{ .Values.rabbitmq.persistence.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistence.size }}
+      
+
+{{- end }}

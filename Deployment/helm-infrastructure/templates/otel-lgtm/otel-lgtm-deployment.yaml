@@ -1,0 +1,68 @@
+{{- if .Values.otelLgtm.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.otelLgtm.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.otelLgtm.name }}
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: {{ .Values.otelLgtm.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.otelLgtm.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.otelLgtm.name }}
+          image: {{ .Values.otelLgtm.image.repository }}
+
+          ports:
+            - name: grafana
+              containerPort: {{ .Values.otelLgtm.service.port }}
+              protocol: TCP
+
+            - name: otlp-grpc
+              containerPort: 4317
+              protocol: TCP
+
+            - name: otlp-http
+              containerPort: 4318
+              protocol: TCP
+
+          env:
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
+
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: "Admin"
+
+            - name: GF_AUTH_DISABLE_LOGIN_FORM
+              value: "true"
+
+          resources:
+            requests:
+              cpu: {{ .Values.otelLgtm.resources.requests.cpu | quote }}
+              memory: {{ .Values.otelLgtm.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.otelLgtm.resources.limits.cpu | quote }}
+              memory: {{ .Values.otelLgtm.resources.limits.memory | quote }}
+
+          volumeMounts:
+            - name: {{ .Values.otelLgtm.name }}-data
+              mountPath: /data
+
+      volumes:
+        - name: {{ .Values.otelLgtm.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.otelLgtm.name }}-data
+
+{{- end }}

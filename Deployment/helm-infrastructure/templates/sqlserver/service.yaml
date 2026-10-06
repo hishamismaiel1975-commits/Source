@@ -1,0 +1,22 @@
+{{- if .Values.sqlserver.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.sqlserver.name }}
+  namespace:  {{ .Values.global.namespace }}
+spec:
+  
+  type: {{ .Values.sqlserver.service.type }}
+
+  selector:
+    app: {{ .Values.sqlserver.name }}
+
+  ports:
+    - name: mssql
+      port: {{ .Values.sqlserver.service.port }}
+      targetPort: 1433
+
+  
+
+{{- end }}

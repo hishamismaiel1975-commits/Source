@@ -16,7 +16,7 @@ helm uninstall ecommerce-infrastructure  --namespace ecommerce
 kubectl rollout restart deployment -n ecommerce
 
 helm list -n ecommerce
-helm lint ./helm
+helm lint ./helm-apps
 helm template ecommerce ./helm > rendered.yaml
 helm status ecommerce -n ecommerce
 helm history ecommerce -n ecommerce

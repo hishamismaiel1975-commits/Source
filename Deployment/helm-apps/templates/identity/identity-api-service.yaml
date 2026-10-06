@@ -1,0 +1,28 @@
+{{- if .Values.identity.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.identity.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.identity.name }}
+spec:
+  type: {{ .Values.identity.service.type }}
+
+  selector:
+    app: {{ .Values.identity.name }}
+
+  ports:
+    - name: http
+      port: {{ .Values.identity.service.port }}
+      targetPort: {{ .Values.identity.service.targetPort }}
+      protocol: {{ .Values.identity.service.protocol }}
+
+    - name: grpc
+      port: {{ .Values.identity.serviceGrpc.port }}
+      targetPort: {{ .Values.identity.serviceGrpc.targetPort }}
+      protocol: {{ .Values.identity.serviceGrpc.protocol }}
+  
+
+{{- end }}

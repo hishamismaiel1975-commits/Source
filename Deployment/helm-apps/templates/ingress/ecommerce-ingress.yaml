@@ -6,7 +6,7 @@ metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ .Values.global.namespace }}
   annotations:
-    cert-manager.io/cluster-issuer: ecommerce-selfsigned
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.annotations.clusterIssuer  }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.ingress.annotations.proxyBodySize | quote }}

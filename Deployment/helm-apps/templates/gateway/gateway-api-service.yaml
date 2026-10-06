@@ -1,0 +1,25 @@
+{{- if .Values.gateway.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.gateway.name }}
+
+spec:
+  type: {{ .Values.gateway.service.type }}
+
+  selector:
+    app: {{ .Values.gateway.name }}
+
+  ports:
+    # Public Gateway
+    - name: http
+      port: {{ .Values.gateway.service.port }}
+      targetPort: {{ .Values.gateway.service.targetPort }}
+      protocol: {{ .Values.gateway.service.protocol }}
+
+
+{{- end }}

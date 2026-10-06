@@ -1,0 +1,89 @@
+{{- if .Values.catalog.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.catalog.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.catalog.name }}
+
+spec:
+  replicas: {{ .Values.catalog.replicas }}
+
+  selector:
+    matchLabels:
+      app: {{ .Values.catalog.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.catalog.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.catalog.name }}
+          image: "{{ .Values.catalog.image.repository }}"
+          imagePullPolicy: {{ .Values.catalog.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value:  {{ .Values.config.ASPNETCORE_ENVIRONMENT }}
+
+            - name: CatalogDb__ConnectionString
+              value: {{ .Values.config.CatalogDb__ConnectionString }}
+
+            - name: RedisSettings__ConnectionString
+              value: {{ .Values.config.RedisSettings__ConnectionString }}
+
+            - name: GrpcSettings__IdentityServiceUrl
+              value: {{ .Values.config.GrpcSettings__IdentityServiceUrl }}
+
+            - name: EventBusSettings__HostAddress
+              value: {{ .Values.config.EventBusSettings__HostAddress }}
+
+            - name: Security__SecretKey
+              value: {{ .Values.config.Security__SecretKey }}
+
+            - name: Security__Issuer
+              value: {{ .Values.config.Security__Issuer }}
+
+            - name: Security__Audience
+              value: {{ .Values.config.Security__Audience }}
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.config.OTEL_EXPORTER_OTLP_ENDPOINT }}
+               
+
+          resources:
+            requests:
+              cpu: {{ .Values.catalog.resources.requests.cpu | quote }}
+              memory: {{ .Values.catalog.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.catalog.resources.limits.cpu | quote }}
+              memory: {{ .Values.catalog.resources.limits.memory | quote }}
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+{{- end }}
