@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 using Platform.Lib.DTOs;
+using Platform.Lib.Exceptions;
 using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Persistence.IRepositories;
+using Platform.Lib.Services.File;
 using Platform.Lib.Services.Identity.Enums;
 using Platform.Lib.Services.Security;
 
@@ -14,12 +15,15 @@ namespace FileStorage.API.Controllers
     [Route("v{version:apiVersion}/[controller]")]
     public class CustomerFileController : ControllerBase
     {
-        private readonly IRepository<Core.Persistence.Entities.File> _fileRepository;
+        private readonly IRepository<Platform.Lib.Persistence.Entities.File> _fileRepository;
+        private readonly IFileStorageService _fileStorageService;
         private readonly ICurrentUserService _currentUserService;
 
-        public CustomerFileController(IRepository<Core.Persistence.Entities.File> fileRepository, ICurrentUserService currentUserService)
+
+        public CustomerFileController(IRepository<Platform.Lib.Persistence.Entities.File> fileRepository, IFileStorageService fileStorageService, ICurrentUserService currentUserService)
         {
             _fileRepository = fileRepository;
+            _fileStorageService = fileStorageService;
             _currentUserService = currentUserService;
         }
 
@@ -28,29 +32,7 @@ namespace FileStorage.API.Controllers
         [HttpPost]
         public async Task<Result<string>> Upload(IFormFile file)
         {
-            if (file == null || file.Length == 0) return Result<string>.Failure("FileRequired");
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "CustomerFiles", DateTime.UtcNow.Year.ToString(), DateTime.UtcNow.Month.ToString());
-
-            Directory.CreateDirectory(path);
-
-            var fileId = Guid.NewGuid();
-            var fileType = Path.GetExtension(file.FileName);
-            var fileName = $"{fileId}{fileType}";
-            var filleFullPath = Path.Combine(path, fileName);
-
-            await using var stream = System.IO.File.Create(filleFullPath);
-            await file.CopyToAsync(stream);
-
-            await _fileRepository.CreateAsync(new Core.Persistence.Entities.File
-            {
-                Id = fileId,
-                Path = path,
-                Type = fileType,
-                IsCustomer = true,
-                CustomerId = _currentUserService.UserId
-            });
-
+            var fileId = await _fileStorageService.UploadAsync(file, "CustomerFiles", _fileRepository, isCustomer: true, customerId: _currentUserService.UserId);
             return Result<string>.Success(fileId.ToString());
         }
 
@@ -59,10 +41,8 @@ namespace FileStorage.API.Controllers
         [HttpPost("Replace/{fileId:guid}")]
         public async Task<Result<string>> Replace(IFormFile file, Guid fileId)
         {
-            var result = await Upload(file);
-            await Delete(fileId);
-            return Result<string>.Success(result.Data);
-
+            var newFileId = await _fileStorageService.ReplaceAsync(file, fileId, "CustomerFiles", _fileRepository, isCustomer: true, customerId: _currentUserService.UserId);
+            return Result<string>.Success(newFileId.ToString());
         }
 
         [Authorize]
@@ -71,62 +51,27 @@ namespace FileStorage.API.Controllers
         public async Task<IActionResult> Get(Guid fileId)
         {
             var file = await _fileRepository.GetByIdAsync(fileId);
-            if (file == null) return NotFound();
+            if (file == null || file.IsCustomer == false || file.CustomerId != _currentUserService.UserId) return NotFound();
 
-
-            // Check if it is customer file and Customer Own the file
-            if (file.IsCustomer == false || file.CustomerId != _currentUserService.UserId) return NotFound();
-
-            // Check if Folder Present
-            if (!Directory.Exists(file?.Path)) return NotFound();
-
-            // Check if File Present
-            var filePath = Directory.GetFiles(file.Path, $"{fileId}{file.Type}").FirstOrDefault();
-            if (filePath == null) return NotFound();
-
-            var contentType = GetContentType(filePath);
-
-            return PhysicalFile(
-                filePath,
-                contentType,
-                enableRangeProcessing: true);
+            var result = await _fileStorageService.GetAsync(fileId, _fileRepository);
+            return File(
+                    result.Content,
+                    result.ContentType,
+                    enableRangeProcessing: true);
         }
 
         [Authorize]
         [UserTypeAuthorize(UserTypes.Customer)]
         [HttpDelete("{fileId:guid}")]
-        public async Task<Result<string>> Delete(Guid fileId)
+        public async Task Delete(Guid fileId)
         {
             var file = await _fileRepository.GetByIdAsync(fileId);
-            if (file == null) return Result<string>.Failure("FileNotFound");
+            if (file == null || file.IsCustomer == false || file.CustomerId != _currentUserService.UserId)
+                AppException.Throw("FileNotFound");
 
-            // Check if it is customer file and Customer Own the file
-            if (file.IsCustomer == false || file.CustomerId != _currentUserService.UserId)
-                return Result<string>.Failure("FileNotFound");
-
-            // Check if Folder Present
-            if (!Directory.Exists(file?.Path))
-                return Result<string>.Failure("FileNotFound");
-
-            // Check if File Present
-            var filePath = Directory.GetFiles(file.Path, $"{fileId}{file.Type}").FirstOrDefault();
-            if (filePath == null) return
-                    Result<string>.Failure("FileNotFound");
-
-            System.IO.File.Delete(filePath);
-
-            await _fileRepository.DeleteByIdAsync(fileId);
-
-            return Result<string>.Success(fileId.ToString());
+            await _fileStorageService.DeleteAsync(fileId, _fileRepository);
         }
 
-        private static string GetContentType(string filePath)
-        {
-            return new FileExtensionContentTypeProvider()
-                .TryGetContentType(filePath, out var contentType)
-                    ? contentType
-                    : "application/octet-stream";
-        }
 
     }
 }

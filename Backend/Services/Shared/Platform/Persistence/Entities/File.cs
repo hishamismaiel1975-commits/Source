@@ -1,6 +1,4 @@
-﻿using Platform.Lib.Persistence.Entities;
-
-namespace FileStorage.Core.Persistence.Entities
+﻿namespace Platform.Lib.Persistence.Entities
 {
     public class File : Entity
     {

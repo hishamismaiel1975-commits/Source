@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Entities\" />
+  </ItemGroup>
+
 </Project>
