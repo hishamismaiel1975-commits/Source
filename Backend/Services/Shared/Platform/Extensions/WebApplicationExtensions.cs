@@ -401,6 +401,7 @@ namespace Platform.Lib.API.Extensions
         public static WebApplicationBuilder AddMongoDB(this WebApplicationBuilder builder, IMongoDbConfiguration mongoDbConfiguration)
         {
             var connectionString = builder.Configuration["MongoDB:ConnectionString"];
+
             // Register MongoClient as singleton
             builder.Services.AddSingleton<IMongoClient>(options =>
             {
