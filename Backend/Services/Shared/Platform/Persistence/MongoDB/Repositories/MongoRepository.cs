@@ -339,7 +339,7 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
         await _collection.DeleteOneAsync(
             x => x.Id == id);
     }
-    m
+
     private IAggregateFluent<T> ApplyInclude(
     IAggregateFluent<T> query,
     Expression<Func<T, object>> include)
