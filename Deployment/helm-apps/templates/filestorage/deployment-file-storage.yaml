@@ -35,6 +35,12 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: {{ .Values.config.ASPNETCORE_ENVIRONMENT }}
                  
+            - name: MongoDB__ConnectionString
+              value: {{ .Values.config.MongoDB__ConnectionString }}
+
+            - name: MongoDB__DatabaseName
+              value: {{ .Values.config.FileStorage__DatabaseName }}
+
             - name: GrpcSettings__IdentityServiceUrl
               value: {{ .Values.config.GrpcSettings__IdentityServiceUrl }}
 

@@ -1,5 +1,5 @@
 using Catalog.Infrastructure.Persistence.MongoDB;
-using FileStorage.Application;
+using FileStorage.API;
 using Platform.Lib.API.Extensions;
 using Platform.Lib.Constants;
 

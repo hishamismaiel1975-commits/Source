@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
-    <ProjectReference Include="..\FileStorage.Application\FileStorage.Application.csproj" />
+    <ProjectReference Include="..\FileStorage.Core\FileStorage.Core.csproj" />
     <ProjectReference Include="..\FileStorage.Infrastructure\FileStorage.Infrastructure.csproj" />
   </ItemGroup>
 

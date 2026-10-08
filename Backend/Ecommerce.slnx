@@ -8,7 +8,7 @@
   </Folder>
   <Folder Name="/Services/FileStorage/">
     <Project Path="Services/FileStorage/FileStorage.API/FileStorage.API.csproj" Id="33d4a1d6-77c7-4a50-9617-a8339690320c" />
-    <Project Path="Services/FileStorage/FileStorage.Application/FileStorage.Application.csproj" Id="5239fb22-f598-4c68-ae21-2b8a97868dfc" />
+    <Project Path="Services/FileStorage/FileStorage.Core/FileStorage.Core.csproj" Id="bb4419f7-96ae-4a7b-8cb6-d708d16881e4" />
     <Project Path="Services/FileStorage/FileStorage.Infrastructure/FileStorage.Infrastructure.csproj" Id="7b345bee-8f7f-4e7c-9bd0-49ad163a633b" />
   </Folder>
   <Folder Name="/Services/Gateway/">

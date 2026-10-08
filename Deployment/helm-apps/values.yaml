@@ -179,6 +179,9 @@ config:
   # Database Connections
   CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
   IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
-
+  
+  MongoDB__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
+  FileStorage__DatabaseName: FileStorageDB
+  
   # RabbitMQ
   EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672
