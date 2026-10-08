@@ -5,6 +5,7 @@ using Platform.Lib.DTOs;
 using Platform.Lib.Infrastructure.Persistence.MongoDB.Extensions;
 using Platform.Lib.Persistence.Entities;
 using Platform.Lib.Persistence.IRepositories;
+using Platform.Lib.Services.Security;
 using System.Linq.Expressions;
 
 namespace Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
@@ -12,9 +13,12 @@ namespace Platform.Lib.Infrastructure.Persistence.MongoDB.Repositories;
 public class MongoRepository<T> : IRepository<T> where T : Entity
 {
     private readonly IMongoCollection<T> _collection;
+    private readonly ICurrentUserService _currentUserService;
 
-    public MongoRepository(IMongoClient client, IConfiguration configuration)
+    public MongoRepository(IMongoClient client, IConfiguration configuration, ICurrentUserService currentUserService)
     {
+        _currentUserService = currentUserService;
+
         var database = client.GetDatabase(configuration["MongoDB:DatabaseName"]);
         _collection = database.GetCollection<T>($"{typeof(T).Name}s");
     }
@@ -271,21 +275,38 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
     // =========================================================
     public async Task CreateAsync(T entity)
     {
+        entity.CreatedDate = DateTime.UtcNow;
+        entity.CreatedBy = _currentUserService.UserId;
         await _collection.InsertOneAsync(entity);
     }
     public async Task CreateManyAsync(IEnumerable<T> entities)
     {
+        foreach (var entity in entities)
+        {
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.CreatedBy = _currentUserService.UserId;
+        }
+
         await _collection.InsertManyAsync(entities);
     }
 
     public async Task UpdateAsync(T entity)
     {
+        entity.UpdatedDate = DateTime.UtcNow;
+        entity.UpdatedBy = _currentUserService.UserId;
+
         await _collection.ReplaceOneAsync(
             x => x.Id == entity.Id,
             entity);
     }
     public async Task UpdateManyAsync(IEnumerable<T> entities)
     {
+        foreach (var entity in entities)
+        {
+            entity.UpdatedDate = DateTime.UtcNow;
+            entity.UpdatedBy = _currentUserService.UserId;
+        }
+
         var models = entities.Select(entity =>
             new ReplaceOneModel<T>(
                 Builders<T>.Filter.Eq(x => x.Id, entity.Id),
@@ -318,7 +339,7 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
         await _collection.DeleteOneAsync(
             x => x.Id == id);
     }
-
+    m
     private IAggregateFluent<T> ApplyInclude(
     IAggregateFluent<T> query,
     Expression<Func<T, object>> include)
