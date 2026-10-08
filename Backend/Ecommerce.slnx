@@ -11,6 +11,9 @@
     <Project Path="Services/FileStorage/FileStorage.Application/FileStorage.Application.csproj" Id="5239fb22-f598-4c68-ae21-2b8a97868dfc" />
     <Project Path="Services/FileStorage/FileStorage.Infrastructure/FileStorage.Infrastructure.csproj" Id="7b345bee-8f7f-4e7c-9bd0-49ad163a633b" />
   </Folder>
+  <Folder Name="/Services/Gateway/">
+    <Project Path="Services/Gateway/Gateway.API/Gateway.API.csproj" />
+  </Folder>
   <Folder Name="/Services/Identity/">
     <Project Path="Services/Identity/Identity.API/Identity.API.csproj" />
     <Project Path="Services/Identity/Identity.Application/Identity.Application.csproj" Id="54622e3a-30df-43e8-8e0c-d563059c3264" />
@@ -19,9 +22,6 @@
   </Folder>
   <Folder Name="/Services/Shared/">
     <Project Path="Services/Shared/Platform/Platform.Lib.csproj" />
-  </Folder>
-  <Folder Name="/Services/Shared/Gateway/">
-    <Project Path="Services/Gateway/Gateway.API/Gateway.API.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />

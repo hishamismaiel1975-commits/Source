@@ -67,6 +67,7 @@ namespace Platform.Lib.Constants
         public static class FileStorage
         {
             public const string Upload = "FileStorage.Upload";
+            public const string Read = "FileStorage.Read";
             public const string Delete = "FileStorage.Delete";
 
         }

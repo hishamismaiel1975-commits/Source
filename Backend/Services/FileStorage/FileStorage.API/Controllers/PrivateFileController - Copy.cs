@@ -3,15 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Platform.Lib.Constants;
 using Platform.Lib.DTOs;
+using Platform.Lib.Infrastructure.Authorization;
+using Platform.Lib.Services.Identity.Enums;
 
 namespace FileStorage.API.Controllers
 {
 
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    public class FileController : ControllerBase
+    public class PrivateFileController : ControllerBase
     {
         [Authorize(Policy = PermissionConstants.FileStorage.Upload)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost]
         public async Task<Result<string>> Upload(IFormFile file)
         {
@@ -31,6 +34,8 @@ namespace FileStorage.API.Controllers
             return Result<string>.Success(fileId.ToString());
         }
 
+        [Authorize(Policy = PermissionConstants.FileStorage.Read)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpGet("{fileId:guid}")]
         public IActionResult Get(Guid fileId)
         {
@@ -55,6 +60,7 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize(Policy = PermissionConstants.FileStorage.Delete)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpDelete("{fileId:guid}")]
         public Result<string> Delete(Guid fileId)
         {

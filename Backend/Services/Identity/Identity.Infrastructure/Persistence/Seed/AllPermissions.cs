@@ -40,6 +40,7 @@ namespace Identity.Infrastructure.Persistence.Seed
 
                  // File Storage
                 new Permission { Name = PermissionConstants.FileStorage.Upload, NameEn = "Upload File", NameAr = "رفع ملف" },
+                new Permission { Name = PermissionConstants.FileStorage.Read, NameEn = "Read File", NameAr = "عرض ملف" },
                 new Permission { Name = PermissionConstants.FileStorage.Delete, NameEn = "Delete File", NameAr = "حذف ملف" },
 
 
