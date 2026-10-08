@@ -110,6 +110,17 @@ public class MongoRepository<T> : IRepository<T> where T : Entity
             .Find(x => x.Id == id)
             .FirstOrDefaultAsync();
     }
+    public async Task<IReadOnlyList<T>> GetByIdsAsync(IEnumerable<Guid> ids)
+    {
+        var idList = ids.Distinct().ToList();
+
+        if (idList.Count == 0) return [];
+
+        var filter = Builders<T>.Filter.In(x => x.Id, idList);
+        return await _collection
+            .Find(filter)
+            .ToListAsync();
+    }
     public async Task<bool> ExistsAsync(Guid id)
     {
         return await _collection

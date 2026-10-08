@@ -86,6 +86,16 @@ public class EFRepository<T> : IRepository<T>
         return await _dbSet
             .FindAsync(id);
     }
+
+    public async Task<IReadOnlyList<T>> GetByIdsAsync(IEnumerable<Guid> ids)
+    {
+        var idList = ids.Distinct().ToList();
+        if (idList.Count == 0) return [];
+        return await _dbSet
+            .Where(x => idList.Contains(x.Id))
+            .ToListAsync();
+    }
+
     public async Task<bool> ExistsAsync(Guid id)
     {
         return await _dbSet

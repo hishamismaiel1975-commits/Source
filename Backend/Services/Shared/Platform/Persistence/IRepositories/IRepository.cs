@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 
 namespace Platform.Lib.Persistence.IRepositories;
 
-
 public interface IRepository<T> where T : Entity
 {
     // Query
@@ -18,6 +17,8 @@ public interface IRepository<T> where T : Entity
     Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, IReadOnlyCollection<Expression<Func<T, object>>>? includes = null);
     Task<TResult?> FirstOrDefaultAsync<TResult>(Expression<Func<T, TResult>> select, Expression<Func<T, bool>> filter);
     Task<T?> GetByIdAsync(Guid id);
+    Task<IReadOnlyList<T>> GetByIdsAsync(IEnumerable<Guid> ids);
+
     Task<bool> ExistsAsync(Guid id);
     Task<int> CountAsync(Expression<Func<T, bool>>? filter = null);
 
