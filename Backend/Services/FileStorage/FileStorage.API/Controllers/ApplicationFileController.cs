@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Platform.Lib.Constants;
 using Platform.Lib.DTOs;
 using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Persistence.IRepositories;
@@ -12,25 +13,26 @@ namespace FileStorage.API.Controllers
 
     [ApiController]
     [Route("v{version:apiVersion}/[controller]")]
-    public class CustomerFileController : ControllerBase
+    public class ApplicationFileController : ControllerBase
     {
         private readonly IRepository<Core.Persistence.Entities.File> _fileRepository;
         private readonly ICurrentUserService _currentUserService;
 
-        public CustomerFileController(IRepository<Core.Persistence.Entities.File> fileRepository, ICurrentUserService currentUserService)
+        public ApplicationFileController(IRepository<Core.Persistence.Entities.File> fileRepository, ICurrentUserService currentUserService)
         {
             _fileRepository = fileRepository;
             _currentUserService = currentUserService;
         }
 
         [Authorize]
-        [UserTypeAuthorize(UserTypes.Customer)]
+        [Authorize(Policy = PermissionConstants.FileStorage.Upload)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost]
         public async Task<Result<string>> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0) return Result<string>.Failure("FileRequired");
 
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "CustomerFiles", DateTime.UtcNow.Year.ToString(), DateTime.UtcNow.Month.ToString());
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "uploads", "ApplicationFiles", DateTime.UtcNow.Year.ToString(), DateTime.UtcNow.Month.ToString());
 
             Directory.CreateDirectory(path);
 
@@ -47,15 +49,15 @@ namespace FileStorage.API.Controllers
                 Id = fileId,
                 Path = path,
                 Type = fileType,
-                IsCustomer = true,
-                CustomerId = _currentUserService.UserId
+                IsCustomer = false,
             });
 
             return Result<string>.Success(fileId.ToString());
         }
 
         [Authorize]
-        [UserTypeAuthorize(UserTypes.Customer)]
+        [Authorize(Policy = PermissionConstants.FileStorage.Upload)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpPost("Replace/{fileId:guid}")]
         public async Task<Result<string>> Replace(IFormFile file, Guid fileId)
         {
@@ -66,16 +68,13 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize]
-        [UserTypeAuthorize(UserTypes.Customer)]
+        [Authorize(Policy = PermissionConstants.FileStorage.Read)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpGet("{fileId:guid}")]
         public async Task<IActionResult> Get(Guid fileId)
         {
             var file = await _fileRepository.GetByIdAsync(fileId);
             if (file == null) return NotFound();
-
-
-            // Check if it is customer file and Customer Own the file
-            if (file.IsCustomer == false || file.CustomerId != _currentUserService.UserId) return NotFound();
 
             // Check if Folder Present
             if (!Directory.Exists(file?.Path)) return NotFound();
@@ -93,16 +92,13 @@ namespace FileStorage.API.Controllers
         }
 
         [Authorize]
-        [UserTypeAuthorize(UserTypes.Customer)]
+        [Authorize(Policy = PermissionConstants.FileStorage.Delete)]
+        [UserTypeAuthorize(UserTypes.Employee)]
         [HttpDelete("{fileId:guid}")]
         public async Task<Result<string>> Delete(Guid fileId)
         {
             var file = await _fileRepository.GetByIdAsync(fileId);
             if (file == null) return Result<string>.Failure("FileNotFound");
-
-            // Check if it is customer file and Customer Own the file
-            if (file.IsCustomer == false || file.CustomerId != _currentUserService.UserId)
-                return Result<string>.Failure("FileNotFound");
 
             // Check if Folder Present
             if (!Directory.Exists(file?.Path))
