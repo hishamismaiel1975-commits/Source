@@ -6,9 +6,9 @@ config:
   protobuf:
     protoFiles:
       - type: file
-        path: ../Services/Identity/Identity.API/GrpcServices/Identity.proto
-      - type: file
         path: ../Backend/Services/Identity/Identity.API/GrpcServices/Identity.proto
+      - type: file
+        path: ../Backend/Services/Catalog/Catalog.API/GrpcServices/Catalog.proto
   proxy:
     inherit: true
     config:

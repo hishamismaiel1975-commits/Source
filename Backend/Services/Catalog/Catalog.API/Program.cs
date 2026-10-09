@@ -1,4 +1,5 @@
 using Catalog.API.EventBus.Consumer;
+using Catalog.API.GrpcServices;
 using Catalog.Application;
 using Catalog.Infrastructure.Persistence.Seed;
 using Catalog.Infrastructure.Persistence.SQLServer;
@@ -61,6 +62,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 app.UsePlatform<Program>();
+
+// Add gRPC service to the request pipeline
+app.MapGrpcService<CatalogGrpcService>();
 
 app.Run();
 

@@ -41,11 +41,10 @@
 		<PrivateAssets>all</PrivateAssets>
 	</PackageReference>
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<Protobuf Include="GrpcServices\Identity.proto" GrpcServices="Server" />
 	</ItemGroup>
-
 	
 
 	

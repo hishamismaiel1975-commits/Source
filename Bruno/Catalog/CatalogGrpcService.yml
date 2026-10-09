@@ -1,0 +1,19 @@
+info:
+  name: CatalogGrpcService
+  type: grpc
+  seq: 2
+
+grpc:
+  url: http://localhost:8104/
+  method: /Catalog.CatalogService/GetProducts
+  methodType: unary
+  protoFilePath: ../Backend/Services/Catalog/Catalog.API/GrpcServices/Catalog.proto
+  message:
+    - title: message 1
+      message: |-
+        {
+          "brand_id": "B47C129E-8A63-4D75-91F2-5E306C7AB814",
+          "type_id":  "E83B5A19-6472-4F20-BD91-3C758A026E54"
+          
+        }
+  auth: inherit

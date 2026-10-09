@@ -116,6 +116,7 @@ services:
         condition: service_started
     ports:
       - "8004:80"
+      - "8104:81"
  
  otel-lgtm:
     container_name: ecommerce-grafana-otel-lgtm
