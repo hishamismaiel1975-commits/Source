@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 
 namespace Platform.Lib.Infrastructure.Authorization;
 

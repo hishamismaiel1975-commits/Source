@@ -5,7 +5,7 @@ using Platform.Lib.Exceptions;
 using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Persistence.IRepositories;
 using Platform.Lib.Services.File;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using Platform.Lib.Services.Security;
 
 namespace FileStorage.API.Controllers

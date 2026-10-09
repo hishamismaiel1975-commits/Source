@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Platform.Lib.Constants;
 using Platform.Lib.DTOs;
 using Platform.Lib.Infrastructure.Authorization;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using ProductsApp = Catalog.Application.Products;
 
 

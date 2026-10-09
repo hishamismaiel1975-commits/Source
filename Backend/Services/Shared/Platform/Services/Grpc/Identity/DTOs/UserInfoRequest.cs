@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Services.Identity.DTOs
+﻿namespace Platform.Lib.Services.Grpc.Identity.DTOs
 {
     public record UserInfoRequest
     (

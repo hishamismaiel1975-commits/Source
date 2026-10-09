@@ -18,8 +18,6 @@ public class CatalogGrpcService : CatalogService.CatalogServiceBase
 
     public override async Task<GetProductsResult> GetProducts(GetProductsRequest request, ServerCallContext context)
     {
-
-
         var products = await _productRepository.GetAllAsync(
             select: x => new GetProductsResponse
             {
@@ -27,7 +25,9 @@ public class CatalogGrpcService : CatalogService.CatalogServiceBase
                 Summary = x.Summary,
                 Description = x.Description,
                 BrandName = x.ProductBrand.Name,
-                TypeName = x.ProductType.Name
+                TypeName = x.ProductType.Name,
+                Price = x.Price.ToString(),
+                CreatedDate = x.CreatedDate.ToString()
             },
             filter: x =>
                  (string.IsNullOrEmpty(request.BrandId) || x.ProductBrandId.ToString() == request.BrandId)

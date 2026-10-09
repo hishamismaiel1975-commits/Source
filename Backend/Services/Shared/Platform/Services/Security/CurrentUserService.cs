@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using Platform.Lib.Services.Security;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

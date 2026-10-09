@@ -52,7 +52,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Protobuf Include="Services\Identity\Identity.proto" GrpcServices="Client" />
+	  <Protobuf Include="Services\Grpc\Catalog\Catalog.proto" GrpcServices="Client" />
+	  <Protobuf Include="Services\Grpc\Identity\Identity.proto" GrpcServices="Client" />
 	</ItemGroup>
 
 	<ItemGroup>

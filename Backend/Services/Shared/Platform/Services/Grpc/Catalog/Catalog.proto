@@ -16,7 +16,7 @@ message GetProductsResponse {
   string description = 3;
   string brand_name = 4;
   string type_name = 5;
-  string   price = 6;
+  string  price = 6;
   string CreatedDate = 7;
 }
 

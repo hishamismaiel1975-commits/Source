@@ -1,0 +1,13 @@
+﻿//using Identity.GRPC;
+//using Platform.Lib.Services.Grpc.Identity.DTOs;
+//using Riok.Mapperly.Abstractions;
+
+//namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients
+//{
+//    [Mapper]
+//    public static partial class IdentityGrpcClientMapper
+//    {
+//        public static partial UserInfoRequest ToDTO(GetUserInfoResponse getUserInfoResponse);
+
+//    }
+//}

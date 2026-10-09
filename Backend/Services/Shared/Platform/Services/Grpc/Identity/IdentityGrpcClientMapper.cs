@@ -1,5 +1,5 @@
 ﻿using Identity.GRPC;
-using Platform.Lib.Services.Identity.DTOs;
+using Platform.Lib.Services.Grpc.Identity.DTOs;
 using Riok.Mapperly.Abstractions;
 
 namespace Application.Lib.Infrastructure.Services.Discount.GrpcClients

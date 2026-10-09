@@ -1,9 +1,8 @@
 ﻿using Identity.GRPC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Platform.Lib.Services.Identity;
 
-namespace Platform.Lib.Infrastructure.Services.Identity;
+namespace Platform.Lib.Services.Grpc.Identity;
 
 public static class IdentityGrpcClientConfig
 {

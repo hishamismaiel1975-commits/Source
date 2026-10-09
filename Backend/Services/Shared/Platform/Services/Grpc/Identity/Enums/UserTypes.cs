@@ -1,4 +1,4 @@
-﻿namespace Platform.Lib.Services.Identity.Enums
+﻿namespace Platform.Lib.Services.Grpc.Identity.Enums
 {
     public enum UserTypes
     {

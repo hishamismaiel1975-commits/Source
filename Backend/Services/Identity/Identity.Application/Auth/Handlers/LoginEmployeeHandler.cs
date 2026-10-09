@@ -4,7 +4,7 @@ using Identity.Application.Auth.Responses;
 using Identity.Core.Persistence.Entities;
 using Platform.Lib.Exceptions;
 using Platform.Lib.Persistence.IRepositories;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using Platform.Lib.Services.Security;
 using Platform.Lib.Services.Token;
 

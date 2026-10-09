@@ -1,6 +1,6 @@
 ﻿using Identity.GRPC;
 
-namespace Platform.Lib.Services.Identity;
+namespace Platform.Lib.Services.Grpc.Identity;
 
 public interface IIdentityService
 {

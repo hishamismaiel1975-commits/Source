@@ -1,7 +1,7 @@
 ﻿using Identity.Core.Persistence.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Lib.Persistence.IRepositories;
-using Platform.Lib.Services.Identity.Enums;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using Platform.Lib.Services.Security;
 
 namespace Identity.Infrastructure.Persistence.Seed
