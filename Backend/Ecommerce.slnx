@@ -20,6 +20,11 @@
     <Project Path="Services/Identity/Identity.Core/Identity.Core.csproj" Id="c2c9a5ec-d967-466d-b3ec-1291a5eaf8b7" />
     <Project Path="Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" Id="b7c4adf5-9a1f-46c2-8ea3-5e6cfd95619b" />
   </Folder>
+  <Folder Name="/Services/Reporting/">
+    <Project Path="Services/Reporting/Reporting.API/Reporting.API.csproj" Id="0fec24b5-548e-48f6-ae3b-3f94d701634d" />
+    <Project Path="Services/Reporting/Reporting.Core/Reporting.Core.csproj" Id="b9939b7b-8d59-41af-8601-29010ede2955" />
+    <Project Path="Services/Reporting/Reporting.Infrastructure/Reporting.Infrastructure.csproj" Id="119a9f0e-2bee-40a7-94c7-4777f6de1574" />
+  </Folder>
   <Folder Name="/Services/Shared/">
     <Project Path="Services/Shared/Platform/Platform.Lib.csproj" />
   </Folder>
