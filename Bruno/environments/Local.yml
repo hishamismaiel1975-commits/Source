@@ -1,0 +1,5 @@
+name: Local
+variables:
+  - name: url-base-grpc
+    value: localhost:8102
+    description: ""

@@ -23,7 +23,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UsePlatform<Program>();
 
-// Add gRPC service to the request pipeline & reflection for postman support
+// Add gRPC service to the request pipeline
 app.MapGrpcService<IdentityGrpcService>();
 
 // Add Built-in Roles, Users, and Update Always New Permissions to the database. 

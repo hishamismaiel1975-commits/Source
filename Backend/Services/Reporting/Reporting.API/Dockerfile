@@ -11,20 +11,22 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Gateway/Gateway.API/Gateway.API.csproj", "Services/Gateway/Gateway.API/"]
+COPY ["Services/Reporting/Reporting.API/Reporting.API.csproj", "Services/Reporting/Reporting.API/"]
 COPY ["Services/Shared/Platform/Platform.Lib.csproj", "Services/Shared/Platform/"]
-RUN dotnet restore "./Services/Gateway/Gateway.API/Gateway.API.csproj"
+COPY ["Services/Reporting/Reporting.Core/Reporting.Core.csproj", "Services/Reporting/Reporting.Core/"]
+COPY ["Services/Reporting/Reporting.Infrastructure/Reporting.Infrastructure.csproj", "Services/Reporting/Reporting.Infrastructure/"]
+RUN dotnet restore "./Services/Reporting/Reporting.API/Reporting.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Gateway/Gateway.API"
-RUN dotnet build "./Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Reporting/Reporting.API"
+RUN dotnet build "./Reporting.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Reporting.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Gateway.API.dll"]
+ENTRYPOINT ["dotnet", "Reporting.API.dll"]

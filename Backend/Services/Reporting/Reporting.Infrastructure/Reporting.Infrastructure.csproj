@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Platform\Platform.Lib.csproj" />
+  </ItemGroup>
+
 </Project>

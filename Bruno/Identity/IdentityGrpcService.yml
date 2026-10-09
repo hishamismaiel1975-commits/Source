@@ -12,6 +12,6 @@ grpc:
     - title: message 1
       message: |-
         {
-          "user_id":"11CB7FA2-9CDD-5780-7000-01A0FD471F6D"
+          "user_id":"6E24B81F-503D-2981-7000-01A10E036CAC"
         }
   auth: inherit

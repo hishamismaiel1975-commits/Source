@@ -1,21 +1,22 @@
+using Platform.Lib.API.Extensions;
+using Platform.Lib.Constants;
+using Reporting.API;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add Platform Services
+builder.AddPlatform<Program, App>(PermissionConstants.GetPermissions);
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.AddGrafanaOTEL("Reporting.API");
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//Seed db on startup 
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
+    //await DatabaseSeeder.SeedAsync(scope.ServiceProvider);
 }
 
-app.UseAuthorization();
-
-app.MapControllers();
+app.UsePlatform<Program>();
 
 app.Run();
