@@ -2,8 +2,12 @@
 {
     public record ProductsDTO
     (
-         string Name,
-         string Description,
-         decimal Price
+    string Name,
+    string Summary,
+    string Description,
+    string BrandName,
+    string TypeName,
+    string Price,
+    string CreatedDate
     );
 }

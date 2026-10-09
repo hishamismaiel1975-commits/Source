@@ -6,7 +6,7 @@ namespace Platform.Lib.Services.Grpc.Identity;
 
 public static class IdentityGrpcClientConfig
 {
-    public static WebApplicationBuilder AddIdentityGrpcService(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddIdentityGrpcClientService(this WebApplicationBuilder builder)
     {
         builder.Services.AddGrpcClient<IdentityService.IdentityServiceClient>(options =>
         {

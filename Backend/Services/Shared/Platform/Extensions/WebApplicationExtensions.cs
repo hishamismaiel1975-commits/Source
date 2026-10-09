@@ -53,7 +53,7 @@ namespace Platform.Lib.API.Extensions
         public static WebApplicationBuilder AddPlatform<TProgram, TMediatr>(this WebApplicationBuilder builder, IEnumerable<string?> permissions)
         {
             // Add Identity gRPC Client to get user permissions from Identity Service
-            builder.AddIdentityGrpcService();
+            builder.AddIdentityGrpcClientService();
 
             // Configure Kestrel to listen on different ports for HTTP/1.1 and HTTP/2
             builder.WebHost.ConfigureKestrel(options =>

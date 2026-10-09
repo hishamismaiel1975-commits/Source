@@ -30,10 +30,9 @@ public class CatalogGrpcService : CatalogService.CatalogServiceBase
                 CreatedDate = x.CreatedDate.ToString()
             },
             filter: x =>
-                 (string.IsNullOrEmpty(request.BrandId) || x.ProductBrandId.ToString() == request.BrandId)
-
+                 (!request.HasBrandId || x.ProductBrandId.ToString() == request.BrandId)
                  &&
-                  (string.IsNullOrEmpty(request.TypeId) || x.ProductTypeId.ToString() == request.TypeId)
+                  (!request.HasTypeId || x.ProductTypeId.ToString() == request.TypeId)
                  );
 
         return new GetProductsResult()

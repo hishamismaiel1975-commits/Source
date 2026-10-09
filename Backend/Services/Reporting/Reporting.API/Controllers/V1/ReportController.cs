@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Lib.Services.Grpc.Catalog;
 
 namespace Reporting.API.Controllers
 {
@@ -9,16 +10,21 @@ namespace Reporting.API.Controllers
     [Route("v{version:apiVersion}/[controller]")]
     public class ReportController : ControllerBase
     {
-        public ReportController()
+        private readonly ICatalogService _catalogService;
+
+        public ReportController(ICatalogService catalogService)
         {
+            _catalogService = catalogService;
         }
 
 
         [HttpGet("{reportId}")]
         //[Authorize]
         //[UserTypeAuthorize(UserTypes.Employee)]
-        public IActionResult GetReport(Guid reportId)
+        public async Task<IActionResult> GetReport(Guid reportId)
         {
+            var products = await _catalogService.GetProductsAsync();
+
             // Implement your report generation logic here
             return Ok("Report generated successfully.");
         }
