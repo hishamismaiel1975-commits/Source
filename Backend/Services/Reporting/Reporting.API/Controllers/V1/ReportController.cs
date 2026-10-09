@@ -21,9 +21,9 @@ namespace Reporting.API.Controllers
         [HttpGet("{reportId}")]
         //[Authorize]
         //[UserTypeAuthorize(UserTypes.Employee)]
-        public async Task<IActionResult> GetReport(Guid reportId)
+        public async Task<IActionResult> GetReport(Guid reportId, [FromQuery] Guid? brandId, [FromQuery] Guid? typeId)
         {
-            var products = await _catalogService.GetProductsAsync();
+            var products = await _catalogService.GetProductsAsync(brandId, typeId);
 
             // Implement your report generation logic here
             return Ok("Report generated successfully.");
