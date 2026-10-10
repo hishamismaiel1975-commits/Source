@@ -1,0 +1,97 @@
+{{- if .Values.mongodb.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.mongodb.name}}
+  namespace: {{.Values.global.namespace}}
+  labels:
+    app: {{.Values.mongodb.name}}
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: {{.Values.mongodb.name}} 
+
+  template:
+    metadata:
+      labels:
+        app: {{.Values.mongodb.name}}
+
+    spec:
+      containers:
+        - name: {{.Values.mongodb.name}} 
+          image: {{.Values.mongodb.image.repository}}
+          imagePullPolicy: {{.Values.mongodb.image.pullPolicy}}
+
+          ports:
+            - name: {{.Values.mongodb.name}}
+              containerPort: 27017
+              protocol: TCP
+
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value:  {{ .Values.config.MONGO_INITDB_ROOT_USERNAME }}
+
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: {{ .Values.config.MONGO_INITDB_ROOT_PASSWORD }}
+
+          resources:
+            {{- toYaml .Values.mongodb.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: {{.Values.mongodb.name}}-data
+              mountPath: /data/db
+
+          livenessProbe:
+            exec:
+              command:
+                - mongosh
+                - --host
+                - localhost
+                - --port
+                - "27017"
+                - -u
+                - "$(MONGO_INITDB_ROOT_USERNAME)"
+                - -p
+                - "$(MONGO_INITDB_ROOT_PASSWORD)"
+                - --authenticationDatabase
+                - admin
+                - --eval
+                - "db.adminCommand('ping').ok"
+                - --quiet
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+
+          readinessProbe:
+            exec:
+              command:
+                - mongosh
+                - --host
+                - localhost
+                - --port
+                - "27017"
+                - -u
+                - "$(MONGO_INITDB_ROOT_USERNAME)"
+                - -p
+                - "$(MONGO_INITDB_ROOT_PASSWORD)"
+                - --authenticationDatabase
+                - admin
+                - --eval
+                - "db.adminCommand('ping').ok"
+                - --quiet
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+
+      volumes:
+        - name: {{.Values.mongodb.name}}-data
+          persistentVolumeClaim:
+            claimName: {{.Values.mongodb.name}}-pvc
+
+{{- end }}

@@ -121,6 +121,30 @@ otelLgtm:
     size: 10Gi
     storageClass: standard
 
+mongodb:
+  enabled: true
+  name: mongodb
+
+  image:
+    repository: mongo:8.3.8
+
+  service:
+    type: ClusterIP
+    port: 27017
+
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: standard
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "2Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+
 config:
   # RabbitMQ
   RABBITMQ_DEFAULT_USER: admin
@@ -128,3 +152,8 @@ config:
 
   # SQL Server
   MSSQL_SA_PASSWORD: pass_123456789
+
+  # MongoDB
+  MONGO_INITDB_ROOT_USERNAME: admin
+  MONGO_INITDB_ROOT_PASSWORD: pass_123456789
+
