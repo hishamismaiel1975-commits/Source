@@ -17,10 +17,10 @@ kubectl rollout restart deployment -n ecommerce
 
 helm list -n ecommerce
 helm lint ./helm-apps
-helm template ecommerce ./helm > rendered.yaml
-helm status ecommerce -n ecommerce
-helm history ecommerce -n ecommerce
-helm rollback ecommerce 0 -n ecommerce
+helm template ecommerce-apps ./helm > rendered.yaml
+helm status ecommerce-apps -n ecommerce
+helm history ecommerce-apps -n ecommerce
+helm rollback ecommerce-apps 0 -n ecommerce
 
 -- Install Ingress Controller
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
@@ -38,13 +38,10 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 
 
 docker build --no-cache -t reporting-api:1.0.1 -f Services/Reporting/reporting.api/Dockerfile .
-
 docker build --no-cache -t filestorage-api:1.0.0 -f Services/FileStorage/filestorage.api/Dockerfile .
-
-docker build --no-cache -t gateway-api:1.0.1 -f Services/Gateway/gateway.api/Dockerfile .
+docker build --no-cache -t gateway-api:1.0.3 -f Services/Gateway/gateway.api/Dockerfile .
 docker build --no-cache -t catalog-api:1.0.1 -f Services/catalog/catalog.api/Dockerfile .
-
-docker build --no-cache -t identity-api:1.0.0 -f Services/identity/identity.api/Dockerfile .
+docker build --no-cache -t identity-api:1.0.1 -f Services/identity/identity.api/Dockerfile .
 docker build --no-cache -t client:1.0.0 -f Dockerfile .
 
 kubectl apply -R -f k8s

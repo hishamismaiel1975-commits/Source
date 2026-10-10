@@ -30,10 +30,6 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          
-            - name: grpc
-              containerPort: 81
-              protocol: TCP
 
           env:
             - name: ASPNETCORE_ENVIRONMENT

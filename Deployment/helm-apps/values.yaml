@@ -7,7 +7,7 @@ gateway:
   replicas: 2
 
   image:
-    repository: gateway-api:1.0.1
+    repository: gateway-api:1.0.3
     pullPolicy: IfNotPresent
 
   service:
@@ -30,7 +30,7 @@ identity:
   replicas: 2
 
   image:
-    repository: identity-api:1.0.0
+    repository: identity-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
