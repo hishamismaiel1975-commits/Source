@@ -1,6 +1,10 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Lib.Persistence.IRepositories;
 using Platform.Lib.Services.Grpc.Catalog;
+using QuestPDF.Fluent;
+using Reporting.API.Reports.Products;
+using Reporting.Core.Persistence.Entities;
 
 namespace Reporting.API.Controllers
 {
@@ -10,11 +14,13 @@ namespace Reporting.API.Controllers
     [Route("v{version:apiVersion}/[controller]")]
     public class ReportController : ControllerBase
     {
+        private readonly IRepository<Report> _repository;
         private readonly ICatalogService _catalogService;
-
-        public ReportController(ICatalogService catalogService)
+        public ReportController(ICatalogService catalogService, IRepository<Report> repository)
         {
             _catalogService = catalogService;
+            _repository = repository;
+
         }
 
 
@@ -23,10 +29,21 @@ namespace Reporting.API.Controllers
         //[UserTypeAuthorize(UserTypes.Employee)]
         public async Task<IActionResult> GetReport(Guid reportId, [FromQuery] Guid? brandId, [FromQuery] Guid? typeId)
         {
-            var products = await _catalogService.GetProductsAsync(brandId, typeId);
+            switch (reportId.ToString())
+            {
+                //Products Report
+                case "4548273b-2d43-42d4-9a57-5874668df4fc":
+                    var report = await _repository.GetByIdAsync(Guid.Parse("4548273b-2d43-42d4-9a57-5874668df4fc"));
+                    if (report == null) return NotFound();
 
-            // Implement your report generation logic here
-            return Ok("Report generated successfully.");
+                    var products = await _catalogService.GetProductsAsync(brandId, typeId);
+                    var pdf = new ProductsReport(products, report.Title).GeneratePdf();
+                    return File(pdf, "application/pdf");
+
+                default:
+                    return NotFound();
+            }
+
         }
     }
 }
