@@ -56,10 +56,6 @@ spec:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ .Values.config.OTEL_EXPORTER_OTLP_ENDPOINT }}
 
-          volumeMounts:
-            - name: {{ .Values.reporting.name }}-data
-              mountPath: /app/uploads
-
           resources:
             requests:
               cpu: {{ .Values.reporting.resources.requests.cpu | quote }}
@@ -85,11 +81,5 @@ spec:
             periodSeconds: 20
             timeoutSeconds: 5
             failureThreshold: 3
-
-      volumes:
-        - name: {{ .Values.reporting.name }}-data
-          persistentVolumeClaim:
-            claimName: {{ .Values.reporting.name }}-pvc
-    
 
 {{- end }}

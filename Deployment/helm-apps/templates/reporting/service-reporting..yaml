@@ -1,18 +1,18 @@
-{{- if .Values.fileStorage.enabled }}
+{{- if .Values.reporting.enabled }}
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.fileStorage.name }}
+  name: {{ .Values.reporting.name }}
   namespace: {{ .Values.global.namespace }}
   labels:
-    app: {{ .Values.fileStorage.name }}
+    app: {{ .Values.reporting.name }}
 
 spec:
   type: ClusterIP
 
   selector:
-    app: {{ .Values.fileStorage.name }}
+    app: {{ .Values.reporting.name }}
 
   ports:
     - name: http

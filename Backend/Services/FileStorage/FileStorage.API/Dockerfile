@@ -14,7 +14,6 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/FileStorage/FileStorage.API/FileStorage.API.csproj", "Services/FileStorage/FileStorage.API/"]
 COPY ["Services/Shared/Platform/Platform.Lib.csproj", "Services/Shared/Platform/"]
-COPY ["Services/FileStorage/FileStorage.Application/FileStorage.Application.csproj", "Services/FileStorage/FileStorage.Application/"]
 RUN dotnet restore "./Services/FileStorage/FileStorage.API/FileStorage.API.csproj"
 COPY . .
 WORKDIR "/src/Services/FileStorage/FileStorage.API"
