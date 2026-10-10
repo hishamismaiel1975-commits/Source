@@ -161,7 +161,7 @@ ingress:
   host: ecommerce.local
 
   tls:
-    enabled: false
+    enabled: true
     secretName: ecommerce-tls
 
   annotations:
