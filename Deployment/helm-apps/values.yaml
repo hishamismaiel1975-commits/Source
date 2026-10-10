@@ -182,6 +182,7 @@ config:
   
   MongoDB__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
   FileStorage__DatabaseName: FileStorageDB
+  Reporting__DatabaseName: ReportingDB
   
   # RabbitMQ
   EventBusSettings__HostAddress: amqp://admin:pass_123456789@rabbitmq:5672

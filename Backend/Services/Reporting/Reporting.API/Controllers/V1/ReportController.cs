@@ -1,7 +1,10 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Persistence.IRepositories;
 using Platform.Lib.Services.Grpc.Catalog;
+using Platform.Lib.Services.Grpc.Identity.Enums;
 using QuestPDF.Fluent;
 using Reporting.API.Reports.Products;
 using Reporting.Core.Persistence.Entities;
@@ -25,8 +28,8 @@ namespace Reporting.API.Controllers
 
 
         [HttpGet("{reportId}")]
-        //[Authorize]
-        //[UserTypeAuthorize(UserTypes.Employee)]
+        [Authorize]
+        [UserTypeAuthorize(UserTypes.Employee)]
         public async Task<IActionResult> GetReport(Guid reportId, [FromQuery] Guid? brandId, [FromQuery] Guid? typeId)
         {
             switch (reportId.ToString())

@@ -1,0 +1,95 @@
+{{- if .Values.reporting.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.reporting.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.reporting.name }}
+
+spec:
+  replicas: {{ .Values.reporting.replicas }}
+
+  selector:
+    matchLabels:
+      app: {{ .Values.reporting.name }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.reporting.name }}
+
+    spec:
+      containers:
+        - name: {{ .Values.reporting.name }}
+          image: "{{ .Values.reporting.image.repository }}"
+          imagePullPolicy: {{ .Values.reporting.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.config.ASPNETCORE_ENVIRONMENT }}
+                 
+            - name: MongoDB__ConnectionString
+              value: {{ .Values.config.MongoDB__ConnectionString }}
+
+            - name: MongoDB__DatabaseName
+              value: {{ .Values.config.Reporting__DatabaseName }}
+
+            - name: GrpcSettings__IdentityServiceUrl
+              value: {{ .Values.config.GrpcSettings__IdentityServiceUrl }}
+
+            - name: Security__SecretKey
+              value: {{ .Values.config.Security__SecretKey }}
+
+            - name: Security__Issuer
+              value: {{ .Values.config.Security__Issuer }}
+
+            - name: Security__Audience
+              value: {{ .Values.config.Security__Audience }}
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.config.OTEL_EXPORTER_OTLP_ENDPOINT }}
+
+          volumeMounts:
+            - name: {{ .Values.reporting.name }}-data
+              mountPath: /app/uploads
+
+          resources:
+            requests:
+              cpu: {{ .Values.reporting.resources.requests.cpu | quote }}
+              memory: {{ .Values.reporting.resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .Values.reporting.resources.limits.cpu | quote }}
+              memory: {{ .Values.reporting.resources.limits.memory | quote }}
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+      volumes:
+        - name: {{ .Values.reporting.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.reporting.name }}-pvc
+    
+
+{{- end }}
