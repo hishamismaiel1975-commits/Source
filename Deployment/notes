@@ -39,7 +39,7 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 
 docker build --no-cache -t reporting-api:1.0.1 -f Services/Reporting/reporting.api/Dockerfile .
 docker build --no-cache -t filestorage-api:1.0.0 -f Services/FileStorage/filestorage.api/Dockerfile .
-docker build --no-cache -t gateway-api:1.0.3 -f Services/Gateway/gateway.api/Dockerfile .
+docker build --no-cache -t gateway-api:1.0.4 -f Services/Gateway/gateway.api/Dockerfile .
 docker build --no-cache -t catalog-api:1.0.1 -f Services/catalog/catalog.api/Dockerfile .
 docker build --no-cache -t identity-api:1.0.1 -f Services/identity/identity.api/Dockerfile .
 docker build --no-cache -t client:1.0.0 -f Dockerfile .
