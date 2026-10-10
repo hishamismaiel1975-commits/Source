@@ -59,10 +59,10 @@ spec:
               value: {{ .Values.config.Security__Audience }}
 
             - name: Security__AccessTokenLifetimeInMinutes
-              value: {{ .Values.config.Security__AccessTokenLifetimeInMinutes }}
+              value: {{ .Values.config.Security__AccessTokenLifetimeInMinutes | quote }}
 
             - name: Security__RefreshTokenLifetimeInMinutes
-              value: {{ .Values.config.Security__RefreshTokenLifetimeInMinutes }}
+              value: {{ .Values.config.Security__RefreshTokenLifetimeInMinutes | quote }}
 
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ .Values.config.OTEL_EXPORTER_OTLP_ENDPOINT }}
