@@ -20,4 +20,9 @@ spec:
       targetPort: http
       protocol: TCP
 
+    - name: grpc
+      port: {{ .Values.reporting.serviceGrpc.port }}
+      targetPort: {{ .Values.reporting.serviceGrpc.targetPort }}
+      protocol: {{ .Values.reporting.serviceGrpc.protocol }}
+
 {{- end }}

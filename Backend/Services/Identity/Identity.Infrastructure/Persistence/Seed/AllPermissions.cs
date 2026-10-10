@@ -43,6 +43,8 @@ namespace Identity.Infrastructure.Persistence.Seed
                 new Permission { Name = PermissionConstants.FileStorage.Read, NameEn = "Read File", NameAr = "عرض ملف" },
                 new Permission { Name = PermissionConstants.FileStorage.Delete, NameEn = "Delete File", NameAr = "حذف ملف" },
 
+                // Reporting    
+                new Permission { Name = PermissionConstants.Reporting.Read, NameEn = "Read Reporting", NameAr = "عرض التقارير" },
 
             };
     }

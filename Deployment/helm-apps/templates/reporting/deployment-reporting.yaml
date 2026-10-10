@@ -30,6 +30,10 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          
+          - name: grpc
+              containerPort: 81
+              protocol: TCP
 
           env:
             - name: ASPNETCORE_ENVIRONMENT
@@ -44,6 +48,9 @@ spec:
             - name: GrpcSettings__IdentityServiceUrl
               value: {{ .Values.config.GrpcSettings__IdentityServiceUrl }}
 
+            - name: GrpcSettings__CatalogServiceUrl
+              value: {{ .Values.config.GrpcSettings__CatalogServiceUrl }}
+              
             - name: Security__SecretKey
               value: {{ .Values.config.Security__SecretKey }}
 

@@ -73,6 +73,7 @@ services:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
       MongoDB__ConnectionString: ${MongoDB__ConnectionString}
       MongoDB__DatabaseName: ${Reporting__DatabaseName}
+      GrpcSettings__IdentityServiceUrl: ${GrpcSettings__IdentityServiceUrl}
       GrpcSettings__CatalogServiceUrl: ${GrpcSettings__CatalogServiceUrl}
       Security__SecretKey: ${Security__SecretKey}
       Security__Issuer: "${Security__Issuer}"

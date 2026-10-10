@@ -116,6 +116,11 @@ catalog:
     port: 80
     targetPort: http
     protocol: TCP
+  
+  serviceGrpc:
+    port: 81
+    targetPort: grpc
+    protocol: TCP
 
   resources:
     requests:
@@ -198,7 +203,8 @@ config:
 
   # gRPC service URL
   GrpcSettings__IdentityServiceUrl: http://identity-api:81
-
+  GrpcSettings__CatalogServiceUrl: http://catalog-api:81
+  
   # Database Connections
   CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
   IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;

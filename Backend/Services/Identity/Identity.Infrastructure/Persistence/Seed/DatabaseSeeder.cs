@@ -20,6 +20,8 @@ namespace Identity.Infrastructure.Persistence.Seed
 
 
             // --------------------------------------------------
+
+
             // Roles
             // --------------------------------------------------
             if (await roleRepository.CountAsync() == 0)

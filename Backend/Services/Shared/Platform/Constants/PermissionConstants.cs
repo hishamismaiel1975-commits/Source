@@ -71,6 +71,12 @@ namespace Platform.Lib.Constants
             public const string Delete = "FileStorage.Delete";
 
         }
+        public static class Reporting
+        {
+            public const string Read = "Reporting.Read";
+        }
 
     }
+
 }
+

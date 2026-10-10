@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Lib.Constants;
 using Platform.Lib.Infrastructure.Authorization;
 using Platform.Lib.Persistence.IRepositories;
 using Platform.Lib.Services.Grpc.Catalog;
@@ -28,7 +29,7 @@ namespace Reporting.API.Controllers
 
 
         [HttpGet("{reportId}")]
-        [Authorize]
+        [Authorize(Policy = PermissionConstants.Reporting.Read)]
         [UserTypeAuthorize(UserTypes.Employee)]
         public async Task<IActionResult> GetReport(Guid reportId, [FromQuery] Guid? brandId, [FromQuery] Guid? typeId)
         {
