@@ -31,7 +31,7 @@ spec:
               containerPort: 80
               protocol: TCP
           
-          - name: grpc
+            - name: grpc
               containerPort: 81
               protocol: TCP
 

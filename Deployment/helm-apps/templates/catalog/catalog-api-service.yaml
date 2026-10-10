@@ -16,5 +16,10 @@ spec:
       port: {{ .Values.catalog.service.port }}
       targetPort: {{ .Values.catalog.service.targetPort }}
       protocol: {{ .Values.catalog.service.protocol }}
+
+    - name: grpc
+      port: {{ .Values.catalog.serviceGrpc.port }}
+      targetPort: {{ .Values.catalog.serviceGrpc.targetPort }}
+      protocol: {{ .Values.catalog.serviceGrpc.protocol }}
       
 {{- end }}

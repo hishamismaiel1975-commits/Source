@@ -7,7 +7,7 @@ gateway:
   replicas: 2
 
   image:
-    repository: gateway-api:1.0.0
+    repository: gateway-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -85,7 +85,7 @@ reporting:
   replicas: 2
 
   image:
-    repository: reporting-api:1.0.0
+    repository: reporting-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -108,7 +108,7 @@ catalog:
   replicas: 2
 
   image:
-    repository: catalog-api:1.0.0
+    repository: catalog-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:

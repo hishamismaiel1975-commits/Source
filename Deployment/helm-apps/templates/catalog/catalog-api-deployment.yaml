@@ -31,6 +31,10 @@ spec:
               containerPort: 80
               protocol: TCP
 
+            - name: grpc
+              containerPort: 81
+              protocol: TCP
+
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value:  {{ .Values.config.ASPNETCORE_ENVIRONMENT }}

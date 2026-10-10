@@ -16,13 +16,8 @@ spec:
 
   ports:
     - name: http
-      port: 80
-      targetPort: http
-      protocol: TCP
-
-    - name: grpc
-      port: {{ .Values.reporting.serviceGrpc.port }}
-      targetPort: {{ .Values.reporting.serviceGrpc.targetPort }}
-      protocol: {{ .Values.reporting.serviceGrpc.protocol }}
+      port: {{ .Values.reporting.service.port }}
+      targetPort: {{ .Values.reporting.service.targetPort }}
+      protocol: {{ .Values.reporting.service.protocol }}
 
 {{- end }}
