@@ -84,8 +84,7 @@ services:
         condition: service_started
     ports:
       - "8003:80"
-
-  
+ 
  catalog-api:
     container_name: ecommerce-catalog-api
     image: ${DOCKER_REGISTRY-}catalog-api
@@ -120,6 +119,23 @@ services:
       - "8004:80"
       - "8104:81"
  
+ ollama-api:
+    container_name: ecommerce-ollama-api
+    image: ${DOCKER_REGISTRY-}ollama-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Services/AI/Ollama.API/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      Security__SecretKey: ${Security__SecretKey}
+      Security__Issuer: "${Security__Issuer}"
+      Security__Audience: "${Security__Audience}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
+    ports:
+      - "8005:80"
+
+
  otel-lgtm:
     container_name: ecommerce-grafana-otel-lgtm
     image: grafana/otel-lgtm:0.34.0

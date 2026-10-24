@@ -15,7 +15,7 @@ builder.AddMongoDB(new MongoDbConfiguration());
 // Add File Storage Service
 builder.Services.AddSingleton<IFileStorageService, LocalFileStorageService>();
 
-builder.AddGrafanaOTEL("FileStorage-api");
+builder.AddGrafanaOTEL("FileStorage-API");
 
 var app = builder.Build();
 

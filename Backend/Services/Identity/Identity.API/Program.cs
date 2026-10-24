@@ -16,7 +16,7 @@ builder.AddSqlServer<IdentityDbContext>(builder.Configuration["IdentityDb:Connec
 // Add Redis Cache Service & Repository Services
 builder.AddRedis();
 
-builder.AddGrafanaOTEL("Identity-api");
+builder.AddGrafanaOTEL("Identity-API");
 
 var app = builder.Build();
 

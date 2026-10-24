@@ -48,7 +48,7 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
-builder.AddGrafanaOTEL("Catalog-api");
+builder.AddGrafanaOTEL("Catalog-API");
 
 var app = builder.Build();
 

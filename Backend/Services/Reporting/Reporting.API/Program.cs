@@ -23,7 +23,7 @@ builder.AddMongoDB(new MongoDbConfiguration());
 
 
 // Add Grafana OTEL
-builder.AddGrafanaOTEL("Reporting.API");
+builder.AddGrafanaOTEL("Reporting-API");
 
 var app = builder.Build();
 
