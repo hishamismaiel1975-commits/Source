@@ -1,0 +1,4 @@
+﻿Our company name is ABC Company.
+Employees receive 21 vacation days per year.
+The office is located in Cairo.
+Employees can work remotely on Fridays.
