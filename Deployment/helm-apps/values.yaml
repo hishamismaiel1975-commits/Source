@@ -154,21 +154,13 @@ client:
       memory: 512Mi
 
 ingress:
-  enabled: false
+  enabled: true
 
   name: ecommerce-ingress
-  className: nginx
-  host: ecommerce.local
 
   tls:
     enabled: false
     secretName: ecommerce-tls
-
-  annotations:
-    clusterIssuer: ecommerce-selfsigned
-    proxyBodySize: "50m"
-    proxyReadTimeout: "120"
-    proxySendTimeout: "120"
 
   paths:
     # Angular client

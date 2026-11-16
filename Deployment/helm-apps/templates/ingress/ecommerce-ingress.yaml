@@ -8,7 +8,9 @@ spec:
   gatewayClassName: approuting-istio
   listeners:
     - name: http
+{{ if .Values.ingress.host }}
       hostname: {{ .Values.ingress.host | quote }}
+{{ end }}
       port: 80
       protocol: HTTP
       allowedRoutes:
@@ -16,7 +18,9 @@ spec:
           from: Same
 {{- if .Values.ingress.tls.enabled }}
     - name: https
+{{ if .Values.ingress.host }}
       hostname: {{ .Values.ingress.host | quote }}
+{{ end }}
       port: 443
       protocol: HTTPS
       tls:
@@ -37,8 +41,10 @@ metadata:
 spec:
   parentRefs:
     - name: {{ .Values.ingress.name }}
+{{ if .Values.ingress.host }}
   hostnames:
     - {{ .Values.ingress.host | quote }}
+{{ end }}
   rules:
     {{- range .Values.ingress.paths }}
     - matches:
