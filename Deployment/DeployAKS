@@ -3,9 +3,7 @@ Create registry: ecommerceregistry.azurecr.io
 
 az login --tenant 936cad7f-3dae-4fba-9a3e-144b0f8e3f4b
 az acr login --name ecommerceregistry
-
-docker build -t ecommerceregistry.azurecr.io/<image-name>:<tag> .
-docker push ecommerceregistry.azurecr.io/<image-name>:<tag>
+az account show
 
 docker build --no-cache -t ecommerceregistry.azurecr.io/reporting-api:1.0.1 -f Services/Reporting/reporting.api/Dockerfile .
 docker build --no-cache -t ecommerceregistry.azurecr.io/filestorage-api:1.0.0 -f Services/FileStorage/filestorage.api/Dockerfile .
@@ -20,3 +18,25 @@ docker push ecommerceregistry.azurecr.io/gateway-api:1.0.5
 docker push ecommerceregistry.azurecr.io/catalog-api:1.0.1
 docker push ecommerceregistry.azurecr.io/identity-api:1.0.1
 docker push ecommerceregistry.azurecr.io/client:1.0.1
+
+Create Azure AKS: ecommerce-aks-cluster
+
+Connect to AKS:
+$aksKubeconfig = Join-Path $HOME ".kube\config-ecommerce-aks"
+
+az aks get-credentials --resource-group Ecommerce-RG --name ecommerce-aks-cluster --overwrite-existing --file $aksKubeconfig  
+$env:KUBECONFIG = $aksKubeconfig
+
+kubectl config get-contexts
+kubectl get nodes
+
+Create namespace:
+kubectl create namespace ecommerce
+kubectl get namespaces
+
+Create ecommerce-infrastructure:
+helm install ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
+helm uninstall ecommerce-infrastructure  --namespace ecommerce 
+
+Create ecommerce-apps:
+helm install ecommerce-apps ./helm-apps --namespace ecommerce 

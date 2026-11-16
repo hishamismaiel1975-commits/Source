@@ -10,6 +10,12 @@ metadata:
     app: {{ .Values.sqlserver.name }}
 
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+
   replicas: 1
 
   selector:
@@ -22,6 +28,10 @@ spec:
         app: {{ .Values.sqlserver.name }}
 
     spec:
+      securityContext:
+        fsGroup: 10001
+        fsGroupChangePolicy: OnRootMismatch
+
       containers:
         - name: {{ .Values.sqlserver.name }}
           image: {{ .Values.sqlserver.image.repository }}

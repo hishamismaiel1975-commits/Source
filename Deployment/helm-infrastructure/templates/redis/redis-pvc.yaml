@@ -10,7 +10,7 @@ metadata:
 
 spec:
   storageClassName:
-        {{ .Values.rabbitmq.persistence.storageClass }}
+        {{ .Values.redis.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
 

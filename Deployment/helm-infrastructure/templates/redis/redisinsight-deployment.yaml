@@ -10,6 +10,12 @@ metadata:
     app: {{ .Values.redisinsight.name }}
 
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+
   replicas: 1
 
   selector:
@@ -22,6 +28,10 @@ spec:
         app: {{ .Values.redisinsight.name }}
 
     spec:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+
       containers:
         - name: {{ .Values.redisinsight.name }}
           image: {{ .Values.redisinsight.image.repository }}
