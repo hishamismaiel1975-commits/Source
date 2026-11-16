@@ -36,7 +36,10 @@ kubectl get namespaces
 
 Create ecommerce-infrastructure:
 helm install ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
+helm upgrade ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
 helm uninstall ecommerce-infrastructure  --namespace ecommerce 
 
 Create ecommerce-apps:
 helm install ecommerce-apps ./helm-apps --namespace ecommerce 
+helm upgrade ecommerce-apps ./helm-apps --namespace ecommerce
+helm uninstall ecommerce-apps --namespace ecommerce 

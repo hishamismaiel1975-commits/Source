@@ -4,7 +4,7 @@ global:
 gateway:
   enabled: true
   name: gateway-api
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/gateway-api:1.0.5
@@ -27,7 +27,7 @@ gateway:
 identity:
   enabled: true
   name: identity-api
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/identity-api:1.0.1
@@ -55,7 +55,7 @@ identity:
 fileStorage:
   enabled: true
   name: filestorage-api
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/filestorage-api:1.0.0
@@ -82,7 +82,7 @@ fileStorage:
 reporting:
   enabled: true
   name: reporting-api
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/reporting-api:1.0.1
@@ -105,7 +105,7 @@ reporting:
 catalog:
   enabled: true
   name: catalog-api
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/catalog-api:1.0.1
@@ -133,7 +133,7 @@ catalog:
 client:
   enabled: true
   name: ecommerce-client
-  replicas: 2
+  replicas: 1
 
   image:
     repository: ecommerceregistry.azurecr.io/client:1.0.1
