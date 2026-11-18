@@ -7,7 +7,7 @@ gateway:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/gateway-api:1.0.5
+    repository: ecommercestageregistry.azurecr.io/gateway-api:1.0.5
     pullPolicy: IfNotPresent
 
   service:
@@ -30,7 +30,7 @@ identity:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/identity-api:1.0.1
+    repository: ecommercestageregistry.azurecr.io/identity-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -58,7 +58,7 @@ fileStorage:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/filestorage-api:1.0.0
+    repository: ecommercestageregistry.azurecr.io/filestorage-api:1.0.0
     pullPolicy: IfNotPresent
 
   service:
@@ -85,7 +85,7 @@ reporting:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/reporting-api:1.0.1
+    repository: ecommercestageregistry.azurecr.io/reporting-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -108,7 +108,7 @@ catalog:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/catalog-api:1.0.1
+    repository: ecommercestageregistry.azurecr.io/catalog-api:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -136,7 +136,7 @@ client:
   replicas: 1
 
   image:
-    repository: ecommerceregistry.azurecr.io/client:1.0.1
+    repository: ecommercestageregistry.azurecr.io/client:1.0.1
     pullPolicy: IfNotPresent
 
   service:
@@ -155,7 +155,7 @@ client:
 
 gatewaynetworking:
   enabled: true
-
+  host: web.ecommerce.insure
   name: ecommerce-gatewaynetworking
   
   tls:
@@ -198,8 +198,8 @@ config:
   GrpcSettings__CatalogServiceUrl: http://catalog-api:81
   
   # Database Connections
-  CatalogDb__ConnectionString: Server=tcp:ecommerce-sqldatabase-server.database.windows.net,1433;Initial Catalog=CatalogDB;Persist Security Info=False;User ID=sqladmin;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-  IdentityDb__ConnectionString: Server=tcp:ecommerce-sqldatabase-server.database.windows.net,1433;Initial Catalog=IdentityDB;Persist Security Info=False;User ID=sqladmin;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+  CatalogDb__ConnectionString: Server=tcp:ecommerce-stage-sqldatabase-server.database.windows.net,1433;Initial Catalog=CatalogDB;Persist Security Info=False;User ID=sqladmin1455;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+  IdentityDb__ConnectionString: Server=tcp:ecommerce-stage-sqldatabase-server.database.windows.net,1433;Initial Catalog=IdentityDB;Persist Security Info=False;User ID=sqladmin1455;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
   
   MongoDB__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
   FileStorage__DatabaseName: FileStorageDB

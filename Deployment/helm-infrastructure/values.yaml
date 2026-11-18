@@ -75,7 +75,7 @@ redis:
     storageClass: managed-csi
 
 redisinsight:
-  enabled: true
+  enabled: false
   name: redisinsight
 
   image:
@@ -99,7 +99,7 @@ redisinsight:
     storageClass: managed-csi
 
 otelLgtm:
-  enabled: true
+  enabled: false
   name: otel-lgtm
 
   image:

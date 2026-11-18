@@ -1,52 +1,56 @@
-Create Azure Resource Group: ecommerce-rg
-Create container registry: ecommerceregistry.azurecr.io
-
+Create Azure Resource Group: ecommerce-stage-rg
+Create container registry: ecommercestageregistry.azurecr.io
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 az login --tenant 936cad7f-3dae-4fba-9a3e-144b0f8e3f4b
-az acr login --name ecommerceregistry
+az acr login --name ecommercestageregistry
 az account show
-
-docker build --no-cache -t ecommerceregistry.azurecr.io/gateway-api:1.0.5 -f Services/Gateway/gateway.api/Dockerfile .
-docker build --no-cache -t ecommerceregistry.azurecr.io/catalog-api:1.0.1 -f Services/catalog/catalog.api/Dockerfile .
-docker build --no-cache -t ecommerceregistry.azurecr.io/identity-api:1.0.1 -f Services/identity/identity.api/Dockerfile .
-docker build --no-cache -t ecommerceregistry.azurecr.io/client:1.0.1 -f Dockerfile .
-
-docker push ecommerceregistry.azurecr.io/gateway-api:1.0.5
-docker push ecommerceregistry.azurecr.io/catalog-api:1.0.1
-docker push ecommerceregistry.azurecr.io/identity-api:1.0.1
-docker push ecommerceregistry.azurecr.io/client:1.0.1
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+docker build --no-cache -t ecommercestageregistry.azurecr.io/gateway-api:1.0.5 -f Services/Gateway/gateway.api/Dockerfile .
+docker build --no-cache -t ecommercestageregistry.azurecr.io/catalog-api:1.0.1 -f Services/catalog/catalog.api/Dockerfile .
+docker build --no-cache -t ecommercestageregistry.azurecr.io/identity-api:1.0.1 -f Services/identity/identity.api/Dockerfile .
+docker build --no-cache -t ecommercestageregistry.azurecr.io/client:1.0.1 -f Dockerfile .
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+docker push ecommercestageregistry.azurecr.io/gateway-api:1.0.5
+docker push ecommercestageregistry.azurecr.io/catalog-api:1.0.1
+docker push ecommercestageregistry.azurecr.io/identity-api:1.0.1
+docker push ecommercestageregistry.azurecr.io/client:1.0.1
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Create VNET : 
-ecommerce-vnet (10.0.0.0 - 10.0.255.255) --> ecommerce-vnet-vms-subnet(10.0.0.0/24)-ecommerce-vnet-aks-subnet(10.0.1.0/24) - ecommerce-vnet-dbs-subnet(10.0.2.0/24)
-
+ecommerce-stage-vnet (10.0.0.0 - 10.0.255.255) --> 
+ecommerce-stage-vnet-vms-subnet (10.0.0.0/24)
+ecommerce-stage-vnet-aks-subnet (10.0.1.0/24) 
+ecommerce-stage-vnet-dbs-subnet (10.0.2.0/24)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Create VM on ecommerce-vnet-vms-subnet: 
-ecommerce-vm001 (IP:172.184.110.22)
-UserName:ecommerce-admin 
+ecommerce-stage-vm001 (IP:172.184.110.22)
+UserName: vmadmin1455 
 Password: vm@ecommerce@stage@3561
-
-Create SQL Database with Private endpoint connected to  ecommerce-vnet-dbs-subnet: 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Create SQL Database with Private endpoint connected to ecommerce-vnet-dbs-subnet: 
 Create Two DBS On Same Elastic Pool (Share Same Server for both dbs cost less):
 CatalogDB 
 IdentityDB
 
-Server & elastic Pool: ecommerce-sqldatabase-server.database.windows.net,1433
-ecommerce-sqldatabase-server
-ecommerce-sqldatabase-elasticpool
+Server & elastic Pool: ecommerce-stage-sqldatabase-server.database.windows.net,1433
+ecommerce-stage-sqldatabase-server
+ecommerce-stage-sqldatabase-elasticpool
 
-UserName:sqladmin 
+UserName: sqladmin1455 
 Password: sqldb@ecommerce@stage@3561
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-Create Azure AKS: ecommerce-aks-cluster
-Managed identity: ecommerce-aks-cluster-uami
+Create Azure AKS: 
+for network set aks to ecommerce-stage-vnet-aks-subnet by select Azure CNI Node Subnet on network tab.
 
+Managed identity: ecommerce-stage-aks-cluster-uami
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Connect to AKS:
 $aksKubeconfig = Join-Path $HOME ".kube\config-ecommerce-aks"
-az aks get-credentials --resource-group ecommerce-rg --name ecommerce-aks-cluster --overwrite-existing --file $aksKubeconfig  
+az aks get-credentials --resource-group ecommerce-stage-rg --name ecommerce-stage-aks-cluster --overwrite-existing --file $aksKubeconfig  
 $env:KUBECONFIG = $aksKubeconfig
 
 kubectl config get-contexts
 kubectl get nodes
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Create namespace:
 kubectl create namespace ecommerce
 kubectl get namespaces
@@ -57,12 +61,13 @@ helm upgrade ecommerce-infrastructure ./helm-infrastructure --namespace ecommerc
 helm uninstall ecommerce-infrastructure  --namespace ecommerce 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Enable Gateway API on the cluster:
-az aks update --resource-group ecommerce-rg --name ecommerce-aks-cluster --enable-gateway-api --enable-app-routing-istio
+az aks update --resource-group ecommerce-stage-rg --name ecommerce-stage-aks-cluster --enable-gateway-api --enable-app-routing-istio
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Deploy ecommerce-apps:
 helm upgrade --install ecommerce-apps .\helm-apps --namespace ecommerce
+helm uninstall ecommerce-apps --namespace ecommerce
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-retrieve the assigned IP: 20.245.155.92
+retrieve the assigned IP: 20.174.196.88 (http://web.ecommerce.insure/) (http://ecommerce.insure/)
 kubectl --kubeconfig "$HOME\.kube\config-ecommerce-aks" get gateway ecommerce-gatewaynetworking -n ecommerce -o wide
 
 
