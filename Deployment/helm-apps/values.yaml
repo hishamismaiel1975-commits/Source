@@ -155,7 +155,7 @@ client:
 
 gatewaynetworking:
   enabled: true
-  host: web.ecommerce.insure
+  host: ecommerce.insure
   name: ecommerce-gatewaynetworking
   
   tls:

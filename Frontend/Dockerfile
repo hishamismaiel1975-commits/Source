@@ -11,7 +11,7 @@ RUN npm ci
 COPY . .
 
 # Angular production build
-RUN npx ng build ecommerce --configuration production
+RUN npx ng build ecommerce --configuration staging
 
 # =========================
 # Runtime stage
