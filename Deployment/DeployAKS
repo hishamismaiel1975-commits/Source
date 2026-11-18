@@ -8,12 +8,12 @@ az account show
 docker build --no-cache -t ecommercestageregistry.azurecr.io/gateway-api:1.0.5 -f Services/Gateway/gateway.api/Dockerfile .
 docker build --no-cache -t ecommercestageregistry.azurecr.io/catalog-api:1.0.1 -f Services/catalog/catalog.api/Dockerfile .
 docker build --no-cache -t ecommercestageregistry.azurecr.io/identity-api:1.0.1 -f Services/identity/identity.api/Dockerfile .
-docker build --no-cache -t ecommercestageregistry.azurecr.io/client:1.0.1 -f Dockerfile .
+docker build --no-cache -t ecommercestageregistry.azurecr.io/client:1.0.2 -f Dockerfile .
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 docker push ecommercestageregistry.azurecr.io/gateway-api:1.0.5
 docker push ecommercestageregistry.azurecr.io/catalog-api:1.0.1
 docker push ecommercestageregistry.azurecr.io/identity-api:1.0.1
-docker push ecommercestageregistry.azurecr.io/client:1.0.1
+docker push ecommercestageregistry.azurecr.io/client:1.0.2
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 Create VNET : 
 ecommerce-stage-vnet (10.0.0.0 - 10.0.255.255) --> 
