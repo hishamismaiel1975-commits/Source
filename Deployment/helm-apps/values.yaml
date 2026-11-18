@@ -53,7 +53,7 @@ identity:
       memory: "512Mi"
 
 fileStorage:
-  enabled: true
+  enabled: false
   name: filestorage-api
   replicas: 1
 
@@ -80,7 +80,7 @@ fileStorage:
     storageClass: managed-csi
 
 reporting:
-  enabled: true
+  enabled: false
   name: reporting-api
   replicas: 1
 
@@ -153,11 +153,11 @@ client:
       cpu: 500m
       memory: 512Mi
 
-ingress:
+gatewaynetworking:
   enabled: true
 
-  name: ecommerce-ingress
-
+  name: ecommerce-gatewaynetworking
+  
   tls:
     enabled: false
     secretName: ecommerce-tls
@@ -198,8 +198,8 @@ config:
   GrpcSettings__CatalogServiceUrl: http://catalog-api:81
   
   # Database Connections
-  CatalogDb__ConnectionString: Server=sqlserver,1433;Database=CatalogDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
-  IdentityDb__ConnectionString: Server=sqlserver,1433;Database=IdentityDb;User Id=sa;Password=pass_123456789;TrustServerCertificate=True;
+  CatalogDb__ConnectionString: Server=tcp:ecommerce-sqldatabase-server.database.windows.net,1433;Initial Catalog=CatalogDB;Persist Security Info=False;User ID=sqladmin;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+  IdentityDb__ConnectionString: Server=tcp:ecommerce-sqldatabase-server.database.windows.net,1433;Initial Catalog=IdentityDB;Persist Security Info=False;User ID=sqladmin;Password=sqldb@ecommerce@stage@3561;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
   
   MongoDB__ConnectionString: mongodb://admin:pass_123456789@mongodb:27017
   FileStorage__DatabaseName: FileStorageDB

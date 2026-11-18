@@ -2,7 +2,7 @@ global:
   namespace: ecommerce
 
 sqlserver:
-  enabled: true
+  enabled: false
   name: sqlserver
 
   image:
@@ -75,7 +75,7 @@ redis:
     storageClass: managed-csi
 
 redisinsight:
-  enabled: false
+  enabled: true
   name: redisinsight
 
   image:
@@ -122,7 +122,7 @@ otelLgtm:
     storageClass: managed-csi
 
 mongodb:
-  enabled: true
+  enabled: false
   name: mongodb
 
   image:

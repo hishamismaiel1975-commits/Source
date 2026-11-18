@@ -4,20 +4,23 @@ winget install Helm.Hel
 kubectl create namespace ecommerce
 kubectl delete namespace ecommerce
 
-helm install ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce 
+helm install ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
 helm upgrade ecommerce-infrastructure ./helm-infrastructure --namespace ecommerce
 
-helm install ecommerce-apps ./helm-apps --namespace ecommerce 
+helm install ecommerce-apps ./helm-apps --namespace ecommerce
 helm upgrade ecommerce-apps ./helm-apps --namespace ecommerce
 
-helm uninstall ecommerce-apps --namespace ecommerce 
-helm uninstall ecommerce-infrastructure  --namespace ecommerce 
+helm uninstall ecommerce-apps --namespace ecommerce
+helm uninstall ecommerce-infrastructure --namespace ecommerce
 
 kubectl rollout restart deployment -n ecommerce
 
 helm list -n ecommerce
-helm lint ./helm-apps
+
+#Check if the helm-app is correct
+helm lint ./helm-apps  
 helm template ecommerce-apps ./helm > rendered.yaml
+
 helm status ecommerce-apps -n ecommerce
 helm history ecommerce-apps -n ecommerce
 helm rollback ecommerce-apps 0 -n ecommerce
@@ -35,7 +38,6 @@ helm repo update
 kubectl create namespace cert-manager
 
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.18.2 --set crds.enabled=true
-
 
 docker build --no-cache -t reporting-api:1.0.1 -f Services/Reporting/reporting.api/Dockerfile .
 docker build --no-cache -t filestorage-api:1.0.0 -f Services/FileStorage/filestorage.api/Dockerfile .
