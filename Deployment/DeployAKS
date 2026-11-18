@@ -67,8 +67,19 @@ Deploy ecommerce-apps:
 helm upgrade --install ecommerce-apps .\helm-apps --namespace ecommerce
 helm uninstall ecommerce-apps --namespace ecommerce
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
-retrieve the assigned IP: 20.174.196.88 (http://web.ecommerce.insure/) (http://ecommerce.insure/)
+Get Assigned IP for Gateway
 kubectl --kubeconfig "$HOME\.kube\config-ecommerce-aks" get gateway ecommerce-gatewaynetworking -n ecommerce -o wide
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Install cert-manager with Gateway API support (required for automatic HTTPS certificate issuance and renewal):
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.18.2 --reset-values --set crds.enabled=true --set config.enableGatewayAPI=true --server-side=false
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Deploy ecommerce-apps again:
+helm upgrade --install ecommerce-apps .\helm-apps --namespace ecommerce
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+After the Certificate reports Ready=True, use https://web.ecommerce.insure/
+kubectl --kubeconfig "$HOME\.kube\config-ecommerce-aks" get certificate ecommerce-tls -n ecommerce
 
 
 

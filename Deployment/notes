@@ -35,9 +35,7 @@ helm repo list
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
-kubectl create namespace cert-manager
-
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.18.2 --set crds.enabled=true
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.18.2 --reset-values --set crds.enabled=true --set config.enableGatewayAPI=true --server-side=false
 
 docker build --no-cache -t reporting-api:1.0.1 -f Services/Reporting/reporting.api/Dockerfile .
 docker build --no-cache -t filestorage-api:1.0.0 -f Services/FileStorage/filestorage.api/Dockerfile .

@@ -41,6 +41,9 @@ metadata:
 spec:
   parentRefs:
     - name: {{ .Values.gatewaynetworking.name }}
+{{- if .Values.gatewaynetworking.tls.enabled }}
+      sectionName: https
+{{- end }}
 {{ if .Values.gatewaynetworking.host }}
   hostnames:
     - {{ .Values.gatewaynetworking.host | quote }}
@@ -55,4 +58,26 @@ spec:
         - name: {{ .service.name }}
           port: {{ .service.port }}
     {{- end }}
+{{- if .Values.gatewaynetworking.tls.enabled }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Values.gatewaynetworking.name }}-http-redirect
+  namespace: {{ .Values.global.namespace }}
+spec:
+  parentRefs:
+    - name: {{ .Values.gatewaynetworking.name }}
+      sectionName: http
+{{- if .Values.gatewaynetworking.host }}
+  hostnames:
+    - {{ .Values.gatewaynetworking.host | quote }}
+{{- end }}
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301
+{{- end }}
 {{- end }}

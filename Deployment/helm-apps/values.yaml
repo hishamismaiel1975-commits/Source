@@ -159,8 +159,9 @@ gatewaynetworking:
   name: ecommerce-gatewaynetworking
   
   tls:
-    enabled: false
+    enabled: true
     secretName: ecommerce-tls
+    acmeEmail: ""
 
   paths:
     # Angular client
